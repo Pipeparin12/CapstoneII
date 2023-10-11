@@ -1,26 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:longdoo_frontend/components/clothesCard.dart';
+import 'package:longdoo_frontend/model/clothes.dart';
 import 'package:longdoo_frontend/screen/accountName/accName.dart';
+import 'package:longdoo_frontend/screen/itemDetail.dart';
 
 class CategoryScreen extends StatefulWidget {
   final String name;
-  CategoryScreen({required this.name});
+  CategoryScreen({Key? key, required this.name});
 
   @override
   State<CategoryScreen> createState() => _CategoryScreenState();
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
-  final List<String> _listItem = [
-    'assets/images/two.jpg',
-    'assets/images/three.jpg',
-    'assets/images/four.jpg',
-    'assets/images/five.jpg',
-    'assets/images/one.jpg',
-    'assets/images/two.jpg',
-    'assets/images/three.jpg',
-    'assets/images/four.jpg',
-    'assets/images/five.jpg',
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,54 +91,23 @@ class _CategoryScreenState extends State<CategoryScreen> {
               ),
               Expanded(
                   child: GridView.count(
-                crossAxisCount: 2,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                children: _listItem
-                    .map(
-                      (item) => Column(
-                        children: [
-                          Card(
-                            color: Colors.transparent,
-                            elevation: 0,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                image: DecorationImage(
-                                  image: AssetImage(item),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              child: Transform.translate(
-                                offset: Offset(50, -50),
-                                child: Container(
-                                  margin: EdgeInsets.symmetric(
-                                    horizontal: 65,
-                                    vertical: 63,
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      children: [
+                    ...List.generate(
+                        demoClothes.length,
+                        (index) => ClothesCard(
+                            demoClothes: demoClothes[index],
+                            press: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ItemDetailScreen(
+                                      demoItem: demoClothes[index],
+                                    ),
                                   ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.white,
-                                  ),
-                                  child: Icon(
-                                    Icons.bookmark_border,
-                                    size: 15,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Text(
-                            '1,200 Bath',
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.left,
-                          ),
-                        ],
-                      ),
-                    )
-                    .toList(),
-              ))
+                                )))
+                  ]))
             ],
           ),
         ),

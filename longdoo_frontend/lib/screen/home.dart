@@ -10,22 +10,27 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Map<String, dynamic>> _listItems = [
     {
       'name': 'Men\'s Wear',
+      'category': 'Men',
       'imagePath': 'assets/images/menswear.jpg',
     },
     {
       'name': 'Women\'s Wear',
+      'category': 'Women',
       'imagePath': 'assets/images/womenswear.jpg',
     },
     {
       'name': 'Kids Wear',
+      'category': 'Kid',
       'imagePath': 'assets/images/kidswear.jpg',
     },
     {
       'name': 'Unisex',
+      'category': 'Unisex',
       'imagePath': 'assets/images/unisex.png',
     },
     {
       'name': 'Sale',
+      'category': 'Sale',
       'imagePath': 'assets/images/sale.png',
     },
   ];
