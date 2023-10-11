@@ -34,7 +34,7 @@ export const signup = async (data: SignUpPost): ResultHandler => {
         }
         const user = await User.findOne({ username: props.username }).exec();
         if (user) {
-            return genericError("Email already exists", 400)
+            return genericError("Username already exists", 400)
         }
 
         const hashedPassword = await bcrypt.hash(password, saltRounds);

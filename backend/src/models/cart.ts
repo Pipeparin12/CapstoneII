@@ -9,7 +9,7 @@ export const cartSchema = new mongoose.Schema({
     },
     itemId: {
         type: Types.ObjectId,
-        ref: 'Book'
+        ref: 'Item'
     },
     itemName:{
         type: String, 
