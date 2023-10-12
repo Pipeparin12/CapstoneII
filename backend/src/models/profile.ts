@@ -30,7 +30,27 @@ export const ProfileSchema = new mongoose.Schema({
     phone: {
         type: String,
         required: true
-    }
+    },
+    height: {
+        type: Number,
+        required: true
+    },
+    weight: {
+        type: Number,
+        required: true
+    },
+    chestSize: {
+        type: Number,
+        required: true
+    },
+    waistSize: {
+        type: Number,
+        required: true
+    },
+    hipsSize: {
+        type: Number,
+        required: true
+    },
 });
 
 export default mongoose.model('Profile', ProfileSchema);
