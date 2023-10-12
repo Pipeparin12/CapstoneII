@@ -32,7 +32,6 @@ authRoute.post('/signup', async (req,res)=>{
 				phone: "000-000-0000",
 				address: "NoAddress",
 				email: "anonymous@mail.com",
-				imageUrl: `https://avatars.dicebear.com/api/adventurer-neutral/${Date.now()}.png`,
 			}).catch(err => console.log(err));
 
             // Send it back to flutter

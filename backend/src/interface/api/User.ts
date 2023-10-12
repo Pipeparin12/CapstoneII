@@ -10,5 +10,4 @@ export interface SignUpPost {
 	lastname: string;
 	Address: string;
 	tel: string;
-    pictureUrl: string;
 }
