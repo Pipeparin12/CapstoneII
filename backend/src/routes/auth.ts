@@ -18,7 +18,9 @@ authRoute.post('/signup', async (req,res)=>{
             // Create new user
             newUser = new User({
                     username:req.body.username,
-                    password:req.body.password
+                    password:req.body.password,
+                    firstName:req.body.firstName,
+                    lastName:req.body.lastName
                 });
             // Save into a database.
             newUser = await newUser.save();
@@ -26,9 +28,9 @@ authRoute.post('/signup', async (req,res)=>{
             // Create new profile along with a user.
             await Profile.create({
 				user: newUser._id,
-				username:newUser.username,
-				firstName: "NoFirstName",
-				lastName: "NoLastName",
+				username: newUser.username,
+				firstName: newUser.firstName,
+				lastName: newUser.lastName,
 				phone: "000-000-0000",
 				address: "NoAddress",
 				email: "anonymous@mail.com",
@@ -84,14 +86,14 @@ authRoute.post('/signin',async (req,res)=>{
     }
 })
 
-// Service Book Restful API
+// Service product Restful API
 // TOKEN   ->   sdfsdfkxclvokxlcvklsdkflsdkflsdklfksdlf
-//C   POST  /book   body -> { name: 'sirawit', count: 2 }
-// C  POST  /book/add-favourite/:id   ->   
-//R   GET   /book
-//F   GET  /book/:id   /book/1   /book/d121er12dfer12
-//U   PATCH /book/:id      body -> { name: 'sirawit', count: 2 }
-//D   DELETE /book/:id   
+//C   POST  /product   body -> { name: 'parin', count: 2 }
+// C  POST  /product/add-favourite/:id   ->   
+//R   GET   /product
+//F   GET  /product/:id   /product/1   /product/d121er12dfer12
+//U   PATCH /product/:id      body -> { name: 'parin', count: 2 }
+//D   DELETE /product/:id   
 
 
 authRoute.get("/me", async (req, res) => {
