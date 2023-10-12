@@ -32,8 +32,13 @@ authRoute.post('/signup', async (req,res)=>{
 				firstName: newUser.firstName,
 				lastName: newUser.lastName,
 				phone: "000-000-0000",
-				address: "NoAddress",
+				address: "Please fill your Address",
 				email: "anonymous@mail.com",
+                height: 0,
+                weight: 0,
+                chestSize: 0,
+                waistSize: 0,
+                hipsSize: 0,
 			}).catch(err => console.log(err));
 
             // Send it back to flutter

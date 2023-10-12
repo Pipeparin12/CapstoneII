@@ -20,6 +20,14 @@ export const ProductSchema = new mongoose.Schema({
         require: true
     },
     price:{
+        type: Number,
+        require: true
+    },
+    colors:{
+        type: String,
+        require: true
+    },
+    size:{
         type: String,
         require: true
     },

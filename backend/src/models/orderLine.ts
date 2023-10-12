@@ -20,7 +20,7 @@ export const orderLineSchema = new mongoose.Schema({
         min: 1
     },
     // Add price field for the product
-    price: { 
+    totalPrice: { 
         type: Number, 
         required: true 
     },
