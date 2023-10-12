@@ -11,7 +11,7 @@ import AppConfig from '@/config';
 authRoute.post('/signup', async (req,res)=>{
     try{
         // Find one user!
-        let newUser = await User.findOne({email:req.body.email});
+        let newUser = await User.findOne({username:req.body.username});
 
         // Check if user exists? If it doesn't...
         if(newUser == null){
