@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/components/bottomNavBar.dart';
-import 'package:longdoo_frontend/screen/accountName/accName.dart';
 import 'package:longdoo_frontend/screen/category.dart';
 import 'package:longdoo_frontend/screen/home.dart';
 
-class SignUpPage extends StatelessWidget {
-  const SignUpPage({Key? key}) : super(key: key);
+class SignInPage extends StatelessWidget {
+  const SignInPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +13,9 @@ class SignUpPage extends StatelessWidget {
         // appBar: AppBar(title: const Text(_title)),
         body: const MyStatefulWidget(),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => AccNameScreen())),
-          tooltip: 'Sign Up',
+          onPressed: () => Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => BottomNavBar())),
+          tooltip: 'Sign In',
           child: Icon(
             Icons.east,
             color: Color(0xFFFFFFFF),
@@ -49,7 +48,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.fromLTRB(10, 50, 10, 50),
                 child: const Text(
-                  'Create your account',
+                  'Sign in',
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 30),
                 )),
             Container(

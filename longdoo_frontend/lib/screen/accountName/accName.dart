@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:longdoo_frontend/components/bottomNavBar.dart';
 
 class AccNameScreen extends StatelessWidget {
   const AccNameScreen({Key? key}) : super(key: key);
@@ -10,10 +11,8 @@ class AccNameScreen extends StatelessWidget {
         // appBar: AppBar(title: const Text(_title)),
         body: const MyStatefulWidget(),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            print(context);
-            print(context);
-          },
+          onPressed: () => Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => BottomNavBar())),
           tooltip: 'Enter your fullname',
           child: Icon(
             Icons.east,

@@ -6,10 +6,11 @@ import 'package:longdoo_frontend/model/clothes.dart';
 
 import '../screen/accountName/accName.dart';
 
-class ClothesCard extends StatelessWidget {
+class WishlistCard extends StatelessWidget {
   final ClothingItem demoClothes;
   final GestureTapCallback press;
-  const ClothesCard({Key? key, required this.demoClothes, required this.press});
+  const WishlistCard(
+      {Key? key, required this.demoClothes, required this.press});
 
   @override
   Widget build(BuildContext context) {
@@ -47,16 +48,6 @@ class ClothesCard extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
-              Text(
-                demoClothes.price.toStringAsFixed(0) + " ฿",
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.left,
-              ),
-              Text(
-                demoClothes.name,
-                style: TextStyle(fontSize: 10),
-                textAlign: TextAlign.left,
               ),
             ],
           )),

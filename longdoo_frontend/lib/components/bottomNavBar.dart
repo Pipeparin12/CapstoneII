@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:longdoo_frontend/screen/accountName/accName.dart';
 import 'package:longdoo_frontend/screen/home.dart';
+import 'package:longdoo_frontend/screen/menu.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);
@@ -13,7 +15,7 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 0;
   PageController pageController = PageController();
-  List<Widget> pageList = <Widget>[HomeScreen()];
+  List<Widget> pageList = <Widget>[HomeScreen(), AccNameScreen(), MenuScreen()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(

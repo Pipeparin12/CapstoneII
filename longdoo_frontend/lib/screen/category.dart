@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/components/clothesCard.dart';
 import 'package:longdoo_frontend/model/clothes.dart';
 import 'package:longdoo_frontend/screen/accountName/accName.dart';
+import 'package:longdoo_frontend/screen/cart.dart';
 import 'package:longdoo_frontend/screen/itemDetail.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -25,7 +26,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
             icon: const Icon(Icons.shopping_bag),
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return AccNameScreen();
+                return CartScreen();
               }));
             },
           )
