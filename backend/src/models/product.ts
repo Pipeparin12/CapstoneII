@@ -23,7 +23,7 @@ export const ProductSchema = new mongoose.Schema({
         type: Number,
         require: true
     },
-    colors:{
+    color:{
         type: String,
         require: true
     },

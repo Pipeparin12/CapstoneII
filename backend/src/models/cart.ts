@@ -1,7 +1,7 @@
 import mongoose, { Mongoose }  from "mongoose"
 import { ObjectId, Types } from "mongoose"
 
-export const orderLineSchema = new mongoose.Schema({
+export const cartSchema = new mongoose.Schema({
     owner: {
         type: Types.ObjectId,
         required: true,
@@ -32,4 +32,4 @@ export const orderLineSchema = new mongoose.Schema({
     timestamps: true
 })
 
-export default mongoose.model('OrderLine',orderLineSchema);
+export default mongoose.model('Cart',cartSchema);
