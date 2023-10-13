@@ -20,6 +20,9 @@ import morgan from "morgan";
 import { logger } from "@/utils/serviceLog";
 import path from "path";
 import fs from "fs";
+import productRoute from "./routes/product";
+import storageRoute from "./routes/storage";
+import cartRoute from "./routes/cart";
 
 /** Instantiate Application */
 const app = express();
@@ -72,6 +75,9 @@ app.use(
 
 /** Routes */
 app.use("/auth", authRoute);
+app.use("/product", productRoute);
+app.use("/storage", storageRoute);
+app.use("/cart", cartRoute);
 
 // for testing only
 app.get("/", async (req, res) => {

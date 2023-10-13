@@ -18,12 +18,14 @@ const upload = multer({ storage });
 
 
 async function createproduct(req, res, next){
-    const user_id = req.user.user_id;
     try {
         const newproduct = await Product.create({
-            'owner': user_id,
             'productName': "",
             'productDescription': "",
+            'price': 0,
+            'color': "",
+            'size': "",
+            'category': "",
             'productAmount': 0,
             'productImage': "",
         });
@@ -40,10 +42,10 @@ async function createproduct(req, res, next){
 productRoute.post('/add', createproduct , upload.single('file'), async (req,res) => {
     const product_name = req.body.productName;
 	const product_des = req.body.productDescription;
-    const product_price = req.body.productPrice;
-    const product_colors = req.body.productColors;
-    const product_size = req.body.productSize;
-    const product_category = req.body.productCategory;
+    const product_price = req.body.price;
+    const product_color = req.body.color;
+    const product_size = req.body.size;
+    const product_category = req.body.category;
 	const product_image = req.body.productImage;
     const productId = (req as any).productId;
 
@@ -53,10 +55,10 @@ productRoute.post('/add', createproduct , upload.single('file'), async (req,res)
 			productName: product_name,
 			productDescription: product_des,
 			productImage: `/products/${productId}.jpg`,
-            productPrice: product_price,
-            productColors: product_colors,
-            productSize: product_size,
-            productCategory: product_category
+            price: product_price,
+            color: product_color,
+            size: product_size,
+            category: product_category
 		}
 	);
 
