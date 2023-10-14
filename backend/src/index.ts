@@ -10,6 +10,7 @@ import cookieParser from "cookie-parser";
 /** Routes */
 import authRoute from "@/routes/auth";
 
+
 /** Misc */
 import config from "./config";
 
@@ -23,6 +24,7 @@ import fs from "fs";
 import productRoute from "./routes/product";
 import storageRoute from "./routes/storage";
 import cartRoute from "./routes/cart";
+import newpassRoute from "./routes/password";
 
 /** Instantiate Application */
 const app = express();
@@ -78,6 +80,7 @@ app.use("/auth", authRoute);
 app.use("/product", productRoute);
 app.use("/storage", storageRoute);
 app.use("/cart", cartRoute);
+app.use("/changpassword", newpassRoute)
 
 // for testing only
 app.get("/", async (req, res) => {
