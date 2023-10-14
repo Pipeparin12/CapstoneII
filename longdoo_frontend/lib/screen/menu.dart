@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/components/wishlistCard.dart';
-import 'package:longdoo_frontend/model/clothes.dart';
+import 'package:longdoo_frontend/model/product.dart';
 import 'package:longdoo_frontend/screen/cart.dart';
 import 'package:longdoo_frontend/screen/itemDetail.dart';
 import 'package:longdoo_frontend/screen/order/processing.dart';
@@ -264,15 +264,15 @@ class MenuScreen extends StatelessWidget {
                               mainAxisSpacing: 0,
                               children: [
                             ...List.generate(
-                                demoClothes.length,
+                                demoProduct.length,
                                 (index) => WishlistCard(
-                                    demoClothes: demoClothes[index],
+                                    demoProduct: demoProduct[index],
                                     press: () => Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 ItemDetailScreen(
-                                              demoItem: demoClothes[index],
+                                              demoItem: demoProduct[index],
                                             ),
                                           ),
                                         )))

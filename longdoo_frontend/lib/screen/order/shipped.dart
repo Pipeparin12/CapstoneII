@@ -1,6 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:longdoo_frontend/model/clothes.dart';
+import 'package:longdoo_frontend/model/product.dart';
 import 'package:longdoo_frontend/screen/accountName/accName.dart';
 import 'package:longdoo_frontend/screen/order/processing.dart';
 import 'package:longdoo_frontend/screen/order/unpaid.dart';

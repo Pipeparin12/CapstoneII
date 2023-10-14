@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:longdoo_frontend/model/clothes.dart';
+import 'package:longdoo_frontend/model/product.dart';
 
 import 'accountName/accName.dart';
 
 class ItemDetailScreen extends StatefulWidget {
-  final ClothingItem demoItem;
+  final Product demoItem;
   ItemDetailScreen({required this.demoItem});
 
   @override
@@ -58,7 +58,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
           height: MediaQuery.of(context).size.height * .42,
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage(widget.demoItem.imagePath),
+                  image: AssetImage(widget.demoItem.productImage),
                   fit: BoxFit.cover)),
         ),
         Align(
@@ -79,7 +79,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                     children: [
                       Expanded(
                         child: Text(
-                          widget.demoItem.name,
+                          widget.demoItem.productName,
                           style: TextStyle(
                               fontSize: 25, fontWeight: FontWeight.bold),
                         ),
@@ -104,7 +104,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                   child: Row(
                     children: [
                       Text(
-                        "Amount : " + widget.demoItem.amount.toStringAsFixed(0),
+                        "Quantity : " + widget.demoItem.quantity.toStringAsFixed(0),
                         style: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.bold),
                       )
@@ -137,7 +137,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                               fontSize: 12, color: Colors.grey.withOpacity(1)),
                         ),
                         SizedBox(height: 10),
-                        Text(widget.demoItem.description),
+                        Text(widget.demoItem.productDescription),
                       ],
                     ),
                   ),
