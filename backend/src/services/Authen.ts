@@ -18,7 +18,7 @@ export const login = async (username: string, password: string): ResultHandler =
             return genericError("Password is incorrect", 400);
         }
 
-        const token = generateJwtToken(user._id, user.email);
+        const token = generateJwtToken(user._id, user.username);
 
         return infoResponse(token, "Sign in success");
     } catch (e) {
@@ -34,7 +34,7 @@ export const signup = async (data: SignUpPost): ResultHandler => {
         }
         const user = await User.findOne({ username: props.username }).exec();
         if (user) {
-            return genericError("Email already exists", 400)
+            return genericError("Username already exists", 400)
         }
 
         const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -45,7 +45,7 @@ export const signup = async (data: SignUpPost): ResultHandler => {
             return genericError(e.message, 400);
         }
 
-        const token = generateJwtToken(myUser._id, myUser.email);
+        const token = generateJwtToken(myUser._id, myUser.username);
 
         return infoResponse(token, "Sign up success", 201);
     } catch (e) {
