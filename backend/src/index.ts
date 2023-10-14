@@ -25,6 +25,7 @@ import productRoute from "./routes/product";
 import storageRoute from "./routes/storage";
 import cartRoute from "./routes/cart";
 import newpassRoute from "./routes/password";
+import accountRoute from "./routes/account";
 
 /** Instantiate Application */
 const app = express();
@@ -80,7 +81,8 @@ app.use("/auth", authRoute);
 app.use("/product", productRoute);
 app.use("/storage", storageRoute);
 app.use("/cart", cartRoute);
-app.use("/changpassword", newpassRoute)
+app.use("/password", newpassRoute)
+app.use("/account", accountRoute)
 
 // for testing only
 app.get("/", async (req, res) => {
