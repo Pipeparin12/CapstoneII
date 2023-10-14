@@ -25,6 +25,7 @@ async function createproduct(req, res, next){
             'price': 0,
             'color': "",
             'size': "",
+            'quantity': 0,
             'category': "",
             'productAmount': 0,
             'productImage': "",
@@ -45,6 +46,7 @@ productRoute.post('/add', createproduct , upload.single('file'), async (req,res)
     const product_price = req.body.price;
     const product_color = req.body.color;
     const product_size = req.body.size;
+    const product_quantuty = req.body.quantity;
     const product_category = req.body.category;
 	const product_image = req.body.productImage;
     const productId = (req as any).productId;
@@ -58,6 +60,7 @@ productRoute.post('/add', createproduct , upload.single('file'), async (req,res)
             price: product_price,
             color: product_color,
             size: product_size,
+            quantity: product_quantuty,
             category: product_category
 		}
 	);
@@ -142,6 +145,22 @@ productRoute.get('/search/:key',async (req, res) => {
         let result = await Product.find({
             "$or": [{
                 productName: {$regex: req.params.key}
+            }]
+        })
+        res.send(result);
+    } catch (err) {
+        return res.json({
+            success: false,
+            message: err
+        })
+    }
+})
+
+productRoute.get('/category/:key',async (req, res) => {
+    try {
+        let result = await Product.find({
+            "$or": [{
+                category: {$regex: req.params.key}
             }]
         })
         res.send(result);

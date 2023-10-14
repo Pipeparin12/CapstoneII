@@ -31,7 +31,6 @@ authRoute.post('/signup', async (req,res)=>{
 				username: newUser.username,
 				firstName: newUser.firstName,
 				lastName: newUser.lastName,
-                password: newUser.password,
 				phone: "000-000-0000",
 				address: "Please fill your Address",
 				email: "anonymous@mail.com",

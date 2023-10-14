@@ -31,6 +31,10 @@ export const ProductSchema = new mongoose.Schema({
         type: String,
         require: true
     },
+    quantity:{
+        type: Number,
+        require: true
+    },
     category:{
         type: String,
         require: true

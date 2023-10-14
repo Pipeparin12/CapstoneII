@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:longdoo_frontend/model/clothes.dart';
+import 'package:longdoo_frontend/model/product.dart';
 
 import '../screen/accountName/accName.dart';
 
 class ClothesCard extends StatelessWidget {
-  final ClothingItem demoClothes;
+  final Product demoProduct;
   final GestureTapCallback press;
-  const ClothesCard({Key? key, required this.demoClothes, required this.press});
+  const ClothesCard({Key? key, required this.demoProduct, required this.press});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class ClothesCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     image: DecorationImage(
-                      image: AssetImage(demoClothes.imagePath),
+                      image: AssetImage(demoProduct.productImage),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -49,12 +49,12 @@ class ClothesCard extends StatelessWidget {
                 ),
               ),
               Text(
-                demoClothes.price.toStringAsFixed(0) + " ฿",
+                demoProduct.price.toStringAsFixed(0) + " ฿",
                 style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.left,
               ),
               Text(
-                demoClothes.name,
+                demoProduct.productName,
                 style: TextStyle(fontSize: 10),
                 textAlign: TextAlign.left,
               ),
