@@ -1,4 +1,4 @@
-import 'package:longdoo_app/service/dio.dart';
+import 'package:longdoo_frontend/service/dio.dart';
 
 class UserApi {
   static Future<dynamic> signIn(String username, String password) async {

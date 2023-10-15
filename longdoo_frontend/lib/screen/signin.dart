@@ -1,7 +1,12 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/components/bottomNavBar.dart';
+import 'package:longdoo_frontend/model/user.dart';
 import 'package:longdoo_frontend/screen/category.dart';
 import 'package:longdoo_frontend/screen/home.dart';
+import 'package:longdoo_frontend/service/api/user.dart';
+import 'package:longdoo_frontend/service/dio.dart';
+import 'package:longdoo_frontend/service/share_preference.dart';
 
 class SignInPage extends StatelessWidget {
   static String routeName = "/sign_in";
@@ -50,7 +55,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       });
       try {
         var result =
-            await UserApi.signIn(emailController.text, passwordController.text);
+            await UserApi.signIn(usernameController.text, passwordController.text);
         print(result.data['token']);
         SharePreference.prefs.setString("token", result.data['token']);
         DioInstance.dio.options.headers["Authorization"] =
@@ -84,7 +89,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             Container(
               padding: const EdgeInsets.all(10),
               child: TextField(
-                controller: usernameControllerController,
+                controller: usernameController,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15)),
