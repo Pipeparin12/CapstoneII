@@ -36,7 +36,7 @@ class _SignInPageState extends State<SignInPage> {
             "Bearer ${result.data}";
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => BottomNavBar()));
-      } on DioError catch (e) {
+      } on DioException catch (e) {
         setState(() {
           isLoading = false;
         });
