@@ -9,54 +9,29 @@ import 'package:longdoo_frontend/service/api/user.dart';
 import 'package:longdoo_frontend/service/dio.dart';
 import 'package:longdoo_frontend/service/share_preference.dart';
 
-class SignInPage extends StatelessWidget {
+class SignInPage extends StatefulWidget {
   static String routeName = "/sign_in";
-  
   const SignInPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        // appBar: AppBar(title: const Text(_title)),
-        body: const MyStatefulWidget(),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => BottomNavBar())),
-          tooltip: 'Sign In',
-          child: Icon(
-            Icons.east,
-            color: Color(0xFFFFFFFF),
-          ),
-          backgroundColor: Color(0xFF4A4A4A),
-        ),
-      ),
-    );
-  }
+  State<SignInPage> createState() => _SignInPageState();
 }
 
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key? key}) : super(key: key);
-
-  @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
-}
-
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+class _SignInPageState extends State<SignInPage> {
   final _formKey = GlobalKey<FormState>();
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
   bool? isLoading = false;
   bool? remember = false;
 
-   void signInHandler() async {
+  void signInHandler() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         isLoading = true;
       });
       try {
-        var result =
-            await UserApi.signIn(usernameController.text, passwordController.text);
+        var result = await UserApi.signIn(
+            usernameController.text, passwordController.text);
         print(result.data['token']);
         SharePreference.prefs.setString("token", result.data['token']);
         DioInstance.dio.options.headers["Authorization"] =
@@ -72,73 +47,84 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     }
   }
 
-  User user = User('', '');
+  // User user = User('', '');
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.fromLTRB(10, 50, 10, 50),
-        child: ListView(
-          children: <Widget>[
-            Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.fromLTRB(10, 50, 10, 50),
-                child: const Text(
-                  'Sign in',
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 30),
-                )),
-            Container(
-              padding: const EdgeInsets.all(10),
-              child: TextField(
-                controller: usernameController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
+    return Scaffold(
+      body: Padding(
+          padding: const EdgeInsets.fromLTRB(10, 50, 10, 50),
+          child: ListView(
+            children: <Widget>[
+              Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.fromLTRB(10, 50, 10, 50),
+                  child: const Text(
+                    'Sign in',
+                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 30),
+                  )),
+              Container(
+                padding: const EdgeInsets.all(10),
+                child: TextField(
+                  controller: usernameController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                    labelText: 'Username',
                   ),
-                  labelText: 'Username',
                 ),
               ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(10),
-              child: TextField(
-                obscureText: true,
-                controller: passwordController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
+              Container(
+                padding: const EdgeInsets.all(10),
+                child: TextField(
+                  obscureText: true,
+                  controller: passwordController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                    labelText: 'Password',
                   ),
-                  labelText: 'Password',
                 ),
               ),
-            ),
-            Container(
-                height: 50,
-                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                alignment: Alignment.center,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                        child: Text(
-                          "Sign Up",
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.deepPurple),
-                        ),
-                        onTap: () => Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SignUpPage()))),
-                    Padding(padding: EdgeInsets.only(right: 10)),
-                    Text(
-                      "If you don't have account.",
-                      style: TextStyle(fontSize: 15),
-                    )
-                  ],
-                )),
-          ],
-        ));
+              Container(
+                  height: 50,
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                          child: Text(
+                            "Sign Up",
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.deepPurple),
+                          ),
+                          onTap: () => Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SignUpPage()))),
+                      Padding(padding: EdgeInsets.only(right: 10)),
+                      Text(
+                        "If you don't have account.",
+                        style: TextStyle(fontSize: 15),
+                      )
+                    ],
+                  )),
+            ],
+          )),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => signInHandler(),
+        tooltip: 'Sign In',
+        child: Icon(
+          Icons.east,
+          color: Color(0xFFFFFFFF),
+        ),
+        backgroundColor: Color(0xFF4A4A4A),
+      ),
+    );
   }
 }
