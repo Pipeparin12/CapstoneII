@@ -6,6 +6,8 @@ import 'package:longdoo_frontend/screen/home.dart';
 import 'package:longdoo_frontend/screen/signin.dart';
 
 class SignUpPage extends StatelessWidget {
+  static String routeName = "/sign_up";
+  
   const SignUpPage({Key? key}) : super(key: key);
 
   @override

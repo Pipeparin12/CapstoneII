@@ -5,6 +5,8 @@ import 'package:longdoo_frontend/screen/home.dart';
 import 'package:longdoo_frontend/screen/signup/signUpScreen.dart';
 
 class SignInPage extends StatelessWidget {
+  static String routeName = "/sign_in";
+  
   const SignInPage({Key? key}) : super(key: key);
 
   @override
@@ -36,8 +38,36 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  TextEditingController usernameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+  bool? isLoading = false;
+  bool? remember = false;
+
+   void signInHandler() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
+      try {
+        var result =
+            await UserApi.signIn(emailController.text, passwordController.text);
+        print(result.data['token']);
+        SharePreference.prefs.setString("token", result.data['token']);
+        DioInstance.dio.options.headers["Authorization"] =
+            "Bearer ${result.data}";
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => BottomNavBar()));
+      } on DioError catch (e) {
+        setState(() {
+          isLoading = false;
+        });
+        print(e);
+      }
+    }
+  }
+
+  User user = User('', '');
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +85,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             Container(
               padding: const EdgeInsets.all(10),
               child: TextField(
-                controller: usernameController,
+
+                controller: usernameControllerController,
+
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15)),

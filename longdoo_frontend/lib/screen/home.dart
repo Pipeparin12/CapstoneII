@@ -11,27 +11,27 @@ class _HomeScreenState extends State<HomeScreen> {
     {
       'name': 'Men\'s Wear',
       'category': 'Men',
-      'imagePath': 'assets/images/menswear.jpg',
+      'productImage': 'assets/images/menswear.jpg',
     },
     {
       'name': 'Women\'s Wear',
       'category': 'Women',
-      'imagePath': 'assets/images/womenswear.jpg',
+      'productImage': 'assets/images/womenswear.jpg',
     },
     {
       'name': 'Kids Wear',
       'category': 'Kid',
-      'imagePath': 'assets/images/kidswear.jpg',
+      'productImage': 'assets/images/kidswear.jpg',
     },
     {
       'name': 'Unisex',
       'category': 'Unisex',
-      'imagePath': 'assets/images/unisex.png',
+      'productImage': 'assets/images/unisex.png',
     },
     {
       'name': 'Sale',
       'category': 'Sale',
-      'imagePath': 'assets/images/sale.png',
+      'productImage': 'assets/images/sale.png',
     },
   ];
 
@@ -104,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
                                   image: DecorationImage(
-                                    image: AssetImage(item['imagePath']),
+                                    image: AssetImage(item['productImage']),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
