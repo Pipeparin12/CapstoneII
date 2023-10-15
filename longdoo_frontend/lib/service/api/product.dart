@@ -30,10 +30,10 @@ class ProductApi {
     return response;
   }
 
-  static Future<dynamic> getBook(String bookId) async {
+  static Future<dynamic> getDetail(String productId) async {
     DioInstance.dio.options.headers["authorization"] =
         "Bearer " + SharePreference.prefs.getString("token").toString();
-    final response = await DioInstance.dio.get("/book/$bookId");
+    final response = await DioInstance.dio.get("/product/$productId");
     return response;
   }
 

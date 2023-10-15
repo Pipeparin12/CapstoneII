@@ -137,7 +137,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 ItemDetailScreen(
-                                              demoItem: listProduct[index],
+                                              id: listProduct[index]['_id'],
                                             ),
                                           )),
                                       child: Column(
@@ -200,7 +200,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         //       context,
                         //       MaterialPageRoute(
                         //         builder: (context) => ItemDetailScreen(
-                        //           demoItem: listProduct[index],
                         //         ),
                         //       ),
                         //         ))
