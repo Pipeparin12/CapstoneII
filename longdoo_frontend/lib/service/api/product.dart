@@ -8,11 +8,11 @@ class ProductApi {
     final response = await DioInstance.dio.get('/product/category/$category');
     return response;
   }
-
   static Future<dynamic> getMen() async {
     DioInstance.dio.options.headers["authorization"] =
         "Bearer " + SharePreference.prefs.getString("token").toString();
     final response = await DioInstance.dio.get('/product/category/Men');
+
     return response;
   }
 

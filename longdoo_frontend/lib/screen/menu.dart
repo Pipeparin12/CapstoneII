@@ -305,6 +305,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                             builder: (context) =>
                                                 ItemDetailScreen(
                                               id: listProduct[index]['id'],
+
                                             ),
                                           ),
                                         )))

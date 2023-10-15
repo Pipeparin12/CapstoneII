@@ -10,6 +10,7 @@ import 'accountName/accName.dart';
 
 class ItemDetailScreen extends StatefulWidget {
   final String id;
+
   ItemDetailScreen({required this.id});
 
   @override
@@ -50,6 +51,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
   @override
   void initState() {
     getDetail().then((_) => Future.delayed(new Duration(seconds: 1), () {
+
           setState(() {
             isLoading = false;
           });
@@ -123,6 +125,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                             Text(
                               "Price: " +
                                   listProduct['price'].toStringAsFixed(0),
+
                               style: TextStyle(
                                   fontSize: 14, fontWeight: FontWeight.bold),
                             )
@@ -136,6 +139,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                             Text(
                               "Quantity : " +
                                   listProduct['quantity'].toStringAsFixed(0),
+
                               style: TextStyle(
                                   fontSize: 14, fontWeight: FontWeight.bold),
                             )
