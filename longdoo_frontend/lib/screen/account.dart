@@ -50,6 +50,9 @@ class _AccountScreenState extends State<AccountScreen> {
       "address": addressController.text.trim(),
     });
 
+    print("Updated Phone: ${updatedProfile['phone']}");
+    print("Updated Address: ${updatedProfile['address']}");
+
     try {
       final token = SharePreference.prefs.getString("token");
       final response = await DioInstance.dio.patch(
@@ -65,7 +68,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
       if (response.data["success"]) {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => AccountScreen()));
+            context, MaterialPageRoute(builder: (context) => MenuScreen()));
       }
     } catch (e) {
       print(e);
@@ -96,6 +99,13 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   @override
+  void dispose() {
+    phoneController.dispose();
+    addressController.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
 
@@ -109,13 +119,6 @@ class _AccountScreenState extends State<AccountScreen> {
         isLoading = false;
       });
     });
-  }
-
-  @override
-  void dispose() {
-    phoneController.dispose();
-    addressController.dispose();
-    super.dispose();
   }
 
   @override
