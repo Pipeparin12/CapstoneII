@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/components/wishlistCard.dart';
 
 import 'package:longdoo_frontend/model/product.dart';
+import 'package:longdoo_frontend/screen/account.dart';
 
 import 'package:longdoo_frontend/screen/cart.dart';
 import 'package:longdoo_frontend/screen/itemDetail.dart';
