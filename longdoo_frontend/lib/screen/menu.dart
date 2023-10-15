@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/components/wishlistCard.dart';
 
@@ -10,11 +11,32 @@ import 'package:longdoo_frontend/screen/order/processing.dart';
 import 'package:longdoo_frontend/screen/order/shipped.dart';
 import 'package:longdoo_frontend/screen/order/unpaid.dart';
 import 'package:longdoo_frontend/screen/support.dart';
+import 'package:longdoo_frontend/service/api/product.dart';
 
 import '../components/clothesCard.dart';
 
-class MenuScreen extends StatelessWidget {
+class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
+
+  @override
+  State<MenuScreen> createState() => _MenuScreenState();
+}
+
+class _MenuScreenState extends State<MenuScreen> {
+  var listProduct = [];
+  String name = '';
+
+  Future<void> getAllBook() async {
+    try {
+      var result = await ProductApi.getMen();
+      setState(() {
+        listProduct = result.data['Men'].toList();
+      });
+      print(listProduct);
+    } on DioException catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -274,15 +296,15 @@ class MenuScreen extends StatelessWidget {
                               mainAxisSpacing: 0,
                               children: [
                             ...List.generate(
-                                demoProduct.length,
+                                listProduct.length,
                                 (index) => WishlistCard(
-                                    demoProduct: demoProduct[index],
+                                    demoProduct: listProduct[index],
                                     press: () => Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 ItemDetailScreen(
-                                              demoItem: demoProduct[index],
+                                              demoItem: listProduct[index],
                                             ),
                                           ),
                                         )))

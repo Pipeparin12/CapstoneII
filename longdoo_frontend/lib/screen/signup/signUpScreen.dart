@@ -45,26 +45,6 @@ class _MyStatefulWidgetState extends State<SignUpPage> {
     }
   }
 
-  void signUpHandler() async {
-    if (_formKey.currentState!.validate()) {
-      setState(() {
-        isloading = true;
-      });
-      try {
-        var result = await UserApi.signUp(
-            usernameController.text,
-            passwordController.text,
-            firstnameController.text,
-            lastnameController.text);
-      } on DioException catch (e) {
-        setState(() {
-          isloading = false;
-        });
-        print(e);
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
