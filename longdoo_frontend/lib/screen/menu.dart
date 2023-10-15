@@ -304,7 +304,8 @@ class _MenuScreenState extends State<MenuScreen> {
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 ItemDetailScreen(
-                                              id: listProduct[index]['_id'],
+                                              id: listProduct[index]['id'],
+
                                             ),
                                           ),
                                         )))

@@ -10,7 +10,8 @@ import 'accountName/accName.dart';
 
 class ItemDetailScreen extends StatefulWidget {
   final String id;
-  ItemDetailScreen({required this.id, Key? key}) : super(key: key);
+
+  ItemDetailScreen({required this.id});
 
   @override
   State<ItemDetailScreen> createState() => _ItemDetailScreenState();
@@ -19,7 +20,6 @@ class ItemDetailScreen extends StatefulWidget {
 class _ItemDetailScreenState extends State<ItemDetailScreen> {
   var listProduct;
   bool isLoading = true;
-
   late int counter = 1;
   void increment() {
     setState(() {
@@ -37,16 +37,12 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
     });
   }
 
-  Future<void> getProduct() async {
+  Future<void> getDetail() async {
     try {
-      print(widget.id);
       var result = await ProductApi.getDetail(widget.id);
       setState(() {
         listProduct = Map<String, dynamic>.from(result.data['product']);
-        print(listProduct);
-        print(listProduct['productName']);
       });
-      print(widget.id);
     } on DioException catch (e) {
       print(e);
     }
@@ -54,7 +50,8 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
 
   @override
   void initState() {
-    getProduct().then((_) => Future.delayed(new Duration(seconds: 1), () {
+    getDetail().then((_) => Future.delayed(new Duration(seconds: 1), () {
+
           setState(() {
             isLoading = false;
           });
@@ -126,7 +123,9 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                         child: Row(
                           children: [
                             Text(
-                              "Price: " + listProduct['price'].toString(),
+                              "Price: " +
+                                  listProduct['price'].toStringAsFixed(0),
+
                               style: TextStyle(
                                   fontSize: 14, fontWeight: FontWeight.bold),
                             )
@@ -139,7 +138,8 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                           children: [
                             Text(
                               "Quantity : " +
-                                  listProduct['quantity'].toString(),
+                                  listProduct['quantity'].toStringAsFixed(0),
+
                               style: TextStyle(
                                   fontSize: 14, fontWeight: FontWeight.bold),
                             )
@@ -173,8 +173,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                     color: Colors.grey.withOpacity(1)),
                               ),
                               SizedBox(height: 10),
-                              Text(
-                                  listProduct['productDescription'].toString()),
+                              Text(listProduct['productDescription']),
                             ],
                           ),
                         ),
