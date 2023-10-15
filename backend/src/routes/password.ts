@@ -5,8 +5,14 @@ import Profile from "@/models/profile";
 const newpassRoute = express.Router();
 
 
-newpassRoute.patch('/changepassword', async (req, res) => {
-    const { userId, currentPassword, newPassword } = req.body;
+newpassRoute.patch('/change-password', async (req, res) => {
+  if(req.user == null) return res.json({
+    success: false,
+    message: "Authentication error!"
+  });
+
+  const userId = req.user?.user_id;
+    const { currentPassword, newPassword } = req.body;
 
     // Check if the current password matches the password in the database.
     const user = await User.findById(userId);
