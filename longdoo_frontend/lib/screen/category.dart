@@ -10,7 +10,8 @@ import 'package:longdoo_frontend/service/dio.dart';
 
 class CategoryScreen extends StatefulWidget {
   final String name;
-  CategoryScreen({Key? key, required this.name});
+  final String category;
+  CategoryScreen({Key? key, required this.name, required this.category});
 
   @override
   State<CategoryScreen> createState() => _CategoryScreenState();
@@ -22,7 +23,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   Future<void> getProduct() async {
     try {
-      var result = await ProductApi.getWomen();
+      var result = await ProductApi.getProduct(widget.category);
       final responseData = result.data;
 
       if (responseData is List) {
@@ -137,7 +138,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 ItemDetailScreen(
-                                              demoItem: listProduct[index],
+                                              id: listProduct[index]['_id'],
                                             ),
                                           )),
                                       child: Column(
