@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import Product, { ProductSchema } from '../models/product';
+import Product from '../models/product';
 const productRoute = express.Router();
 
 const storage = multer.diskStorage({
@@ -8,7 +8,7 @@ const storage = multer.diskStorage({
 		cb(null, "./uploads/products");
 	},
 	filename: function (req, file, cb) {
-        const fileName = `${(req as any).productId}.jpg`;
+        const fileName = `${(req).productId}.jpg`;
         console.log(`Uploading...`, fileName);
 		cb(null,fileName);
 	},
@@ -127,7 +127,7 @@ productRoute.delete('/:id',async (req, res) => {
     const product = await Product.findById(req.params.id);
     if (!product) return res.json({message: "No Data Found"});
     try {
-        const deletedproduct = await Product.deleteOne({_id: req.params.id});
+        await Product.deleteOne({_id: req.params.id});
         return res.json({
             success: true,
             message: 'Delete product successfully'
@@ -142,7 +142,7 @@ productRoute.delete('/:id',async (req, res) => {
 
 productRoute.get('/search/:key',async (req, res) => {
     try {
-        let result = await Product.find({
+        const result = await Product.find({
             "$or": [{
                 productName: {$regex: req.params.key}
             }]
@@ -158,7 +158,7 @@ productRoute.get('/search/:key',async (req, res) => {
 
 productRoute.get('/category/:key',async (req, res) => {
     try {
-        let result = await Product.find({
+        const result = await Product.find({
             "$or": [{
                 category: {$regex: req.params.key}
             }]

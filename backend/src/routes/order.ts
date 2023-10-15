@@ -2,7 +2,7 @@ import express from "express";
 import Order from '../models/order';
 const orderRoute = express.Router();
 
-type addOrderRequestProp = {
+export type AddOrderRequestProp = {
     owner: string,
     products: Array<string>,
     totalPrice: number,
@@ -22,7 +22,7 @@ type addOrderRequestProp = {
     }
 };
 
-type updateOrderStatusRequestProp = {
+type UpdateOrderStatusRequestProp = {
     orderId: string,
     status: {
         status: string,
@@ -67,11 +67,7 @@ orderRoute.get('/get/', async (req, res) => {
 })
 
 orderRoute.post('/add/', async (req, res) => {
-    let orderDetail: addOrderRequestProp = { ...req.body };
-    orderDetail.status = {
-        status: "unpaid",
-        description: ""
-    };
+    var orderDetail: AddOrderRequestProp = { ...req.body };
     console.log(orderDetail);
     try {
         const newOrder = await Order.create(
@@ -90,7 +86,7 @@ orderRoute.post('/add/', async (req, res) => {
 });
 
 orderRoute.patch('/update-status/', async (req, res) => {
-    const updateDetail: updateOrderStatusRequestProp = req.body;
+    const updateDetail: UpdateOrderStatusRequestProp = req.body;
     try {
         const updateOrder = await Order.findOneAndUpdate({
             _id: updateDetail.orderId

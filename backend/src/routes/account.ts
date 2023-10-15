@@ -21,8 +21,8 @@ accountRoute.get('/all-user', async (req, res) => {
 
 accountRoute.get('/userdetails', async (req, res) => {
     try {
-        const { userId } = req.body;
-        let userProfile = await Profile.findOne({ user: userId })
+        const userId = req.body.userId;
+        const userProfile = await Profile.findOne({ user: userId })
         return res.json({
             success: true,
             userProfile
@@ -39,7 +39,7 @@ accountRoute.post('/userdetails', async (req, res) => {
     try {
         const { userId, phone, address } = req.body;
 
-        let user = await User.findOne({ userId });
+        const user = await User.findOne({ userId });
 
         if (!user) {
             return res.json({
