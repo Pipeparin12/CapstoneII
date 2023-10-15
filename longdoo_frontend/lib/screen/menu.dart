@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/components/wishlistCard.dart';
 
 import 'package:longdoo_frontend/model/product.dart';
+import 'package:longdoo_frontend/model/profile.dart';
 import 'package:longdoo_frontend/screen/account.dart';
 
 import 'package:longdoo_frontend/screen/cart.dart';
@@ -12,6 +13,8 @@ import 'package:longdoo_frontend/screen/order/shipped.dart';
 import 'package:longdoo_frontend/screen/order/unpaid.dart';
 import 'package:longdoo_frontend/screen/support.dart';
 import 'package:longdoo_frontend/service/api/product.dart';
+import 'package:longdoo_frontend/service/dio.dart';
+import 'package:longdoo_frontend/service/share_preference.dart';
 
 import '../components/clothesCard.dart';
 
@@ -25,6 +28,52 @@ class MenuScreen extends StatefulWidget {
 class _MenuScreenState extends State<MenuScreen> {
   var listProduct = [];
   String name = '';
+  bool isLoading = true;
+  Profile userProfile = Profile(
+      username: "-",
+      firstName: "-",
+      lastName: "-",
+      address: "-",
+      phone: "-",
+      height: 0,
+      weight: 0,
+      chestSize: 0,
+      waistSize: 0,
+      hipsSize: 0);
+
+  Future<void> fetchProfile() async {
+    final token = SharePreference.prefs.getString("token");
+    final response = await DioInstance.dio.get(
+      "/account/userdetails",
+      options: Options(
+        headers: {
+          "Authorization": "Bearer $token",
+        },
+      ),
+    );
+
+    print(response.data);
+
+    if (response.data["success"]) {
+      final profileData = response.data["userProfile"];
+      if (profileData != null) {
+        setState(() {
+          userProfile = Profile.fromJson(profileData);
+        });
+      } else {}
+    } else {}
+  }
+
+  @override
+  void initState() {
+    fetchProfile().then((_) => Future.delayed(const Duration(seconds: 1), () {
+          setState(() {
+            isLoading = false;
+          });
+        }));
+
+    super.initState();
+  }
 
   Future<void> getAllBook() async {
     try {
@@ -54,266 +103,271 @@ class _MenuScreenState extends State<MenuScreen> {
           )
         ],
       ),
-      body: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.only(right: 5, left: 5, bottom: 10),
-            height: 180,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                // borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20, right: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          'Hi, Jannette',
-                          style: TextStyle(fontSize: 20),
+      body: isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.only(right: 5, left: 5, bottom: 10),
+                  height: 180,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      // borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20, right: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(
+                                'Hi, ${userProfile.firstName}',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20, left: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Informations & Services',
+                                style: TextStyle(fontSize: 14),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5, left: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Column(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      Icons.emoji_people,
+                                      size: 35,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Your Size',
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => SupportScreen(),
+                                        ),
+                                      );
+                                    },
+                                    icon: Icon(
+                                      Icons.support_agent,
+                                      size: 35,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Support',
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => AccountScreen(),
+                                        ),
+                                      );
+                                    },
+                                    icon: Icon(
+                                      Icons.manage_accounts,
+                                      size: 35,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Account',
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20, left: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Informations & Services',
-                          style: TextStyle(fontSize: 14),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5, left: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          children: [
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.emoji_people,
-                                size: 35,
-                              ),
-                            ),
-                            Text(
-                              'Your Size',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SupportScreen(),
-                                  ),
-                                );
-                              },
-                              icon: Icon(
-                                Icons.support_agent,
-                                size: 35,
-                              ),
-                            ),
-                            Text(
-                              'Support',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => AccountScreen(),
-                                  ),
-                                );
-                              },
-                              icon: Icon(
-                                Icons.manage_accounts,
-                                size: 35,
-                              ),
-                            ),
-                            Text(
-                              'Account',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.only(right: 5, left: 5, bottom: 10),
-            height: 140,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                // borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20, left: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'My Orders',
-                          style: TextStyle(fontSize: 14),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5, left: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => UnpaidScreen(),
-                                  ),
-                                );
-                              },
-                              icon: Icon(
-                                Icons.account_balance_wallet,
-                                size: 35,
-                              ),
-                            ),
-                            Text(
-                              'Unpaid',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ProcessingScreen(),
-                                  ),
-                                );
-                              },
-                              icon: Icon(
-                                Icons.pallet,
-                                size: 35,
-                              ),
-                            ),
-                            Text(
-                              'Processing',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ShippedScreen(),
-                                  ),
-                                );
-                              },
-                              icon: Icon(
-                                Icons.local_shipping,
-                                size: 35,
-                              ),
-                            ),
-                            Text(
-                              'Shipped',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.only(right: 5, left: 5, bottom: 10),
-            height: 280,
-            child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  // borderRadius: BorderRadius.circular(10),
                 ),
-                child: Column(
-                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20, left: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Wishlist',
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          ],
+                Container(
+                  padding: EdgeInsets.only(right: 5, left: 5, bottom: 10),
+                  height: 140,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      // borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20, left: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'My Orders',
+                                style: TextStyle(fontSize: 14),
+                              ),
+                            ],
+                          ),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5, left: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Column(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => UnpaidScreen(),
+                                        ),
+                                      );
+                                    },
+                                    icon: Icon(
+                                      Icons.account_balance_wallet,
+                                      size: 35,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Unpaid',
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ProcessingScreen(),
+                                        ),
+                                      );
+                                    },
+                                    icon: Icon(
+                                      Icons.pallet,
+                                      size: 35,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Processing',
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => ShippedScreen(),
+                                        ),
+                                      );
+                                    },
+                                    icon: Icon(
+                                      Icons.local_shipping,
+                                      size: 35,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Shipped',
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.only(right: 5, left: 5, bottom: 10),
+                  height: 280,
+                  child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        // borderRadius: BorderRadius.circular(10),
                       ),
-                      Expanded(
-                          child: GridView.count(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 0,
-                              children: [
-                            ...List.generate(
-                                listProduct.length,
-                                (index) => WishlistCard(
-                                    demoProduct: listProduct[index],
-                                    press: () => Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                ItemDetailScreen(
-                                              id: listProduct[index]['id'],
-
-                                            ),
-                                          ),
-                                        )))
-                          ]))
-                    ])),
-          )
-        ],
-      ),
+                      child: Column(
+                          // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(top: 20, left: 10),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Wishlist',
+                                    style: TextStyle(fontSize: 14),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                                child: GridView.count(
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: 10,
+                                    mainAxisSpacing: 0,
+                                    children: [
+                                  ...List.generate(
+                                      listProduct.length,
+                                      (index) => WishlistCard(
+                                          demoProduct: listProduct[index],
+                                          press: () => Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ItemDetailScreen(
+                                                    id: listProduct[index]
+                                                        ['id'],
+                                                  ),
+                                                ),
+                                              )))
+                                ]))
+                          ])),
+                )
+              ],
+            ),
     );
   }
 }
