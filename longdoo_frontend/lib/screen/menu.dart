@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/components/wishlistCard.dart';
+
 import 'package:longdoo_frontend/model/product.dart';
+
 import 'package:longdoo_frontend/screen/cart.dart';
 import 'package:longdoo_frontend/screen/itemDetail.dart';
 import 'package:longdoo_frontend/screen/order/processing.dart';
@@ -55,6 +57,101 @@ class MenuScreen extends StatelessWidget {
                       ],
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20, left: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Informations & Services',
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5, left: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          children: [
+                            IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.emoji_people,
+                                size: 35,
+                              ),
+                            ),
+                            Text(
+                              'Your Size',
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SupportScreen(),
+                                  ),
+                                );
+                              },
+                              icon: Icon(
+                                Icons.support_agent,
+                                size: 35,
+                              ),
+                            ),
+                            Text(
+                              'Support',
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => AccountScreen(),
+                                  ),
+                                );
+                              },
+                              icon: Icon(
+                                Icons.manage_accounts,
+                                size: 35,
+                              ),
+                            ),
+                            Text(
+                              'Account',
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.only(right: 5, left: 5, bottom: 10),
+            height: 140,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                // borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(
+                // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(top: 20, left: 10),
                     child: Row(
@@ -134,94 +231,6 @@ class MenuScreen extends StatelessWidget {
                             ),
                             Text(
                               'Shipped',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.only(right: 5, left: 5, bottom: 10),
-            height: 140,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                // borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20, left: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'More Services',
-                          style: TextStyle(fontSize: 14),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5, left: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          children: [
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.emoji_people,
-                                size: 35,
-                              ),
-                            ),
-                            Text(
-                              'Your Size',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SupportScreen(),
-                                  ),
-                                );
-                              },
-                              icon: Icon(
-                                Icons.support_agent,
-                                size: 35,
-                              ),
-                            ),
-                            Text(
-                              'Support',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.manage_accounts,
-                                size: 35,
-                              ),
-                            ),
-                            Text(
-                              'Account',
                               style: TextStyle(fontSize: 12),
                             ),
                           ],

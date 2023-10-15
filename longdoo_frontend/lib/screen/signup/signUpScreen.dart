@@ -3,6 +3,7 @@ import 'package:longdoo_frontend/components/bottomNavBar.dart';
 import 'package:longdoo_frontend/screen/accountName/accName.dart';
 import 'package:longdoo_frontend/screen/category.dart';
 import 'package:longdoo_frontend/screen/home.dart';
+import 'package:longdoo_frontend/screen/signin.dart';
 
 class SignUpPage extends StatelessWidget {
   static String routeName = "/sign_up";
@@ -16,8 +17,8 @@ class SignUpPage extends StatelessWidget {
         // appBar: AppBar(title: const Text(_title)),
         body: const MyStatefulWidget(),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => AccNameScreen())),
+          onPressed: () => Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => SignInPage())),
           tooltip: 'Sign Up',
           child: Icon(
             Icons.east,
@@ -38,7 +39,9 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  TextEditingController nameController = TextEditingController();
+  TextEditingController firstnameController = TextEditingController();
+  TextEditingController lastnameController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   @override
@@ -57,7 +60,31 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             Container(
               padding: const EdgeInsets.all(10),
               child: TextField(
-                controller: nameController,
+                controller: firstnameController,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                  labelText: 'Firstname',
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(10),
+              child: TextField(
+                controller: lastnameController,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                  labelText: 'Lastname',
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(10),
+              child: TextField(
+                controller: usernameController,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15)),

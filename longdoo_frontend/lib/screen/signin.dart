@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/components/bottomNavBar.dart';
 import 'package:longdoo_frontend/screen/category.dart';
 import 'package:longdoo_frontend/screen/home.dart';
+import 'package:longdoo_frontend/screen/signup/signUpScreen.dart';
 
 class SignInPage extends StatelessWidget {
   static String routeName = "/sign_in";
@@ -84,7 +85,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             Container(
               padding: const EdgeInsets.all(10),
               child: TextField(
+
                 controller: usernameControllerController,
+
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -110,13 +113,27 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 height: 50,
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                 alignment: Alignment.center,
-                child: const Text(
-                  'People use real names on the app.',
-                  style: TextStyle(fontSize: 15),
-                  // onPressed: () {
-                  //   print(nameController.text);
-                  //   print(passwordController.text);
-                  // },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                        child: Text(
+                          "Sign Up",
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.deepPurple),
+                        ),
+                        onTap: () => Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignUpPage()))),
+                    Padding(padding: EdgeInsets.only(right: 10)),
+                    Text(
+                      "If you don't have account.",
+                      style: TextStyle(fontSize: 15),
+                    )
+                  ],
                 )),
           ],
         ));
