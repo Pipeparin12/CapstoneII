@@ -31,7 +31,7 @@ accountRoute.get('/userdetails', async (req,res) =>{
             });
         }
     });
-accountRoute.post('/userdetails/update', async (req, res) => {
+accountRoute.patch('/userdetails/update', async (req, res) => {
     try {
         const { phone, address } = req.body;
         if(req.user == null) return res.json({
