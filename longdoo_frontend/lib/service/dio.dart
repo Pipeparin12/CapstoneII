@@ -14,7 +14,7 @@ class DioInstance {
       baseUrl: baseUrl,
       contentType: "application/json",
       connectTimeout: Duration(milliseconds: 10000),
-      receiveTimeout: Duration(milliseconds: 3000),
+      receiveTimeout: Duration(milliseconds: 10000),
     );
     try {
       dio = Dio(options);

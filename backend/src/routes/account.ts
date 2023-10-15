@@ -31,36 +31,27 @@ accountRoute.get('/userdetails', async (req,res) =>{
             });
         }
     });
-accountRoute.patch('/userdetails/update', async (req, res) => {
-    try {
-        const { phone, address } = req.body;
-        if(req.user == null) return res.json({
-            success: false,
-            message: "Authentication error!"
-        });
-
-        const userId = req.user?.user_id;
-
-        let user = await User.findOne({ userId });
-
-        if (!user) {
-            return res.json({
+    
+    accountRoute.patch("/userdetails/update", async (req, res) => {
+        try {
+            const { phone, address } = req.body;
+            if (req.user == null) return res.json({
                 success: false,
                 message: "Authentication error!"
             });
-
+    
             const user_id = req.user?.user_id;
-
+    
             await Profile.updateOne({ user: user_id }, {
                 phone,
                 address
             });
-
+    
             return res.json({
                 success: true,
                 message: "Updated profile!"
             });
-
+    
         } catch (err) {
             return res.json({
                 success: false,
