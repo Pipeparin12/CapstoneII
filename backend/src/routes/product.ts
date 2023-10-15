@@ -171,4 +171,5 @@ productRoute.get('/category/:key',async (req, res) => {
         })
     }
 })
+
 export default productRoute;

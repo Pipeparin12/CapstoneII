@@ -1,5 +1,4 @@
-import mongoose, { Mongoose }  from "mongoose"
-import { ObjectId, Types } from "mongoose"
+import mongoose, { Types } from "mongoose";
 
 export const orderSchema = new mongoose.Schema({
     owner: {
@@ -7,10 +6,11 @@ export const orderSchema = new mongoose.Schema({
         required: true,
         ref: 'User'
     },
-    productId: {
-        type: Types.ObjectId,
+    products: [{
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
         ref: 'Product'
-    },
+    }],
     totalPrice: { 
         type: Number, 
         required: true 
@@ -25,6 +25,13 @@ export const orderSchema = new mongoose.Schema({
     paymentInformation:{
         bankAccountNumber: String,
         bankName: String
+    },
+    status: {
+        status: {
+            type: String,
+            required: true
+        },
+        description: String
     }
 })
 
