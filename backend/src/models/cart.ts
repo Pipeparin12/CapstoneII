@@ -1,5 +1,4 @@
-import mongoose, { Mongoose }  from "mongoose"
-import { ObjectId, Types } from "mongoose"
+import mongoose, { Types } from "mongoose";
 
 export const cartSchema = new mongoose.Schema({
     owner: {
