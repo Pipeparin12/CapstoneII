@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:longdoo_frontend/screen/signup/signUpScreen.dart';
 import 'package:longdoo_frontend/service/dio.dart';
 import 'package:longdoo_frontend/service/share_preference.dart';
 

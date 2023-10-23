@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
     },
     {
       'name': 'Kids Wear',
-      'category': 'Kid',
+      'category': 'Kids',
       'productImage': 'assets/images/kidswear.jpg',
     },
     {
@@ -41,7 +41,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('LongDoo'),
+        title: Text(
+          'LongDoo',
+          style: TextStyle(color: Colors.black),
+        ),
         centerTitle: true,
         backgroundColor: Colors.white,
       ),
@@ -88,6 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             MaterialPageRoute(
                               builder: (context) => CategoryScreen(
                                 name: item['name'],
+                                category: item['category'],
                               ),
                             ),
                           );

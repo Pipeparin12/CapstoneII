@@ -33,7 +33,6 @@ authRoute.post('/signup', async (req,res)=>{
 				lastName: newUser.lastName,
 				phone: "000-000-0000",
 				address: "Please fill your Address",
-				email: "anonymous@mail.com",
                 height: 0,
                 weight: 0,
                 chestSize: 0,

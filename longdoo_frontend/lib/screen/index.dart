@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:longdoo_frontend/screen/signin.dart';
 import 'package:longdoo_frontend/screen/signup/signUpScreen.dart';
 
 class IndexScreen extends StatelessWidget {
@@ -45,7 +46,7 @@ class IndexScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => SignUpPage())),
+            context, MaterialPageRoute(builder: (context) => SignInPage())),
         tooltip: 'Enter your fullname',
         child: Icon(
           Icons.east,
