@@ -60,7 +60,7 @@ accountRoute.post('/userdetails', async (req, res) => {
                 message: "Updated profile!"
             });
     
-        } catch (err) {
+        }} catch (err) {
             return res.json({
                 success: false,
                 message: err
