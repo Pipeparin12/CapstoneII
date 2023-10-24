@@ -66,7 +66,7 @@ orderRoute.get('/get/', async (req, res) => {
     }
 })
 
-orderRoute.post('/add/', async (req, res) => {
+orderRoute.post('/add-order', async (req, res) => {
     var orderDetail: AddOrderRequestProp = { ...req.body };
     console.log(orderDetail);
     try {
