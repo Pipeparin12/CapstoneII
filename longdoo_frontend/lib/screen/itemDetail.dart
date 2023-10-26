@@ -20,21 +20,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
   var listProduct;
   bool isLoading = true;
   late int counter = 1;
-  void increment() {
-    setState(() {
-      counter++;
-    });
-  }
-
-  void decrement() {
-    setState(() {
-      if (counter == 0) {
-        return null;
-      } else {
-        counter--;
-      }
-    });
-  }
+  String selectedSize = 'S';
 
   Future<void> getDetail() async {
     try {
@@ -191,85 +177,318 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                             EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                         child: Row(
                           children: [
-                            Expanded(
-                                child: Row(
-                              children: [
-                                Container(
-                                  height: 49,
-                                  width: 49,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Center(
-                                      child: TextButton(
-                                    child: Text(
-                                      '-',
-                                      style: TextStyle(
-                                          fontSize: 30,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    onPressed: () {
-                                      decrement();
-                                    },
-                                  )),
-                                ),
-                                Container(
-                                  height: 49,
-                                  width: 70,
-                                  child: Center(
-                                      child: Text(
-                                    '$counter',
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold),
-                                  )),
-                                ),
-                                Container(
-                                  height: 49,
-                                  width: 49,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Center(
-                                      child: TextButton(
-                                    child: Text(
-                                      '+',
-                                      style: TextStyle(
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.deepPurple,
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      increment();
-                                    },
-                                  )),
-                                ),
-                              ],
-                            )),
                             GestureDetector(
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 20),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.black,
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 20),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.black,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.add_shopping_cart,
+                                        color: Colors.white,
+                                      ),
+                                      SizedBox(width: 5),
+                                      Text('Add to cart',
+                                          style:
+                                              TextStyle(color: Colors.white)),
+                                    ],
+                                  ),
                                 ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.add_shopping_cart,
-                                      color: Colors.white,
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text('Add to cart',
-                                        style: TextStyle(color: Colors.white)),
-                                  ],
-                                ),
-                              ),
-                              onTap: () {
-                                // addToCart();
-                              },
-                            )
+                                onTap: () {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    builder: (
+                                      context,
+                                    ) {
+                                      return StatefulBuilder(builder:
+                                          (BuildContext context,
+                                              StateSetter setModalState) {
+                                        void increment() {
+                                          setModalState(() {
+                                            counter++;
+                                          });
+                                        }
+
+                                        void decrement() {
+                                          setModalState(() {
+                                            if (counter == 0) {
+                                              return null;
+                                            } else {
+                                              counter--;
+                                            }
+                                          });
+                                        }
+
+                                        return Container(
+                                          padding: EdgeInsets.all(16),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: <Widget>[
+                                              Row(
+                                                children: <Widget>[
+                                                  Text(
+                                                    "Quantity : " +
+                                                        listProduct['quantity']
+                                                            .toStringAsFixed(0),
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  )
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Divider(
+                                                color: Colors.black,
+                                              ),
+                                              // Size selection
+                                              Container(
+                                                alignment: Alignment.centerLeft,
+                                                child: Text(
+                                                  'Size:',
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
+                                                children: <Widget>[
+                                                  ElevatedButton(
+                                                    onPressed: () {
+                                                      setModalState(() {
+                                                        selectedSize = 'XS';
+                                                      });
+                                                    },
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      primary:
+                                                          Colors.grey.shade400,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                      ),
+                                                    ),
+                                                    child: Text('XS'),
+                                                  ),
+                                                  ElevatedButton(
+                                                    onPressed: () {
+                                                      setModalState(() {
+                                                        selectedSize = 'S';
+                                                      });
+                                                    },
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      primary:
+                                                          Colors.grey.shade400,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                      ),
+                                                    ),
+                                                    child: Text('S'),
+                                                  ),
+                                                  ElevatedButton(
+                                                    onPressed: () {
+                                                      setModalState(() {
+                                                        selectedSize = 'M';
+                                                      });
+                                                    },
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      primary:
+                                                          Colors.grey.shade400,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                      ),
+                                                    ),
+                                                    child: Text('M'),
+                                                  ),
+                                                  ElevatedButton(
+                                                    onPressed: () {
+                                                      setModalState(() {
+                                                        selectedSize = 'L';
+                                                      });
+                                                    },
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      primary:
+                                                          Colors.grey.shade400,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                      ),
+                                                    ),
+                                                    child: Text('L'),
+                                                  ),
+                                                  ElevatedButton(
+                                                    onPressed: () {
+                                                      setModalState(() {
+                                                        selectedSize = 'XL';
+                                                      });
+                                                    },
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      primary:
+                                                          Colors.grey.shade400,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                      ),
+                                                    ),
+                                                    child: Text('XL'),
+                                                  ),
+                                                ],
+                                              ),
+                                              Divider(
+                                                color: Colors.black,
+                                              ),
+                                              Container(
+                                                alignment: Alignment.centerLeft,
+                                                child: Text(
+                                                  'Amount',
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    height: 30,
+                                                    width: 35,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        10),
+                                                                bottomLeft: Radius
+                                                                    .circular(
+                                                                        10)),
+                                                        border: Border.all(
+                                                            width: 1,
+                                                            color:
+                                                                Colors.grey)),
+                                                    child: Center(
+                                                        child: TextButton(
+                                                      onPressed: () {
+                                                        decrement();
+                                                      },
+                                                      child: Text(
+                                                        '-',
+                                                        style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black,
+                                                        ),
+                                                      ),
+                                                    )),
+                                                  ),
+                                                  Container(
+                                                    height: 30,
+                                                    width: 60,
+                                                    decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                            width: 1,
+                                                            color:
+                                                                Colors.grey)),
+                                                    child: Center(
+                                                        child: Text(
+                                                      '$counter',
+                                                      style: TextStyle(
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    )),
+                                                  ),
+                                                  Container(
+                                                    height: 30,
+                                                    width: 35,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        10),
+                                                                bottomRight: Radius
+                                                                    .circular(
+                                                                        10)),
+                                                        border: Border.all(
+                                                            width: 1,
+                                                            color:
+                                                                Colors.grey)),
+                                                    child: Center(
+                                                        child: TextButton(
+                                                      child: Text(
+                                                        '+',
+                                                        style: TextStyle(
+                                                          fontSize: 14,
+                                                          color: Colors.black,
+                                                        ),
+                                                      ),
+                                                      onPressed: () {
+                                                        increment();
+                                                      },
+                                                    )),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              ElevatedButton(
+                                                onPressed: () {
+                                                  print('$counter and ' +
+                                                      selectedSize);
+                                                  Navigator.pop(
+                                                      context); // Close the modal form
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                  primary: Colors.grey.shade400,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
+                                                  ),
+                                                ),
+                                                child: Text('Confirm'),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      });
+                                    },
+                                  );
+                                })
                           ],
                         ),
                       ),
