@@ -2,9 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/model/profile.dart';
+import 'package:longdoo_frontend/screen/changePW.dart';
 import 'package:longdoo_frontend/screen/menu.dart';
 import 'package:longdoo_frontend/screen/signin.dart';
-import 'package:longdoo_frontend/screen/signup/signUpScreen.dart';
 import 'package:longdoo_frontend/service/dio.dart';
 import 'package:longdoo_frontend/service/share_preference.dart';
 
@@ -250,12 +250,11 @@ class _AccountScreenState extends State<AccountScreen> {
                                                   fontWeight: FontWeight.w400,
                                                   color: Colors.deepPurple),
                                             ),
-                                            onTap: () =>
-                                                Navigator.pushReplacement(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            SignUpPage()))),
+                                            onTap: () => Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ChangePasswordScreen()))),
                                       ),
                                     ],
                                   ),

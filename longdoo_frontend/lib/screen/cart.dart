@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/model/product.dart';
 import 'package:longdoo_frontend/screen/accountName/accName.dart';
+import 'package:longdoo_frontend/screen/checkout.dart';
 
 class CartScreen extends StatefulWidget {
   @override
@@ -10,6 +11,23 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   bool isChecked = false;
+  late int counter = 1;
+  void increment() {
+    setState(() {
+      counter++;
+    });
+  }
+
+  void decrement() {
+    setState(() {
+      if (counter == 1) {
+        return null;
+      } else {
+        counter--;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,24 +51,23 @@ class _CartScreenState extends State<CartScreen> {
                           Container(
                             padding:
                                 EdgeInsets.only(right: 5, left: 5, bottom: 10),
-                            height: 120,
+                            height: 130,
                             child: Container(
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                // crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: <Widget>[
                                   CartCheckbox(),
-                                  Padding(
+                                  Container(
                                     padding: EdgeInsets.all(5.0),
                                     child: Image(
                                       image:
                                           AssetImage('assets/images/one.jpg'),
-                                      width: 100, // Set the desired width
+                                      width: 110, // Set the desired width
                                       height: 120, // Set the desired height
                                       fit: BoxFit
                                           .cover, // Adjust the fit as needed
@@ -58,19 +75,116 @@ class _CartScreenState extends State<CartScreen> {
                                   ),
                                   Expanded(
                                     child: Container(
-                                      padding: EdgeInsets.all(5),
+                                      padding: EdgeInsets.only(
+                                          top: 5, left: 10, bottom: 10),
                                       child: Column(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Text(
-                                            'name',
+                                            'Laura Ashley Print Mix Tiered Babydoll',
                                             style: TextStyle(
-                                              fontWeight: FontWeight.bold,
+                                              fontSize: 14,
                                             ),
-                                            textAlign: TextAlign.center,
+                                            textAlign: TextAlign.start,
                                           ),
-                                          Text("In cart: " + '2'),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text(
+                                            "Size: " + 'M',
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                            ),
+                                            textAlign: TextAlign.start,
+                                          ),
+                                          Expanded(
+                                              child: Container(
+                                            margin: EdgeInsets.all(0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                  height: 30,
+                                                  width: 35,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                              topLeft: Radius
+                                                                  .circular(10),
+                                                              bottomLeft: Radius
+                                                                  .circular(
+                                                                      10)),
+                                                      border: Border.all(
+                                                          width: 1,
+                                                          color: Colors.grey)),
+                                                  child: Center(
+                                                      child: TextButton(
+                                                    onPressed: () {
+                                                      decrement();
+                                                    },
+                                                    child: Text(
+                                                      '-',
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                  )),
+                                                ),
+                                                Container(
+                                                  height: 30,
+                                                  width: 60,
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          width: 1,
+                                                          color: Colors.grey)),
+                                                  child: Center(
+                                                      child: Text(
+                                                    '$counter',
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  )),
+                                                ),
+                                                Container(
+                                                  height: 30,
+                                                  width: 35,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                              topRight: Radius
+                                                                  .circular(10),
+                                                              bottomRight:
+                                                                  Radius
+                                                                      .circular(
+                                                                          10)),
+                                                      border: Border.all(
+                                                          width: 1,
+                                                          color: Colors.grey)),
+                                                  child: Center(
+                                                      child: TextButton(
+                                                    child: Text(
+                                                      '+',
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                    onPressed: () {
+                                                      increment();
+                                                    },
+                                                  )),
+                                                ),
+                                              ],
+                                            ),
+                                          )),
                                         ],
                                       ),
                                     ),
@@ -134,8 +248,7 @@ class _CartScreenState extends State<CartScreen> {
                   children: [
                     Text(
                       "Total Price: \$100",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 18),
                     ), // Replace with your total price text
                     GestureDetector(
                       behavior: HitTestBehavior.translucent,
@@ -157,14 +270,14 @@ class _CartScreenState extends State<CartScreen> {
                           ),
                           child: Text(
                             "Purchase",
-                            style: TextStyle(fontSize: 18),
+                            style: TextStyle(fontSize: 18, color: Colors.white),
                           ),
                           onPressed: () {
                             // Handle the button press here
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => AccNameScreen(),
+                                builder: (context) => CheckoutScreen(),
                               ),
                             );
                           },

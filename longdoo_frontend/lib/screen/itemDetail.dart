@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:longdoo_frontend/model/product.dart';
+import 'package:longdoo_frontend/screen/cart.dart';
 import 'package:longdoo_frontend/service/api/product.dart';
 import 'package:longdoo_frontend/service/dio.dart';
 
@@ -51,7 +50,6 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
   @override
   void initState() {
     getDetail().then((_) => Future.delayed(new Duration(seconds: 1), () {
-
           setState(() {
             isLoading = false;
           });
@@ -70,7 +68,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
             icon: const Icon(Icons.shopping_bag),
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return AccNameScreen();
+                return CartScreen();
               }));
             },
           )
@@ -115,6 +113,15 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                     fontSize: 25, fontWeight: FontWeight.bold),
                               ),
                             ),
+                            IconButton(
+                              icon: const Icon(Icons.favorite_border_outlined),
+                              onPressed: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return AccNameScreen();
+                                }));
+                              },
+                            )
                           ],
                         ),
                       ),
@@ -123,9 +130,8 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                         child: Row(
                           children: [
                             Text(
-                              "Price: " +
+                              "Price: ฿" +
                                   listProduct['price'].toStringAsFixed(0),
-
                               style: TextStyle(
                                   fontSize: 14, fontWeight: FontWeight.bold),
                             )
@@ -139,7 +145,6 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                             Text(
                               "Quantity : " +
                                   listProduct['quantity'].toStringAsFixed(0),
-
                               style: TextStyle(
                                   fontSize: 14, fontWeight: FontWeight.bold),
                             )
@@ -161,6 +166,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                         color: Colors.grey.withOpacity(0.2),
                         margin: EdgeInsets.only(
                             top: 10, left: 20, right: 20, bottom: 5),
+                        width: double.infinity,
                         child: Padding(
                           padding: EdgeInsets.all(10),
                           child: Column(
@@ -264,18 +270,6 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                 // addToCart();
                               },
                             )
-                            // GestureDetector(
-                            //   child: Container(
-                            //     padding: EdgeInsets.symmetric(
-                            //         vertical: 10, horizontal: 20),
-                            //     decoration: BoxDecoration(
-                            //         borderRadius: BorderRadius.circular(10)),
-                            //     child: Text('Add to cart'),
-                            //   ),
-                            //   onTap: () {
-                            //     // addToCart();
-                            //   },
-                            // ),
                           ],
                         ),
                       ),
