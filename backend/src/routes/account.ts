@@ -4,33 +4,21 @@ import Profile from "@/models/profile";
 
 const accountRoute = express.Router();
 
-accountRoute.get('/userdetails', async (req,res) =>{
-        try {
-            if(req.user == null) return res.json({
-                success: false,
-                message: "Authentication error!"
-            });
-    
-            const user_id = req.user?.user_id;
+accountRoute.get('/all-user', async (req, res) => {
+    try {
+        const users = await User.find();
+        return res.json({
+            success: true,
+            users,
+        })
+    } catch (error) {
+        return res.json({
+            success: false,
+            message: error
+        });
+    }
+})
 
-            let userProfile = await Profile.findOne({user:user_id})
-
-            if(userProfile){
-                console.log(`Found profile: `, userProfile);
-                return res.json({
-                    success: true,
-                    message: "Found profile!",
-                    userProfile
-                });
-            }
-            
-        } catch (error) {
-            return res.json({
-                success: false,
-                message: error
-            });
-        }
-    });
 accountRoute.patch('/userdetails/update', async (req, res) => {
     try {
         const { phone, address } = req.body;
