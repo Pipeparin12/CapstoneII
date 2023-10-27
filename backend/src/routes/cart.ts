@@ -2,7 +2,7 @@ import express from "express";
 import Cart from '../models/cart';
 import Product from '../models/product';
 import Profile from '../models/profile';
-import { AddOrderRequestProp } from "./order";
+import { AddOrderRequestProp, addOrderFunc } from "./order";
 const cartRoute = express.Router();
 
 cartRoute.post('/add-cart/', async (req, res) => {
@@ -99,16 +99,17 @@ cartRoute.post('/checkout', async (req, res) => {
             }
         };
         // Perform any additional checkout logic (e.g., payment processing)
-        const addOrder = await fetch(`http://0.0.0.0:${process.env.SERVER_PORT}/order/add`, {
-            method:"POST",
-            headers: {
-                "Content-Type" : "application/json"
-            },
-            body: JSON.stringify(addOrderDetail)
-        }).then(response => response.json())
-        .catch(error => {console.error("Error while fetching local API:", error);});
+        // const addOrder = await fetch(`http://0.0.0.0:${process.env.SERVER_PORT}/order/add`, {
+        //     method:"POST",
+        //     headers: {
+        //         "Content-Type" : "application/json"
+        //     },
+        //     body: JSON.stringify(addOrderDetail)
+        // }).then(response => response.json())
+        // .catch(error => {console.error("Error while fetching local API:", error);});
+        const addOrder = addOrderFunc(addOrderDetail);
         console.log(addOrder)
-        if(!addOrder.success){
+        if(addOrder == null){
             return res.json({
                 success: false,
                 message: "Can't create order."

@@ -2,6 +2,16 @@ import express from "express";
 import Order from '../models/order';
 const orderRoute = express.Router();
 
+export function addOrderFunc(orderDetail: AddOrderRequestProp) {
+
+        console.log("click");
+        
+        const newOrder = Order.create(
+            orderDetail
+        )
+        return newOrder;
+}
+
 export type AddOrderRequestProp = {
     owner: string,
     products: Array<string>,
@@ -70,14 +80,13 @@ orderRoute.post('/add-order', async (req, res) => {
     var orderDetail: AddOrderRequestProp = { ...req.body };
     console.log(orderDetail);
     try {
-        const newOrder = await Order.create(
-            orderDetail
-        )
+        const newOrder = addOrderFunc(orderDetail);
         return res.json({
             success: true,
             newOrder
         })
     } catch (error) {
+        
         return res.json({
             success: false,
             message: error
