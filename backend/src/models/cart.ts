@@ -13,6 +13,10 @@ export const cartSchema = new mongoose.Schema({
     productName:{
         type: String, 
     },
+    size: {
+        type: String,
+        required: true
+    },
     quantity: {
         type: Number,
         required: true,

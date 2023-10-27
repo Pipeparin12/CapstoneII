@@ -5,29 +5,28 @@ import Profile from '../models/profile';
 import { AddOrderRequestProp } from "./order";
 const cartRoute = express.Router();
 
-cartRoute.post('/add-cart/', async (req, res) => {
+cartRoute.post('/add-cart/:id', async (req, res) => {
     // ลอง manual ดูก่อนใน postman
-    const user_id = req.body.user_id;
-
+    const user_id = req.user.user_id;
+    const size = req.body.size
     const quantity = req.body.quantity;
     // Check if the user is authenticated (logged in)
-    // if (!req.user) {
-    //     return res.status(401).json({
-    //         success: false,
-    //         message: 'User not authenticated.'
-    //     });
-    // }
-
-    // const user_id = req.user.user_id;
+    if (!req.user) {
+        return res.status(401).json({
+            success: false,
+            message: 'User not authenticated.'
+        });
+    }
 
     try {
-        // const product_id = req.params.id;
+        const product_id = req.params.id;
 
         // ลอง manual ดูก่อนใน postman
-        const product_id = req.body.product_id;
+        // const product_id = req.body.product_id;
 
         // Fetch the product's price from the database
         const product = await Product.findById(product_id);
+        console.log(product)
 
         if (!product) {
             return res.status(404).json({
@@ -44,6 +43,7 @@ cartRoute.post('/add-cart/', async (req, res) => {
         await Cart.create({
             'owner': user_id,
             "productId": product_id,
+            "size": size,
             "quantity": quantity,
             "productName": product.productName,
             "totalPrice": product.price * quantity,
@@ -133,9 +133,9 @@ cartRoute.post('/checkout', async (req, res) => {
 
 cartRoute.get('/get-cart', async (req, res) => {
     try {
-        // const user = await req.user.user_id;  
-        const user_id = req.body.user_id;
-        const cart = await Cart.find({ 'owner': user_id });
+        const userId = await req.user.user_id;  
+        // const user_id = req.body.user_id;
+        const cart = await Cart.find({ 'owner': userId });
         // const product = await Product.find({_id: {$in: cart.map((e) => e.productId)}});
 
         // const serializedCart = JSON.parse(JSON.stringify(cart));
