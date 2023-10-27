@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:longdoo_frontend/screen/cart.dart';
+import 'package:longdoo_frontend/service/api/cart.dart';
 import 'package:longdoo_frontend/service/api/product.dart';
 import 'package:longdoo_frontend/service/dio.dart';
 
@@ -28,6 +29,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
       setState(() {
         listProduct = Map<String, dynamic>.from(result.data['product']);
       });
+      print(result);
     } on DioException catch (e) {
       print(e);
     }
@@ -208,6 +210,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                       return StatefulBuilder(builder:
                                           (BuildContext context,
                                               StateSetter setModalState) {
+                                        String productId = widget.id;
                                         void increment() {
                                           setModalState(() {
                                             counter++;
@@ -222,6 +225,21 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                               counter--;
                                             }
                                           });
+                                        }
+
+                                        void addToCart() async {
+                                          try {
+                                            var result =
+                                                await CartApi.addToCart(
+                                                    counter,
+                                                    productId,
+                                                    selectedSize,
+                                                    listProduct[
+                                                        'productImage']);
+                                            print(result);
+                                          } catch (e) {
+                                            print(e);
+                                          }
                                         }
 
                                         return Container(
@@ -467,8 +485,11 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                               ),
                                               ElevatedButton(
                                                 onPressed: () {
-                                                  print('$counter and ' +
-                                                      selectedSize);
+                                                  addToCart();
+                                                  // print('$counter and ' +
+                                                  //     selectedSize +
+                                                  //     ' and ' +
+                                                  //     productId);
                                                   Navigator.pop(
                                                       context); // Close the modal form
                                                 },

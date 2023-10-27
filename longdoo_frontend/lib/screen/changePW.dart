@@ -1,4 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:longdoo_frontend/screen/account.dart';
+import 'package:longdoo_frontend/service/dio.dart';
+import 'package:longdoo_frontend/service/share_preference.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});
@@ -14,12 +18,40 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   bool _showOldPassword = false;
   bool _showNewPassword = false;
 
+  updatePassword(context) async {
+    Map<String, dynamic> updatePassword = ({
+      "currentPassword": oldPasswordController.text.trim(),
+      "newPassword": newPasswordController.text.trim(),
+    });
+
+    try {
+      final token = SharePreference.prefs.getString("token");
+      final response = await DioInstance.dio.patch(
+        "/password/change-password",
+        data: updatePassword,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+      print(response.data);
+
+      if (response.data["success"]) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => AccountScreen()));
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text('Account'),
+          title: Text('Change Password'),
           centerTitle: true,
         ),
         body: SingleChildScrollView(
@@ -164,7 +196,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                       ],
                                     ),
                                   ),
-                                  // onTap: () => updateProfile(context),
+                                  onTap: () => updatePassword(context),
                                 )
                               ],
                             )

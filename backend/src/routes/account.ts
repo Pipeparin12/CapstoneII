@@ -19,6 +19,27 @@ accountRoute.get('/all-user', async (req, res) => {
     }
 })
 
+accountRoute.get('/userdetails', async (req, res) => {
+    try {
+        if(req.user == null) return res.json({
+            success: false,
+            message: "Authentication error!"
+        });
+
+        const userId = req.user?.user_id;
+        const userProfile = await Profile.findOne({ user: userId })
+        return res.json({
+            success: true,
+            userProfile
+        })
+    } catch (error) {
+        return res.json({
+            success: false,
+            message: error
+        });
+    }
+});
+
 accountRoute.patch('/userdetails/update', async (req, res) => {
     try {
         const { phone, address } = req.body;

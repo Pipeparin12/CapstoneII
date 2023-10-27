@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:longdoo_frontend/components/bottomNavBar.dart';
 import 'package:longdoo_frontend/screen/cart.dart';
 import 'package:longdoo_frontend/screen/itemDetail.dart';
 import 'package:longdoo_frontend/service/api/product.dart';
