@@ -80,7 +80,8 @@ orderRoute.post('/add-order', async (req, res) => {
     var orderDetail: AddOrderRequestProp = { ...req.body };
     console.log(orderDetail);
     try {
-        const newOrder = addOrderFunc(orderDetail);
+        const newOrder = await addOrderFunc(orderDetail);
+        console.log(newOrder)
         return res.json({
             success: true,
             newOrder
