@@ -2,9 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/model/profile.dart';
+import 'package:longdoo_frontend/screen/changePW.dart';
 import 'package:longdoo_frontend/screen/menu.dart';
 import 'package:longdoo_frontend/screen/signin.dart';
-import 'package:longdoo_frontend/screen/signup/signUpScreen.dart';
 import 'package:longdoo_frontend/service/dio.dart';
 import 'package:longdoo_frontend/service/share_preference.dart';
 
@@ -50,6 +50,9 @@ class _AccountScreenState extends State<AccountScreen> {
       "address": addressController.text.trim(),
     });
 
+    print("Updated Phone: ${updatedProfile['phone']}");
+    print("Updated Address: ${updatedProfile['address']}");
+
     try {
       final token = SharePreference.prefs.getString("token");
       final response = await DioInstance.dio.patch(
@@ -65,7 +68,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
       if (response.data["success"]) {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => AccountScreen()));
+            context, MaterialPageRoute(builder: (context) => MenuScreen()));
       }
     } catch (e) {
       print(e);
@@ -96,6 +99,13 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   @override
+  void dispose() {
+    phoneController.dispose();
+    addressController.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
 
@@ -109,13 +119,6 @@ class _AccountScreenState extends State<AccountScreen> {
         isLoading = false;
       });
     });
-  }
-
-  @override
-  void dispose() {
-    phoneController.dispose();
-    addressController.dispose();
-    super.dispose();
   }
 
   @override
@@ -247,12 +250,11 @@ class _AccountScreenState extends State<AccountScreen> {
                                                   fontWeight: FontWeight.w400,
                                                   color: Colors.deepPurple),
                                             ),
-                                            onTap: () =>
-                                                Navigator.pushReplacement(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            SignUpPage()))),
+                                            onTap: () => Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ChangePasswordScreen()))),
                                       ),
                                     ],
                                   ),

@@ -49,97 +49,80 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.white,
       ),
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: TextField(
-                onChanged: (value) {
-                  setState(() {
-                    _searchQuery = value;
-                  });
-                },
-                decoration: InputDecoration(
-                  labelText: 'Search',
-                  prefixIcon: Icon(Icons.search),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
+        child: Container(
+          padding: EdgeInsets.all(12.0),
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 1,
+                  mainAxisSpacing: 1,
+                  children: _listItems
+                      .where((item) =>
+                          _searchQuery.isEmpty ||
+                          item['name']
+                              .toLowerCase()
+                              .contains(_searchQuery.toLowerCase()))
+                      .map(
+                        (item) => GestureDetector(
+                          onTap: () {
+                            // Navigate to the item detail screen when an item is tapped.
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CategoryScreen(
+                                  name: item['name'],
+                                  category: item['category'],
+                                ),
+                              ),
+                            );
+                          },
+                          child: Column(
+                            children: [
+                              Card(
+                                color: Colors.transparent,
+                                elevation: 0,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    image: DecorationImage(
+                                      image: AssetImage(item['productImage']),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  child: Transform.translate(
+                                    offset: Offset(30, -30),
+                                    child: Container(
+                                      margin: EdgeInsets.symmetric(
+                                        horizontal: 65,
+                                        vertical: 63,
+                                      ),
+                                      child: Icon(
+                                        Icons.bookmark_border,
+                                        size: 0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                item['name'],
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                      .toList(),
                 ),
               ),
-            ),
-            Expanded(
-              child: GridView.count(
-                crossAxisCount: 2,
-                crossAxisSpacing: 1,
-                mainAxisSpacing: 1,
-                children: _listItems
-                    .where((item) =>
-                        _searchQuery.isEmpty ||
-                        item['name']
-                            .toLowerCase()
-                            .contains(_searchQuery.toLowerCase()))
-                    .map(
-                      (item) => GestureDetector(
-                        onTap: () {
-                          // Navigate to the item detail screen when an item is tapped.
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CategoryScreen(
-                                name: item['name'],
-                                category: item['category'],
-                              ),
-                            ),
-                          );
-                        },
-                        child: Column(
-                          children: [
-                            Card(
-                              color: Colors.transparent,
-                              elevation: 0,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  image: DecorationImage(
-                                    image: AssetImage(item['productImage']),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                child: Transform.translate(
-                                  offset: Offset(30, -30),
-                                  child: Container(
-                                    margin: EdgeInsets.symmetric(
-                                      horizontal: 65,
-                                      vertical: 63,
-                                    ),
-                                    child: Icon(
-                                      Icons.bookmark_border,
-                                      size: 0,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Text(
-                              item['name'],
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                    .toList(),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

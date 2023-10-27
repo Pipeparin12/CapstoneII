@@ -12,6 +12,7 @@ import 'package:longdoo_frontend/screen/order/processing.dart';
 import 'package:longdoo_frontend/screen/order/shipped.dart';
 import 'package:longdoo_frontend/screen/order/unpaid.dart';
 import 'package:longdoo_frontend/screen/support.dart';
+import 'package:longdoo_frontend/screen/userSize.dart';
 import 'package:longdoo_frontend/service/api/product.dart';
 import 'package:longdoo_frontend/service/dio.dart';
 import 'package:longdoo_frontend/service/share_preference.dart';
@@ -153,7 +154,15 @@ class _MenuScreenState extends State<MenuScreen> {
                               Column(
                                 children: [
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              UserSizeScreen(),
+                                        ),
+                                      );
+                                    },
                                     icon: Icon(
                                       Icons.emoji_people,
                                       size: 35,
