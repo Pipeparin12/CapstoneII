@@ -2,7 +2,6 @@ import 'package:animate_do/animate_do.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/model/product.dart';
-import 'package:longdoo_frontend/screen/accountName/accName.dart';
 import 'package:longdoo_frontend/screen/checkout.dart';
 import 'package:longdoo_frontend/service/api/cart.dart';
 import 'package:longdoo_frontend/service/dio.dart';
@@ -299,7 +298,7 @@ class _CartScreenState extends State<CartScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => AccNameScreen(),
+                            builder: (context) => CheckoutScreen(),
                           ),
                         );
                       },

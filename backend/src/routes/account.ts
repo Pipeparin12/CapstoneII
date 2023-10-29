@@ -50,45 +50,23 @@ accountRoute.patch('/userdetails/update', async (req, res) => {
 
         const userId = req.user?.user_id;
 
-        let user = await User.findOne({ userId });
-
-        if (!user) {
-            return res.json({
-                success: false,
-                message: "User not found"
-            });
-        }
-
-        let userProfile = await Profile.findOne({ user: user._id });
-
-        if (!userProfile) {
-            userProfile = new Profile({
-                user: user._id,
-                phone,
-                address
-            });
-        } else {
-            if (phone !== undefined) {
-                userProfile.phone = phone;
-            }
-            if (address !== undefined) {
-                userProfile.address = address;
-            }
-        }
-
-        await userProfile.save();
+        await Profile.updateOne({ user: userId }, {
+            phone,
+            address
+        });
 
         return res.json({
             success: true,
-            message: "Phone and address updated and saved successfully"
+            message: "Updated profile!"
         });
 
-    } catch (error) {
+    } catch (err) {
         return res.json({
             success: false,
-            message: error
+            message: err
         });
     }
-});
+    }
+);
 
 export default accountRoute;

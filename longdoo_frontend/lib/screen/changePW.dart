@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:longdoo_frontend/screen/account.dart';
+import 'package:longdoo_frontend/components/bottomNavBar.dart';
 import 'package:longdoo_frontend/service/dio.dart';
 import 'package:longdoo_frontend/service/share_preference.dart';
+import 'package:quickalert/quickalert.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});
@@ -37,11 +38,25 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       );
       print(response.data);
 
-      if (response.data["success"]) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => AccountScreen()));
+      if (response.data["message"] == "Password changed successfully.") {
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.success,
+          text: 'Password Changed Successfully!',
+          onConfirmBtnTap: () => Navigator.push(
+              context, MaterialPageRoute(builder: (context) => BottomNavBar())),
+        );
+        // Navigator.push(
+        //     context, MaterialPageRoute(builder: (context) => AccountScreen()));
       }
     } catch (e) {
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.error,
+        text: "There's a problem with changing your password.",
+        autoCloseDuration: const Duration(seconds: 3),
+        showConfirmBtn: false,
+      );
       print(e);
     }
   }

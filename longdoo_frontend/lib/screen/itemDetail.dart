@@ -2,11 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:longdoo_frontend/screen/cart.dart';
+import 'package:longdoo_frontend/screen/try_on.dart';
 import 'package:longdoo_frontend/service/api/cart.dart';
 import 'package:longdoo_frontend/service/api/product.dart';
 import 'package:longdoo_frontend/service/dio.dart';
-
-import 'accountName/accName.dart';
 
 class ItemDetailScreen extends StatefulWidget {
   final String id;
@@ -103,12 +102,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                             ),
                             IconButton(
                               icon: const Icon(Icons.favorite_border_outlined),
-                              onPressed: () {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return AccNameScreen();
-                                }));
-                              },
+                              onPressed: () {},
                             )
                           ],
                         ),
@@ -178,7 +172,36 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                         padding:
                             EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            GestureDetector(
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.black,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.checkroom,
+                                      color: Colors.white,
+                                    ),
+                                    SizedBox(width: 5),
+                                    Text('Try on virtual clothes',
+                                        style: TextStyle(color: Colors.white)),
+                                  ],
+                                ),
+                              ),
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => TryOnScreen()));
+                              },
+                            ),
                             GestureDetector(
                                 child: Container(
                                   padding: EdgeInsets.symmetric(
