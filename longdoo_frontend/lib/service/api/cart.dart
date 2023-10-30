@@ -45,4 +45,10 @@ class CartApi {
     final response = await DioInstance.dio.get("/cart/get-cart");
     return response;
   }
+
+  static Future<dynamic> checkout() async {
+    DioInstance.dio.options.headers["authorization"] =
+        "Bearer " + SharePreference.prefs.getString("token").toString();
+    var response = await DioInstance.dio.post("/cart/checkout");
+  }
 }
