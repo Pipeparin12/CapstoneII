@@ -2,10 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:longdoo_frontend/screen/cart.dart';
+import 'package:longdoo_frontend/screen/try_on.dart';
+import 'package:longdoo_frontend/service/api/cart.dart';
 import 'package:longdoo_frontend/service/api/product.dart';
 import 'package:longdoo_frontend/service/dio.dart';
-
-import 'accountName/accName.dart';
 
 class ItemDetailScreen extends StatefulWidget {
   final String id;
@@ -28,6 +28,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
       setState(() {
         listProduct = Map<String, dynamic>.from(result.data['product']);
       });
+      print(result);
     } on DioException catch (e) {
       print(e);
     }
@@ -101,12 +102,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                             ),
                             IconButton(
                               icon: const Icon(Icons.favorite_border_outlined),
-                              onPressed: () {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return AccNameScreen();
-                                }));
-                              },
+                              onPressed: () {},
                             )
                           ],
                         ),
@@ -176,7 +172,36 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                         padding:
                             EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            GestureDetector(
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.black,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.checkroom,
+                                      color: Colors.white,
+                                    ),
+                                    SizedBox(width: 5),
+                                    Text('Try on virtual clothes',
+                                        style: TextStyle(color: Colors.white)),
+                                  ],
+                                ),
+                              ),
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => TryOnScreen()));
+                              },
+                            ),
                             GestureDetector(
                                 child: Container(
                                   padding: EdgeInsets.symmetric(
@@ -208,6 +233,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                       return StatefulBuilder(builder:
                                           (BuildContext context,
                                               StateSetter setModalState) {
+                                        String productId = widget.id;
                                         void increment() {
                                           setModalState(() {
                                             counter++;
@@ -222,6 +248,21 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                               counter--;
                                             }
                                           });
+                                        }
+
+                                        void addToCart() async {
+                                          try {
+                                            var result =
+                                                await CartApi.addToCart(
+                                                    counter,
+                                                    productId,
+                                                    selectedSize,
+                                                    listProduct[
+                                                        'productImage']);
+                                            print(result);
+                                          } catch (e) {
+                                            print(e);
+                                          }
                                         }
 
                                         return Container(
@@ -467,8 +508,11 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                               ),
                                               ElevatedButton(
                                                 onPressed: () {
-                                                  print('$counter and ' +
-                                                      selectedSize);
+                                                  addToCart();
+                                                  // print('$counter and ' +
+                                                  //     selectedSize +
+                                                  //     ' and ' +
+                                                  //     productId);
                                                   Navigator.pop(
                                                       context); // Close the modal form
                                                 },

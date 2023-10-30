@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:longdoo_frontend/screen/accountName/accName.dart';
 
 class SupportScreen extends StatelessWidget {
   const SupportScreen({super.key});
@@ -78,15 +77,7 @@ class SupportScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            onPressed: () {
-                              // Handle the button press here
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => AccNameScreen(),
-                                ),
-                              );
-                            },
+                            onPressed: () {},
                           ),
                         ),
                       )
@@ -137,15 +128,7 @@ class SupportScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            onPressed: () {
-                              // Handle the button press here
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => AccNameScreen(),
-                                ),
-                              );
-                            },
+                            onPressed: () {},
                           ),
                         ),
                       )

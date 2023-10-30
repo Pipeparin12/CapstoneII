@@ -4,8 +4,6 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:longdoo_frontend/model/product.dart';
 
-import '../screen/accountName/accName.dart';
-
 class WishlistCard extends StatelessWidget {
   final Product demoProduct;
   final GestureTapCallback press;

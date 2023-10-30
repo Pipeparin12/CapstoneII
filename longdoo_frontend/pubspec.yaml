@@ -31,7 +31,9 @@ dependencies:
     sdk: flutter
   animate_do: ^3.1.2
   flutter_svg: ^2.0.7
-  image_picker: ^1.0.4
+  image_picker: ^0.8.4
+  quickalert: ^1.0.2
+  model_viewer_plus: ^1.5.0
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
@@ -70,12 +72,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
-    - assets/images/one.jpg
-    - assets/images/two.jpg
-    - assets/images/three.jpg
-    - assets/images/four.jpg
-    - assets/images/five.jpg
-    - assets/images/longdoo_logo.png
+    - assets/3D_models/test01.glb
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

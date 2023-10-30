@@ -1,7 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/model/product.dart';
-import 'package:longdoo_frontend/screen/accountName/accName.dart';
 import 'package:longdoo_frontend/screen/order/processing.dart';
 import 'package:longdoo_frontend/screen/order/shipped.dart';
 
@@ -189,14 +188,7 @@ class _UnpaidScreenState extends State<UnpaidScreen> {
                     ), // Replace with your total price text
                     GestureDetector(
                       behavior: HitTestBehavior.translucent,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => AccNameScreen(),
-                          ),
-                        );
-                      },
+                      onTap: () {},
                       child: Container(
                         padding: EdgeInsets.all(
                             10), // Adjust the padding to increase the tappable area
@@ -209,15 +201,7 @@ class _UnpaidScreenState extends State<UnpaidScreen> {
                             "Purchase",
                             style: TextStyle(fontSize: 18),
                           ),
-                          onPressed: () {
-                            // Handle the button press here
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => AccNameScreen(),
-                              ),
-                            );
-                          },
+                          onPressed: () {},
                         ),
                       ),
                     ),

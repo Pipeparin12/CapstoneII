@@ -1,8 +1,10 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/model/product.dart';
-import 'package:longdoo_frontend/screen/accountName/accName.dart';
 import 'package:longdoo_frontend/screen/checkout.dart';
+import 'package:longdoo_frontend/service/api/cart.dart';
+import 'package:longdoo_frontend/service/dio.dart';
 
 class CartScreen extends StatefulWidget {
   @override
@@ -12,6 +14,21 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   bool isChecked = false;
   late int counter = 1;
+  var cart = [];
+
+  Future<void> getYourCart() async {
+    try {
+      var result = await CartApi.getCart();
+      print(result.data);
+      setState(() {
+        cart = result.data['cart'].toList();
+      });
+      print(cart);
+    } on DioException catch (e) {
+      print(e);
+    }
+  }
+
   void increment() {
     setState(() {
       counter++;
@@ -26,6 +43,24 @@ class _CartScreenState extends State<CartScreen> {
         counter--;
       }
     });
+  }
+
+  double calculateTotalPrice(List<dynamic> cart) {
+    double totalPriceSum = 0.0;
+
+    for (var item in cart) {
+      double itemTotalPrice =
+          double.tryParse(item['totalPrice'].toString()) ?? 0.0;
+      totalPriceSum += itemTotalPrice;
+    }
+
+    return totalPriceSum;
+  }
+
+  @override
+  void initState() {
+    getYourCart();
+    super.initState();
   }
 
   @override
@@ -44,7 +79,7 @@ class _CartScreenState extends State<CartScreen> {
                 Padding(padding: EdgeInsets.all(10)),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: 5,
+                    itemCount: cart.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Column(
                         children: [
@@ -63,15 +98,18 @@ class _CartScreenState extends State<CartScreen> {
                                 children: <Widget>[
                                   CartCheckbox(),
                                   Container(
-                                    padding: EdgeInsets.all(5.0),
-                                    child: Image(
-                                      image:
-                                          AssetImage('assets/images/one.jpg'),
-                                      width: 110, // Set the desired width
-                                      height: 120, // Set the desired height
-                                      fit: BoxFit
-                                          .cover, // Adjust the fit as needed
-                                    ),
+                                    width: 110, // Set the desired width
+                                    height: 110, // Set the desired height
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                              DioInstance.getImage(
+                                                  cart[index]['productImage'])),
+
+                                          fit: BoxFit
+                                              .cover, // Adjust the fit as needed)
+                                        )),
                                   ),
                                   Expanded(
                                     child: Container(
@@ -84,7 +122,7 @@ class _CartScreenState extends State<CartScreen> {
                                             CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Text(
-                                            'Laura Ashley Print Mix Tiered Babydoll',
+                                            cart[index]['productName'],
                                             style: TextStyle(
                                               fontSize: 14,
                                             ),
@@ -94,7 +132,7 @@ class _CartScreenState extends State<CartScreen> {
                                             height: 5,
                                           ),
                                           Text(
-                                            "Size: " + 'M',
+                                            "Size: " + cart[index]['size'],
                                             style: TextStyle(
                                               color: Colors.grey,
                                             ),
@@ -146,7 +184,8 @@ class _CartScreenState extends State<CartScreen> {
                                                           color: Colors.grey)),
                                                   child: Center(
                                                       child: Text(
-                                                    '$counter',
+                                                    cart[index]['quantity']
+                                                        .toString(),
                                                     style: TextStyle(
                                                         fontSize: 16,
                                                         fontWeight:
@@ -196,7 +235,9 @@ class _CartScreenState extends State<CartScreen> {
                                           MainAxisAlignment.center,
                                       children: <Widget>[
                                         Text(
-                                          '\$10.99', // Replace with the actual price
+                                          '\฿ ' +
+                                              cart[index]['totalPrice']
+                                                  .toString(), // Replace with the actual price
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -247,7 +288,8 @@ class _CartScreenState extends State<CartScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Total Price: \$100",
+                      "Total Price: ฿" +
+                          calculateTotalPrice(cart).toStringAsFixed(0),
                       style: TextStyle(fontSize: 18),
                     ), // Replace with your total price text
                     GestureDetector(
@@ -256,7 +298,7 @@ class _CartScreenState extends State<CartScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => AccNameScreen(),
+                            builder: (context) => CheckoutScreen(),
                           ),
                         );
                       },

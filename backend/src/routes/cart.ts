@@ -47,6 +47,7 @@ cartRoute.post('/add-cart/:id', async (req, res) => {
             "size": size,
             "quantity": quantity,
             "productName": product.productName,
+            "productImage": product.productImage,
             "totalPrice": product.price * quantity,
             "status": "unpaid"
         });
@@ -128,7 +129,8 @@ cartRoute.post('/checkout', async (req, res) => {
 
 cartRoute.get('/get-cart', async (req, res) => {
     try {
-        const userId = await req.user.user_id;  
+        const userId = await req.user.user_id;
+
         // const user_id = req.body.user_id;
         const cart = await Cart.find({ 'owner': userId });
         // const product = await Product.find({_id: {$in: cart.map((e) => e.productId)}});

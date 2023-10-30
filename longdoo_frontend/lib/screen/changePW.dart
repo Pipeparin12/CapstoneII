@@ -1,4 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:longdoo_frontend/components/bottomNavBar.dart';
+import 'package:longdoo_frontend/service/dio.dart';
+import 'package:longdoo_frontend/service/share_preference.dart';
+import 'package:quickalert/quickalert.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});
@@ -14,12 +19,54 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   bool _showOldPassword = false;
   bool _showNewPassword = false;
 
+  updatePassword(context) async {
+    Map<String, dynamic> updatePassword = ({
+      "currentPassword": oldPasswordController.text.trim(),
+      "newPassword": newPasswordController.text.trim(),
+    });
+
+    try {
+      final token = SharePreference.prefs.getString("token");
+      final response = await DioInstance.dio.patch(
+        "/password/change-password",
+        data: updatePassword,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+      print(response.data);
+
+      if (response.data["message"] == "Password changed successfully.") {
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.success,
+          text: 'Password Changed Successfully!',
+          onConfirmBtnTap: () => Navigator.push(
+              context, MaterialPageRoute(builder: (context) => BottomNavBar())),
+        );
+        // Navigator.push(
+        //     context, MaterialPageRoute(builder: (context) => AccountScreen()));
+      }
+    } catch (e) {
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.error,
+        text: "There's a problem with changing your password.",
+        autoCloseDuration: const Duration(seconds: 3),
+        showConfirmBtn: false,
+      );
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text('Account'),
+          title: Text('Change Password'),
           centerTitle: true,
         ),
         body: SingleChildScrollView(
@@ -164,7 +211,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                       ],
                                     ),
                                   ),
-                                  // onTap: () => updateProfile(context),
+                                  onTap: () => updatePassword(context),
                                 )
                               ],
                             )
