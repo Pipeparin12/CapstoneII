@@ -45,4 +45,20 @@ class CartApi {
     final response = await DioInstance.dio.get("/cart/get-cart");
     return response;
   }
+
+  static Future<dynamic> checkout(
+      int quantity, String productId, String size, String productImage) async {
+    DioInstance.dio.options.headers["authorization"] =
+        "Bearer " + SharePreference.prefs.getString("token").toString();
+
+    try {
+      var response = await DioInstance.dio.post("/cart/checkout");
+      // Return the response from the API call
+      return response.data;
+    } catch (e) {
+      // Handle any errors here, you might want to return an error response or throw an exception
+      print("Error adding to cart: $e");
+      throw e;
+    }
+  }
 }
