@@ -23,8 +23,7 @@ export const orderSchema = new mongoose.Schema({
 
     },
     paymentInformation:{
-        bankAccountNumber: String,
-        bankName: String
+        slip: String
     },
     status: {
         status: {

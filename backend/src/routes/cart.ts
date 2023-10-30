@@ -2,7 +2,8 @@ import express from "express";
 import Cart from '../models/cart';
 import Product from '../models/product';
 import Profile from '../models/profile';
-import { AddOrderRequestProp } from "./order";
+import { AddOrderRequestProp, addOrderFunc } from "./order";
+import order from "@/models/order";
 const cartRoute = express.Router();
 
 cartRoute.post('/add-cart/:id', async (req, res) => {
@@ -68,6 +69,8 @@ cartRoute.post('/checkout', async (req, res) => {
     // ลอง manual ดูก่อนใน postman
     const user_id = req.body.user_id;
 
+    const currentTimestamp = Date.now(); // Get the current timestamp
+
     try {
         const userProfile = await Profile.findOne({ user: user_id })
         const cart = await Cart.find({ owner: user_id });
@@ -91,25 +94,17 @@ cartRoute.post('/checkout', async (req, res) => {
                 address: userProfile.address
             },
             paymentInformation: {
-                bankAccountNumber: "Something",
-                bankName: "Something again"
+                slip: `/slips/${userProfile.firstName}_at_${currentTimestamp}.jpg`
             },
             status: {
                 status: "Unpaid",
                 description: ""
             }
         };
-        // Perform any additional checkout logic (e.g., payment processing)
-        const addOrder = await fetch(`http://0.0.0.0:${process.env.SERVER_PORT}/order/add`, {
-            method:"POST",
-            headers: {
-                "Content-Type" : "application/json"
-            },
-            body: JSON.stringify(addOrderDetail)
-        }).then(response => response.json())
-        .catch(error => {console.error("Error while fetching local API:", error);});
+        const addOrder = await addOrderFunc(addOrderDetail); 
+        
         console.log(addOrder)
-        if(!addOrder.success){
+        if(addOrder == null){
             return res.json({
                 success: false,
                 message: "Can't create order."
@@ -135,6 +130,7 @@ cartRoute.post('/checkout', async (req, res) => {
 cartRoute.get('/get-cart', async (req, res) => {
     try {
         const userId = await req.user.user_id;
+
         // const user_id = req.body.user_id;
         const cart = await Cart.find({ 'owner': userId });
         // const product = await Product.find({_id: {$in: cart.map((e) => e.productId)}});
