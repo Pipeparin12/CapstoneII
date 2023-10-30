@@ -64,10 +64,10 @@ cartRoute.post('/add-cart/:id', async (req, res) => {
 })
 
 cartRoute.post('/checkout', async (req, res) => {
-    const user_id = req.user.user_id;
+    // const user_id = req.user.user_id;
 
     // ลอง manual ดูก่อนใน postman
-    // const user_id = req.body.user_id;
+    const user_id = req.body.user_id;
 
     const currentTimestamp = Date.now(); // Get the current timestamp
 
