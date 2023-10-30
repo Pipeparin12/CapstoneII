@@ -126,6 +126,68 @@ cartRoute.post('/checkout', async (req, res) => {
     }
 });
 
+cartRoute.get('/check-product/:id', async (req, res) => {
+    const user_id = req.user.user_id;
+    const product_id = req.params.id;
+  
+    try {
+      const cartItem = await Cart.findOne({ owner: user_id, productId: product_id });
+      
+      if (cartItem) {
+        return res.json({
+          found: true,
+          quantity: cartItem.quantity
+        });
+      } else {
+        return res.json({
+          found: false
+        });
+      }
+    } catch (err) {
+      return res.json({
+        success: false,
+        message: err
+      });
+    }
+  });
+
+  cartRoute.put('/update-cart/:id', async (req, res) => {
+    const user_id = req.user.user_id;
+    const product_id = req.params.id;
+    const { quantity, size, productImage } = req.body;
+  
+    try {
+      const cartItem = await Cart.findOne({ owner: user_id, productId: product_id });
+  
+      if (!cartItem) {
+        return res.status(404).json({
+          success: false,
+          message: 'Product not found in the cart.'
+        });
+      }
+  
+      const product = await Product.findById(product_id);
+      console.log(product)
+      // Update the cart item details
+      cartItem.quantity = quantity;
+      cartItem.size = size;
+      cartItem.productImage = productImage;
+      cartItem.totalPrice = cartItem.quantity * product.price; // You need to fetch the product's price
+  
+      await cartItem.save();
+  
+      return res.json({
+        success: true,
+        message: 'Cart item updated successfully'
+      });
+    } catch (err) {
+      return res.json({
+        success: false,
+        message: err
+      });
+    }
+  });
+  
 
 cartRoute.get('/get-cart', async (req, res) => {
     try {

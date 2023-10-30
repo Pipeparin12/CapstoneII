@@ -180,20 +180,15 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                                 'productImage'])),
                                                     fit: BoxFit.cover)),
                                             child: Transform.translate(
-                                              offset: Offset(50, -50),
+                                              offset: Offset(30, -30),
                                               child: Container(
                                                 margin: EdgeInsets.symmetric(
                                                   horizontal: 65,
                                                   vertical: 60,
                                                 ),
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  color: Colors.white,
-                                                ),
                                                 child: Icon(
                                                   Icons.bookmark_border,
-                                                  size: 15,
+                                                  size: 0,
                                                 ),
                                               ),
                                             ),
