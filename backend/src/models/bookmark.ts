@@ -12,6 +12,9 @@ export const bookmarkSchema = new mongoose.Schema({
         type: Types.ObjectId,
         ref: 'Book'
     },
+    productImage:{
+        type: String,
+    },
 
 },{
     timestamps: true
