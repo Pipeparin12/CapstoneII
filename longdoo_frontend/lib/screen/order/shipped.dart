@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:longdoo_frontend/components/bottomNavBar.dart';
 import 'package:longdoo_frontend/model/product.dart';
 import 'package:longdoo_frontend/screen/order/processing.dart';
 import 'package:longdoo_frontend/screen/order/unpaid.dart';
@@ -15,6 +16,16 @@ class _ShippedScreenState extends State<ShippedScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            // Navigate back to a specific route
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) {
+              return BottomNavBar();
+            }));
+          },
+        ),
         backgroundColor: Colors.white,
         title: Text('Shipped'),
         centerTitle: true,
