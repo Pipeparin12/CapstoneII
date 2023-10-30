@@ -29,6 +29,14 @@ class _CartScreenState extends State<CartScreen> {
     }
   }
 
+  Future<void> checkout() async {
+    try {
+      var result = await CartApi.checkout();
+    } on DioException catch (e) {
+      print(e);
+    }
+  }
+
   void increment() {
     setState(() {
       counter++;
@@ -315,6 +323,7 @@ class _CartScreenState extends State<CartScreen> {
                             style: TextStyle(fontSize: 18, color: Colors.white),
                           ),
                           onPressed: () {
+                            checkout();
                             // Handle the button press here
                             Navigator.push(
                               context,
