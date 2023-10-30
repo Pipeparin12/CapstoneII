@@ -151,10 +151,22 @@ cartRoute.get('/get-cart', async (req, res) => {
 })
 
 cartRoute.delete('/remove/:id', async (req, res) => {
+    const user_id = req.body.user_id;
+    const productId = req.body.productId;
     try {
-        await Cart.findByIdAndDelete(req.params.id);
+        const removedProduct = await Cart.findOneAndRemove({
+            ower: user_id,
+            productId: productId
+        });
+        if (!removedProduct) {
+            return res.json({
+                success: false,
+                message: 'Product not found in the cart',
+            });
+        }
         return res.json({
             success: true,
+            removedProduct,
             message: 'Delete cart successfully'
         })
     } catch (err) {
