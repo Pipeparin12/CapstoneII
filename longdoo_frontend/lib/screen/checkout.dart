@@ -1,11 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:longdoo_frontend/model/product.dart';
 import 'dart:io';
 import 'package:http_parser/http_parser.dart';
 import 'package:longdoo_frontend/service/api/order.dart';
+import 'package:longdoo_frontend/service/api/product.dart';
 import 'package:longdoo_frontend/service/dio.dart';
 import 'package:longdoo_frontend/service/share_preference.dart';
+import 'package:http_parser/http_parser.dart';
 
 class CheckoutScreen extends StatefulWidget {
   final String orderId;
@@ -17,12 +20,15 @@ class CheckoutScreen extends StatefulWidget {
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
   String imageUrl = '';
+  late String productId;
+  late int productQuantity;
   File? imageFile;
   final imagePicker = ImagePicker();
   double totalPriceSum = 0;
   bool isLoading = true;
 
   var orderData = {};
+  var productData = {};
 
   Future<void> getDetail() async {
     try {
@@ -30,11 +36,42 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       setState(() {
         orderData = result.data['order'];
       });
-      print(result);
+      // print(result);
     } on DioException catch (e) {
       print(e);
     }
   }
+
+  Future<void> getProduct() async {
+    try {
+      setState(() {
+        productData = orderData['products'];
+      });
+      print(productData);
+    } on DioException catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> updateQuantity() async {
+    try {
+      print(productId);
+      var result = await ProductApi.updateQuantity(productId, productQuantity);
+      setState(() {
+        print('Update successfully');
+      });
+    } on DioException catch (e) {
+      print(e);
+    }
+  }
+
+  // getProductId(String id) {
+  //   productId = orderData['products']['productId'];
+  // }
+
+  // getQuantity(int quantity) {
+  //   productQuantity = orderData['products']['quantity'];
+  // }
 
   double calculateTotalPrice(Map<dynamic, dynamic> orderData) {
     double total = 0.0;
@@ -96,10 +133,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             isLoading = false;
           });
         }));
+    getProduct();
   }
 
   @override
   Widget build(BuildContext context) {
+    // getProductId(orderData['products']['quantity']);
+    // getQuantity(orderData['products']['quantity']);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -289,6 +329,49 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                         ),
                                         textAlign: TextAlign.start,
                                       ),
+                                      // ClipRRect(
+                                      //   borderRadius: BorderRadius.circular(10),
+                                      //   child: SizedBox(
+                                      //     height: 250,
+                                      //     width: double.infinity,
+                                      //     child: Column(
+                                      //       children: [
+                                      //         Expanded(
+                                      //             child: Container(
+                                      //           width: 300,
+                                      //           decoration: BoxDecoration(
+                                      //               borderRadius:
+                                      //                   BorderRadius.circular(
+                                      //                       20),
+                                      //               border: Border.all(
+                                      //                   color: Colors.black)),
+                                      //           child: Padding(
+                                      //             padding:
+                                      //                 const EdgeInsets.all(10),
+                                      //             child: Center(
+                                      //               child: Column(
+                                      //                 mainAxisAlignment:
+                                      //                     MainAxisAlignment
+                                      //                         .spaceBetween,
+                                      //                 children: [
+                                      //                   Expanded(
+                                      //                       child: imageFile ==
+                                      //                               null
+                                      //                           ? const Center(
+                                      //                               child: Text(
+                                      //                                   "No image selected"),
+                                      //                             )
+                                      //                           : Image.file(
+                                      //                               imageFile!))
+                                      //                 ],
+                                      //               ),
+                                      //             ),
+                                      //           ),
+                                      //         ))
+                                      //       ],
+                                      //     ),
+                                      //   ),
+                                      // )
                                     ],
                                   ),
                                 ],
@@ -322,6 +405,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               SizedBox(
                                 height: 15,
                               ),
+
                               ElevatedButton(
                                 onPressed: () {
                                   uploadSlips(context);

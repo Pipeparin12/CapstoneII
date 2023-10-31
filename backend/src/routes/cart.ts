@@ -100,7 +100,7 @@ cartRoute.post('/checkout', async (req, res) => {
                 address: userProfile.address
             },
             paymentInformation: {
-                slip: `/slips/${userProfile.firstName}_at_${currentTimestamp}.jpg`
+                slip: `/slips/${userProfile.user_id}_at_${currentTimestamp}.jpg`
             },
             status: {
                 status: "Unpaid",
