@@ -2,8 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-
+import 'package:http_parser/http_parser.dart';
 import 'package:longdoo_frontend/service/api/order.dart';
+import 'package:longdoo_frontend/service/dio.dart';
+import 'package:longdoo_frontend/service/share_preference.dart';
 
 class CheckoutScreen extends StatefulWidget {
   final String orderId;
@@ -60,6 +62,30 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         imageFile = null;
       }
     });
+  }
+
+  void uploadSlips(BuildContext context) async {
+    print("Uploading... " + imageFile!.path);
+    final token = SharePreference.prefs.getString("token");
+    final formData = FormData.fromMap({
+      "file": await MultipartFile.fromFile(
+        imageFile!.path,
+        filename: "fileName.jpg",
+        contentType: MediaType('image', 'jpg'),
+      ),
+    });
+
+    final response = await DioInstance.dio.post(
+      "/storage/upload-slips",
+      data: formData,
+      options: Options(
+        headers: {
+          "Authorization": "Bearer $token",
+        },
+      ),
+    );
+
+    print(response.data);
   }
 
   @override
@@ -286,6 +312,35 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   child: Center(
                                     child: Text(
                                       'Upload Slip',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  uploadSlips(context);
+                                  for (int i = 0;
+                                      i < orderData['products'].length;
+                                      i++) {}
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.grey.shade400,
+                                  padding: EdgeInsets.all(5),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                child: Container(
+                                  width: 200,
+                                  child: Center(
+                                    child: Text(
+                                      'Confirm',
                                       style: TextStyle(
                                         fontSize: 16,
                                       ),
