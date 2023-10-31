@@ -39,6 +39,26 @@ class CartApi {
     }
   }
 
+  static Future<void> updateCartItemQuantity(
+      String productId, String size, int quantity, String productImage) async {
+    DioInstance.dio.options.headers["authorization"] =
+        "Bearer " + SharePreference.prefs.getString("token").toString();
+
+    try {
+      // Make an API call to update the quantity of a cart item
+      await DioInstance.dio.put("/cart/update-cart/$productId", data: {
+        "quantity": quantity,
+        "size": size,
+        "productImage": productImage,
+        // You might need to provide additional data as needed by your API
+      });
+    } catch (e) {
+      // Handle any errors here
+      print("Error updating cart item quantity: $e");
+      throw e;
+    }
+  }
+
   static Future<dynamic> getCart() async {
     DioInstance.dio.options.headers["authorization"] =
         "Bearer " + SharePreference.prefs.getString("token").toString();

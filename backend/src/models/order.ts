@@ -6,11 +6,31 @@ export const orderSchema = new mongoose.Schema({
         required: true,
         ref: 'User'
     },
-    products: [{
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Product'
-    }],
+    products: [
+        {
+            productId: {
+                type: mongoose.Schema.Types.ObjectId,
+                required: true,
+                ref: "Product",
+            },
+            productName:{
+                type: String, 
+            },
+            productImage:{
+                type: String,
+            },
+            size: {
+                type: String,
+            },
+            quantity: {
+                type: Number,
+            },
+            // Add price field for the product
+            totalPrice: { 
+                type: Number, 
+            },
+        },
+    ],
     totalPrice: { 
         type: Number, 
         required: true 

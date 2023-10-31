@@ -1,8 +1,8 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:longdoo_frontend/model/product.dart';
 import 'package:longdoo_frontend/screen/checkout.dart';
+import 'package:longdoo_frontend/screen/order/unpaid.dart';
 import 'package:longdoo_frontend/service/api/cart.dart';
 import 'package:longdoo_frontend/service/dio.dart';
 
@@ -12,9 +12,9 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  bool isChecked = false;
   late int counter = 1;
   var cart = [];
+  var currentCounter;
 
   Future<void> getYourCart() async {
     try {
@@ -37,20 +37,64 @@ class _CartScreenState extends State<CartScreen> {
     }
   }
 
-  void increment() {
-    setState(() {
-      counter++;
-    });
+  void increment(int index) async {
+    try {
+      // Get the current counter value for the selected item
+      int currentCounter = cart[index]['quantity'];
+      int price = cart[index]['price'];
+
+      // Increase the quantity of the selected item in the cart locally
+      setState(() {
+        cart[index]['quantity'] = currentCounter + 1;
+        cart[index]['totalPrice'] = (currentCounter + 1) * price;
+      });
+
+      // Make an API call to update the quantity in the database
+      await CartApi.updateCartItemQuantity(
+          cart[index][
+              'productId'], // Replace with the actual product ID field in your cart item
+          cart[index]['size'],
+          currentCounter + 1, // Send the updated quantity to the server
+          cart[index]['productImage']);
+    } on DioException catch (e) {
+      // Handle API error
+      print("Error incrementing quantity: $e");
+      // Revert the local change if the API call fails
+      setState(() {
+        cart[index]['quantity'] = currentCounter;
+      });
+    }
   }
 
-  void decrement() {
-    setState(() {
-      if (counter == 1) {
-        return null;
-      } else {
-        counter--;
+  void decrement(int index) async {
+    try {
+      // Get the current counter value for the selected item
+      int currentCounter = cart[index]['quantity'];
+      int price = cart[index]['price'];
+
+      if (currentCounter > 1) {
+        // Decrease the quantity of the selected item in the cart locally
+        setState(() {
+          cart[index]['quantity'] = currentCounter - 1;
+          cart[index]['totalPrice'] = (currentCounter - 1) * price;
+        });
+
+        // Make an API call to update the quantity in the database
+        await CartApi.updateCartItemQuantity(
+            cart[index][
+                'productId'], // Replace with the actual product ID field in your cart item
+            cart[index]['size'],
+            currentCounter - 1, // Send the updated quantity to the server
+            cart[index]['productImage']);
       }
-    });
+    } on DioException catch (e) {
+      // Handle API error
+      print("Error decrementing quantity: $e");
+      // Revert the local change if the API call fails
+      setState(() {
+        cart[index]['quantity'] = currentCounter;
+      });
+    }
   }
 
   double calculateTotalPrice(List<dynamic> cart) {
@@ -104,7 +148,6 @@ class _CartScreenState extends State<CartScreen> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 // crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: <Widget>[
-                                  CartCheckbox(),
                                   Container(
                                     width: 110, // Set the desired width
                                     height: 110, // Set the desired height
@@ -170,7 +213,7 @@ class _CartScreenState extends State<CartScreen> {
                                                   child: Center(
                                                       child: TextButton(
                                                     onPressed: () {
-                                                      decrement();
+                                                      decrement(index);
                                                     },
                                                     child: Text(
                                                       '-',
@@ -225,7 +268,7 @@ class _CartScreenState extends State<CartScreen> {
                                                       ),
                                                     ),
                                                     onPressed: () {
-                                                      increment();
+                                                      increment(index);
                                                     },
                                                   )),
                                                 ),
@@ -303,12 +346,14 @@ class _CartScreenState extends State<CartScreen> {
                     GestureDetector(
                       behavior: HitTestBehavior.translucent,
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CheckoutScreen(),
-                          ),
-                        );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => CheckoutScreen(
+                        //       orderId: orderId,
+                        //     ),
+                        //   ),
+                        // );
                       },
                       child: Container(
                         padding: EdgeInsets.all(
@@ -322,14 +367,12 @@ class _CartScreenState extends State<CartScreen> {
                             "Purchase",
                             style: TextStyle(fontSize: 18, color: Colors.white),
                           ),
-                          onPressed: () {
-                            checkout();
-                            // Handle the button press here
+                          onPressed: () async {
+                            await checkout(); // Wait for checkout to complete
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => CheckoutScreen(),
-                              ),
+                                  builder: (context) => UnpaidScreen()),
                             );
                           },
                         ),
@@ -341,28 +384,5 @@ class _CartScreenState extends State<CartScreen> {
             ),
           ),
         ));
-  }
-}
-
-class CartCheckbox extends StatefulWidget {
-  @override
-  _CheckboxExampleState createState() => _CheckboxExampleState();
-}
-
-class _CheckboxExampleState extends State<CartCheckbox> {
-  bool isChecked = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Checkbox(
-        value: isChecked,
-        onChanged: (newValue) {
-          setState(() {
-            isChecked = newValue ?? false;
-          });
-        },
-      ),
-    );
   }
 }
