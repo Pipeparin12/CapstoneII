@@ -75,18 +75,22 @@ cartRoute.post('/checkout', async (req, res) => {
         const userProfile = await Profile.findOne({ user: user_id })
         const cart = await Cart.find({ owner: user_id });
         const products = [];
-        // Calculate the total price
-        let totalPrice = 0;
-        cart.map((item) => {
-            products.push(item._id);
-            totalPrice = totalPrice + item.totalPrice;
-        });
-        console.log(totalPrice);
+        cart.map((cart) => {
+            products.push({
+                productId: cart.productId,
+                productName: cart.productName,
+                productImage: cart.productImage,
+                size: cart.size,
+                quantity: cart.quantity,
+                totalPrice: cart.totalPrice
+              });
+          });
+          console.log(products)
 
         var addOrderDetail: AddOrderRequestProp = {
             owner: user_id,
             products: products,
-            totalPrice: totalPrice as number,
+            totalPrice: 0,
             shippingInformation: {
                 firstName: userProfile.firstName,
                 lastName: userProfile.lastName,
@@ -101,9 +105,14 @@ cartRoute.post('/checkout', async (req, res) => {
                 description: ""
             }
         };
-        const addOrder = await addOrderFunc(addOrderDetail); 
+        const addOrder = await addOrderFunc(addOrderDetail);
+        var orderId
+
+        if (addOrder) {
+            orderId = addOrder._id
+        }
         
-        console.log(addOrder)
+        console.log(orderId)
         if(addOrder == null){
             return res.json({
                 success: false,
@@ -116,6 +125,7 @@ cartRoute.post('/checkout', async (req, res) => {
         return res.json({
             success: true,
             message: 'Checkout successful! order will be processing.',
+            orderId: orderId,
             // addOrder
         });
     } catch (err) {

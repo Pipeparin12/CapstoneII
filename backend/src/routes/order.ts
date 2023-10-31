@@ -59,8 +59,9 @@ orderRoute.get('/get-order/:orderId', async (req, res) => {
     const orderId = req.params.orderId; // Extract the order ID from the request parameters
   
     try {
-      const order = await Order.findById(orderId);
-  
+      const order = await Order.findById(orderId).populate("products");
+      console.log(order.products)
+
       if (order) {
         return res.json({
           success: true,
