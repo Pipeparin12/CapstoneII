@@ -41,17 +41,5 @@ export const orderSchema = new mongoose.Schema({
         phone: String,
         address: String
 
-    },
-    paymentInformation:{
-        slip: String
-    },
-    status: {
-        status: {
-            type: String,
-            required: true
-        },
-        description: String
-    }
-})
 
-export default mongoose.model('Order',orderSchema);
+export default mongoose.model("Order", orderSchema);

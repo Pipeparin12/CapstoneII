@@ -92,7 +92,7 @@ cartRoute.post('/checkout', async (req, res) => {
         var addOrderDetail: AddOrderRequestProp = {
             owner: user_id,
             products: products,
-            totalPrice: totalPrice as number,
+            totalPrice: 0,
             shippingInformation: {
                 firstName: userProfile.firstName,
                 lastName: userProfile.lastName,
