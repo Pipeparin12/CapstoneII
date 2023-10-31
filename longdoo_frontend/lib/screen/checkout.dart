@@ -405,13 +405,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               SizedBox(
                                 height: 15,
                               ),
-
                               ElevatedButton(
                                 onPressed: () {
                                   uploadSlips(context);
                                   for (int i = 0;
                                       i < orderData['products'].length;
                                       i++) {}
+                                  Navigator.pop(context);
                                 },
                                 style: ElevatedButton.styleFrom(
                                   primary: Colors.grey.shade400,
