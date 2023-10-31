@@ -13,6 +13,19 @@ export async function addOrderFunc(orderDetail: AddOrderRequestProp) {
         return newOrder;
 }
 
+export async function updateOrderFunc(updateDetail: UpdateOrderStatusRequestProp) {
+
+    console.log("click");
+    
+    const updateOrder = await Order.findOneAndUpdate({
+        _id: updateDetail.owner
+        }, {
+            status: updateDetail.status
+        }
+    )
+    return updateOrder;
+}
+
 export type AddOrderRequestProp = {
     owner: string,
     products: Array<string>,
@@ -32,8 +45,8 @@ export type AddOrderRequestProp = {
     }
 };
 
-type UpdateOrderStatusRequestProp = {
-    orderId: string,
+export type UpdateOrderStatusRequestProp = {
+    owner: string,
     status: {
         status: string,
         description: string
@@ -137,7 +150,7 @@ orderRoute.patch('/update-status/', async (req, res) => {
     const updateDetail: UpdateOrderStatusRequestProp = req.body;
     try {
         const updateOrder = await Order.findOneAndUpdate({
-            _id: updateDetail.orderId
+            owner: updateDetail.owner
         }, {
             status: updateDetail.status
         }

@@ -8,7 +8,7 @@ const storage = multer.diskStorage({
 		cb(null, "./uploads/products");
 	},
 	filename: function (req, file, cb) {
-        const fileName = `${(req).productId}.jpg`;
+        const fileName = `${(req as any).productId}.jpg`;
         console.log(`Uploading...`, fileName);
 		cb(null,fileName);
 	},
@@ -112,6 +112,25 @@ productRoute.patch('/:id', async (req, res) => {
         const updateproduct = await Product.updateOne({_id: req.params.id}, {$set: req.body});
         return res.json({
             updateproduct,
+            success: true,
+            message: 'Update product successfully!'
+        });
+    }catch(err){
+        return res.json({
+            success: false,
+            message: err
+        });
+    }
+})
+
+productRoute.patch('/update-quantity', async (req, res) => {
+    const product = await Product.findById(req.body.product_id);
+    const quantity = req.body.quantityInCart;
+    if(!product) return res.json({message: "No Data Found"});
+    try{
+        const updatequantity = await Product.updateOne({_id: req.body.product_id}, { $set : { quantity : product.quantity-quantity }});
+        return res.json({
+            updatequantity,
             success: true,
             message: 'Update product successfully!'
         });
