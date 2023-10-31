@@ -44,10 +44,44 @@ type GetOrderId = {
     
 }
 
-orderRoute.get('/all', async (req, res) => {
+orderRoute.get('/all-unpaid', async (req, res) => {
     try {
         const userId = await req.user.user_id;
-        const orders = await Order.find({'owner': userId});
+        const orders = await Order.find({'owner': userId, 'status.status': 'Unpaid'});
+        console.log(orders);
+        return res.json({
+            success: true,
+            orders
+        })
+    } catch (error) {
+        return res.json({
+            success: false,
+            message: error
+        })
+    }
+});
+
+orderRoute.get('/all-process', async (req, res) => {
+    try {
+        const userId = await req.user.user_id;
+        const orders = await Order.find({'owner': userId, 'status.status': { $in: ['Packing', 'On the way'] }});
+        console.log(orders);
+        return res.json({
+            success: true,
+            orders
+        })
+    } catch (error) {
+        return res.json({
+            success: false,
+            message: error
+        })
+    }
+});
+
+orderRoute.get('/all-shipped', async (req, res) => {
+    try {
+        const userId = await req.user.user_id;
+        const orders = await Order.find({'owner': userId, 'status.status': 'Shipped'});
         console.log(orders);
         return res.json({
             success: true,
@@ -154,15 +188,12 @@ orderRoute.patch('/update-status/', async (req, res) => {
     }
 })
 
-orderRoute.delete('/remove/', async (req, res) => {
-    const orderId = req.body.orderId;
+orderRoute.delete('/confirm-shipped/:id', async (req, res) => {
     try {
-        const removeOrder = await Order.findOneAndRemove({
-            _id: orderId
-        });
+        const removeOrder = await Order.findByIdAndDelete(req.params.id);
         return res.json({
             success: true,
-            removeOrder
+            message: 'Confirm received of product'
         });
     } catch (error) {
         return res.json({
