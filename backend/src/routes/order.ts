@@ -55,25 +55,30 @@ orderRoute.get('/all/', async (req, res) => {
     }
 });
 
-orderRoute.get('/get/', async (req, res) => {
-    const orderId = req.body.orderId;
+orderRoute.get('/get-order/:orderId', async (req, res) => {
+    const orderId = req.params.orderId; // Extract the order ID from the request parameters
+  
     try {
-        const getOrder = await Order.findById({
-            _id: orderId
-        }, {
-
-        });
+      const order = await Order.findById(orderId);
+  
+      if (order) {
         return res.json({
-            success: true,
-            getOrder
+          success: true,
+          order
         });
+      } else {
+        return res.status(404).json({
+          success: false,
+          message: 'Order not found'
+        });
+      }
     } catch (error) {
-        return res.json({
-            success: false,
-            message: error
-        });
+      return res.status(500).json({
+        success: false,
+        message: error.message
+      });
     }
-})
+  });
 
 orderRoute.post('/add-order', async (req, res) => {
     var orderDetail: AddOrderRequestProp = { ...req.body };
