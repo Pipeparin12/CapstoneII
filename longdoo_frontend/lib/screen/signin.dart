@@ -128,15 +128,23 @@ class _SignInPageState extends State<SignInPage> {
                         )
                       ],
                     )),
-                FloatingActionButton(
-                  onPressed: () => signInHandler(),
-                  tooltip: 'Sign In',
-                  child: Icon(
-                    Icons.east,
-                    color: Color(0xFFFFFFFF),
+                Container(
+                  width: 100,
+                  height: 50, 
+                  child: ElevatedButton(
+                    onPressed: () => signInHandler(),
+                    child: Text(
+                      'Sign In',
+                      style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 20),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.grey,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
                   ),
-                  backgroundColor: Color(0xFF4A4A4A),
-                ),
+                )
               ],
             ),
           )),

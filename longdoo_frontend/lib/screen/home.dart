@@ -28,11 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
       'category': 'Unisex',
       'productImage': 'assets/images/unisex.png',
     },
-    {
-      'name': 'Sale',
-      'category': 'Sale',
-      'productImage': 'assets/images/sale.png',
-    },
   ];
 
   String _searchQuery = '';
@@ -54,6 +49,65 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: EdgeInsets.all(12.0),
           child: Column(
             children: <Widget>[
+              Container(
+                width: 370,
+                height: 250,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    image: DecorationImage(
+                        image: AssetImage('assets/images/sale.png'),
+                        fit: BoxFit.cover)),
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      gradient:
+                          LinearGradient(begin: Alignment.bottomRight, colors: [
+                        Colors.black.withOpacity(.4),
+                        Colors.black.withOpacity(.2),
+                      ])),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      SizedBox(
+                        height: 30,
+                      ),
+                      GestureDetector(
+                        child: Container(
+                          height: 50,
+                          margin: EdgeInsets.symmetric(horizontal: 40),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white),
+                          child: Center(
+                              child: Text(
+                            "Shop Now",
+                            style: TextStyle(
+                                color: Colors.grey[900],
+                                fontWeight: FontWeight.bold),
+                          )),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CategoryScreen(
+                                name: 'Sale',
+                                category: 'Sale',
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
               Expanded(
                 child: GridView.count(
                   crossAxisCount: 2,

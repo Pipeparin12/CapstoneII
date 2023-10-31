@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:longdoo_frontend/screen/signin.dart';
 import 'package:longdoo_frontend/service/dio.dart';
 import 'package:longdoo_frontend/service/share_preference.dart';
-
-import 'screen/index.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,6 +19,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.grey,
         ),
-        home: IndexScreen());
+        home: SignInPage());
   }
 }
