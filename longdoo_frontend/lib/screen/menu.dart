@@ -23,7 +23,6 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-  var listProduct = [];
   var bookmark = [];
   String name = '';
   bool isLoading = true;
@@ -381,7 +380,17 @@ class _MenuScreenState extends State<MenuScreen> {
                                         bookmark.length,
                                         (index) => Container(
                                               child: GestureDetector(
-                                                  onTap: () {},
+                                                  onTap: () {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              ItemDetailScreen(
+                                                            id: bookmark[index]
+                                                                ['_id'],
+                                                          ),
+                                                        ));
+                                                  },
                                                   child: Column(
                                                     children: [
                                                       Card(

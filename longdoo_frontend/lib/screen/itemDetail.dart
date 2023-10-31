@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:longdoo_frontend/screen/cart.dart';
 import 'package:longdoo_frontend/screen/try_on.dart';
+import 'package:longdoo_frontend/service/api/bookmark.dart';
 import 'package:longdoo_frontend/service/api/cart.dart';
 import 'package:longdoo_frontend/service/api/product.dart';
 import 'package:longdoo_frontend/service/dio.dart';
@@ -30,6 +31,16 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
       });
       print(result);
     } on DioException catch (e) {
+      print(e);
+    }
+  }
+
+  void addBookmark() async {
+    try {
+      var result = await BookmarkApi.addToBookmark(
+          listProduct['productImage'], listProduct['_id']);
+      print(result);
+    } catch (e) {
       print(e);
     }
   }
@@ -98,11 +109,17 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                 listProduct['productName'],
                                 style: TextStyle(
                                     fontSize: 25, fontWeight: FontWeight.bold),
+                                maxLines:
+                                    1, // Ensure the text is displayed on one line
+                                overflow: TextOverflow
+                                    .ellipsis, // Add ellipsis for long text
                               ),
                             ),
                             IconButton(
                               icon: const Icon(Icons.favorite_border_outlined),
-                              onPressed: () {},
+                              onPressed: () {
+                                addBookmark();
+                              },
                             )
                           ],
                         ),

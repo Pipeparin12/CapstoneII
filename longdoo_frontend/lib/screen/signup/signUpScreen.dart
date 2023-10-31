@@ -147,15 +147,23 @@ class _MyStatefulWidgetState extends State<SignUpPage> {
                       //   print(passwordController.text);
                       // },
                     )),
-                FloatingActionButton(
-                  onPressed: () => signUpHandler(),
-                  tooltip: 'Sign Up',
-                  child: Icon(
-                    Icons.east,
-                    color: Color(0xFFFFFFFF),
+                Container(
+                  width: 100,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: () => signUpHandler(),
+                    child: Text(
+                      'Sign Up',
+                      style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 20),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.grey,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
                   ),
-                  backgroundColor: Color(0xFF4A4A4A),
-                ),
+                )
               ],
             ),
           )),

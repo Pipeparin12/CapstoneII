@@ -1,9 +1,12 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/components/bottomNavBar.dart';
 import 'package:longdoo_frontend/model/product.dart';
 import 'package:longdoo_frontend/screen/order/processing.dart';
 import 'package:longdoo_frontend/screen/order/unpaid.dart';
+import 'package:longdoo_frontend/service/api/order.dart';
+import 'package:longdoo_frontend/service/dio.dart';
 
 class ShippedScreen extends StatefulWidget {
   @override
@@ -11,7 +14,37 @@ class ShippedScreen extends StatefulWidget {
 }
 
 class _ShippedScreenState extends State<ShippedScreen> {
+  var order = [];
   bool isChecked = false;
+
+  Future<void> getYourOrder() async {
+    try {
+      var result = await OrderApi.getShippedOrder();
+      print(result.data);
+      setState(() {
+        order = result.data['orders'].toList();
+      });
+      print(order);
+    } on DioException catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> confirmShipped(String orderId) async {
+    try {
+      var result = await OrderApi.confirmShipped(orderId);
+      getYourOrder();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getYourOrder(); // Call the function to fetch your orders
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +60,7 @@ class _ShippedScreenState extends State<ShippedScreen> {
           },
         ),
         backgroundColor: Colors.white,
-        title: Text('Shipped'),
+        title: Text('My Purchases'),
         centerTitle: true,
         elevation: 0,
       ),
@@ -53,7 +86,7 @@ class _ShippedScreenState extends State<ShippedScreen> {
                           );
                         },
                         child: Text(
-                          'Unpaid',
+                          'To Pay',
                           style: TextStyle(fontSize: 14, color: Colors.black),
                         ),
                       ),
@@ -67,7 +100,7 @@ class _ShippedScreenState extends State<ShippedScreen> {
                           );
                         },
                         child: Text(
-                          'Processing',
+                          'To Ship',
                           style: TextStyle(fontSize: 14, color: Colors.black),
                         ),
                       ),
@@ -76,7 +109,7 @@ class _ShippedScreenState extends State<ShippedScreen> {
                           // Add navigation logic for the "Shipped" button
                         },
                         child: Text(
-                          'Shipped',
+                          'To Receive',
                           style: TextStyle(fontSize: 14, color: Colors.black),
                         ),
                       ),
@@ -84,107 +117,168 @@ class _ShippedScreenState extends State<ShippedScreen> {
                   ),
                 ),
               ),
-              Container(
-                width: double.maxFinite,
-                decoration: BoxDecoration(color: Colors.white),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10, top: 10, bottom: 5),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            'Status: shipped',
-                            style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            'Order number: 85f893w ',
-                            style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
               Expanded(
                 child: ListView.builder(
-                  itemCount: 10,
+                  itemCount: order.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return Column(
-                      children: [
-                        Container(
-                          padding:
-                              EdgeInsets.only(right: 5, left: 5, bottom: 10),
-                          height: 120,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: <Widget>[
-                                Padding(
-                                  padding: EdgeInsets.all(5.0),
-                                  child: Image(
-                                    image: AssetImage('assets/images/one.jpg'),
-                                    width: 100, // Set the desired width
-                                    height: 120, // Set the desired height
-                                    fit: BoxFit
-                                        .cover, // Adjust the fit as needed
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    padding: EdgeInsets.all(5),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: <Widget>[
-                                        Text(
-                                          'name',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        Text("In cart: " + '2'),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Text(
-                                        '\$10.99', // Replace with the actual price
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                    return Container(
+                      width: double.maxFinite,
+                      decoration: BoxDecoration(color: Colors.white),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 10, right: 10, top: 10, bottom: 5),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  'Status: Shipped',
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w400),
                                 ),
                               ],
                             ),
-                          ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Order number: ' + order[index]['_id'],
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Column(
+                              children: [
+                                for (var product
+                                    in order[index]['products'] ?? '')
+                                  Container(
+                                    padding: EdgeInsets.only(
+                                        right: 5, left: 5, bottom: 10),
+                                    height: 120,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        children: <Widget>[
+                                          Container(
+                                            width: 110,
+                                            height: 110,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              image: DecorationImage(
+                                                image: NetworkImage(
+                                                  DioInstance.getImage((product[
+                                                          'productImage'] ??
+                                                      '')),
+                                                ),
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 5, left: 10, bottom: 10),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: <Widget>[
+                                                  Text(
+                                                    (product['productName'] ??
+                                                        ''),
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                    ),
+                                                    textAlign: TextAlign.start,
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  Text(
+                                                    "Size: " +
+                                                        (product['size'] ?? ""),
+                                                    style: TextStyle(
+                                                      color: Colors.grey,
+                                                    ),
+                                                    textAlign: TextAlign.start,
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  Text(
+                                                    "Amount: " +
+                                                        (product['quantity']
+                                                                .toString() ??
+                                                            ""),
+                                                    style: TextStyle(
+                                                      color: Colors.grey,
+                                                    ),
+                                                    textAlign: TextAlign.start,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(10),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: <Widget>[
+                                                Text(
+                                                  '\฿ ' +
+                                                      (product['totalPrice']
+                                                              .toString() ??
+                                                          ''),
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                TextButton(
+                                    onPressed: () {
+                                      confirmShipped(order[index]['_id']);
+                                    },
+                                    child: Text(
+                                      'Order received',
+                                      style: TextStyle(color: Colors.black),
+                                    )),
+                              ],
+                            ),
+                            Divider(
+                              color: Colors.black,
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     );
                   },
                 ),

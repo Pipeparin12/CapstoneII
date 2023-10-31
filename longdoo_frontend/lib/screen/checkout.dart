@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:longdoo_frontend/model/product.dart';
 import 'dart:io';
-
+import 'package:http_parser/http_parser.dart';
 import 'package:longdoo_frontend/service/api/order.dart';
 import 'package:longdoo_frontend/service/api/product.dart';
 import 'package:longdoo_frontend/service/dio.dart';
@@ -402,6 +402,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   ),
                                 ),
                               ),
+                              SizedBox(
+                                height: 15,
+                              ),
+
                               ElevatedButton(
                                 onPressed: () {
                                   uploadSlips(context);
