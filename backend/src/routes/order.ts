@@ -1,5 +1,6 @@
 import express from "express";
 import Order from '../models/order';
+import Product from "@/models/product";
 const orderRoute = express.Router();
 
 export async function addOrderFunc(orderDetail: AddOrderRequestProp) {
@@ -39,9 +40,14 @@ type UpdateOrderStatusRequestProp = {
     }
 }
 
-orderRoute.get('/all/', async (req, res) => {
+type GetOrderId = {
+    
+}
+
+orderRoute.get('/all', async (req, res) => {
     try {
-        const orders = await Order.find();
+        const userId = await req.user.user_id;
+        const orders = await Order.find({'owner': userId});
         console.log(orders);
         return res.json({
             success: true,
@@ -56,30 +62,57 @@ orderRoute.get('/all/', async (req, res) => {
 });
 
 orderRoute.get('/get-order/:orderId', async (req, res) => {
-    const orderId = req.params.orderId; // Extract the order ID from the request parameters
-  
-    try {
-      const order = await Order.findById(orderId).populate("products");
-      console.log(order.products)
+    const orderId = req.params.orderId;
 
-      if (order) {
+    if (!req.user) {
+        return res.status(401).json({
+            success: false,
+            message: 'User not authenticated.'
+        });
+    }
+    
+    try {
+        const order = await Order.findById(orderId);
+        
+        if (!order) {
+          return res.status(404).json({
+            success: false,
+            message: 'Order not found'
+          });
+        }
+    
         return res.json({
           success: true,
-          order
+          order,
         });
-      } else {
-        return res.status(404).json({
+      } catch (error) {
+        return res.status(500).json({
           success: false,
-          message: 'Order not found'
+          message: error.message
         });
       }
-    } catch (error) {
-      return res.status(500).json({
-        success: false,
-        message: error.message
-      });
-    }
   });
+  
+// get('/get-order', async (req, res) => {
+//     const user_id = req.user.user_id;
+//     try {
+//         const getOrder = await Order.findOne({
+//             owner: user_id,
+//             status:{
+//                 status: "Unpaid"
+//             }
+//         });
+//         return res.json({
+//             success: true,
+//             getOrder
+//         });
+//     } catch (error) {
+//         return res.json({
+//             success: false,
+//             message: error
+//         });
+//     }
+// })
 
 orderRoute.post('/add-order', async (req, res) => {
     var orderDetail: AddOrderRequestProp = { ...req.body };

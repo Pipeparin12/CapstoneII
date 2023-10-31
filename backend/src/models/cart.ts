@@ -25,7 +25,10 @@ export const cartSchema = new mongoose.Schema({
         required: true,
         min: 1
     },
-    // Add price field for the product
+    price: { 
+        type: Number, 
+        required: true 
+    },
     totalPrice: { 
         type: Number, 
         required: true 
