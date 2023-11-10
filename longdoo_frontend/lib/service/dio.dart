@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 class DioInstance {
   static late Dio dio;
-  static String baseUrl = 'http://192.168.1.53:8080';
+  static String baseUrl = 'http://10.63.132.208:8080';
 
   static String getImage(String url) {
     if (url.startsWith("https://")) return url;
