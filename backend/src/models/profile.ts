@@ -47,6 +47,18 @@ export const ProfileSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    gender: {
+        type: String,
+        required: true
+    },
+    size: {
+        type: String,
+        required: true
+    },
+    model: {
+        type: String,
+        required: true
+    }
 });
 
 export default mongoose.model('Profile', ProfileSchema);
