@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/screen/cart.dart';
 import 'package:longdoo_frontend/screen/itemDetail.dart';
+import 'package:longdoo_frontend/service/api/cart.dart';
 import 'package:longdoo_frontend/service/api/product.dart';
 import 'package:longdoo_frontend/service/dio.dart';
 
@@ -16,6 +17,7 @@ class CategoryScreen extends StatefulWidget {
 
 class _CategoryScreenState extends State<CategoryScreen> {
   var listProduct = [];
+  var cart = [];
   String name = '';
 
   Future<void> getProduct() async {
@@ -38,9 +40,25 @@ class _CategoryScreenState extends State<CategoryScreen> {
     }
   }
 
+  Future<void> getYourCart() async {
+    try {
+      var result = await CartApi.getCart();
+      print(result.data);
+      setState(() {
+        print('Before update: $cart');
+        cart = result.data['cart'].toList();
+        print('After update: $cart');
+      });
+      print(cart);
+    } on DioException catch (e) {
+      print(e);
+    }
+  }
+
   @override
   void initState() {
     getProduct();
+    getYourCart();
     super.initState();
   }
 
@@ -61,13 +79,41 @@ class _CategoryScreenState extends State<CategoryScreen> {
         centerTitle: true,
         backgroundColor: Colors.white,
         actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.shopping_bag),
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return CartScreen();
-              }));
-            },
+          Stack(
+            children: <Widget>[
+              IconButton(
+                icon: const Icon(
+                  Icons.shopping_bag,
+                  size: 30,
+                ),
+                onPressed: () async {
+                  await Navigator.push(context,
+                      MaterialPageRoute(builder: (context) {
+                    return CartScreen();
+                  }));
+                  getYourCart();
+                },
+              ),
+              Visibility(
+                visible: cart
+                    .isNotEmpty, // Show the Positioned widget only if the cart is not empty
+                child: Positioned(
+                  right: 3,
+                  top: 5,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.red,
+                    radius: 10,
+                    child: Text(
+                      cart.length > 99 ? '99+' : cart.length.toString(),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           )
         ],
       ),

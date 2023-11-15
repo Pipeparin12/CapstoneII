@@ -1,6 +1,5 @@
 import mongoose from 'mongoose'
 
-// Create profile schema firstname, lastname, email, address, phone
 
 export const ModelSchema = new mongoose.Schema({
     modelId:{
@@ -23,7 +22,8 @@ export const ModelSchema = new mongoose.Schema({
         type: String, 
         require: true,
     },
-    
+
+
 });
 
 export default mongoose.model('Model', ModelSchema);

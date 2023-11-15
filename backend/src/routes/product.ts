@@ -1,7 +1,8 @@
 import express from "express";
 import multer from "multer";
 import Product from '../models/product';
-import Model from '../models/model'
+import Model from '../models/model';
+
 const productRoute = express.Router();
 
 const storage = multer.diskStorage({
@@ -211,19 +212,19 @@ productRoute.get('/category/:key',async (req, res) => {
 
 productRoute.post('/add-model', createModel , upload.single('file'), async (req,res) => {
     const model_name = req.body.modelName;
-	const model_size = req.body.modelSize;
+    const model_size = req.body.modelSize;
     const model_gender = req.body.modelGender; 
     const modelId = (req as any).modelId;
 
     const newModel = await Model.updateOne(
-		{ _id: modelId },
-		{
-			modelName: model_name,
-			modelSize: model_size,
+        { _id: modelId },
+        {
+            modelName: model_name,
+            modelSize: model_size,
             modelGender: model_gender,
-			modelPath: `/models/${model_name}.glb`,
-		}
-	);
+            modelPath: `/models/${model_name}.glb`,
+        }
+    );
 
     return res.json({
         success: true,

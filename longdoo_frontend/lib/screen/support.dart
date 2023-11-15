@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class SupportScreen extends StatelessWidget {
   const SupportScreen({super.key});
@@ -77,7 +79,15 @@ class SupportScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            onPressed: () {},
+                            onPressed: () async {
+                              final Uri url =
+                                  Uri(scheme: 'tel', path: "091 931 6517");
+                              if (await canLaunchUrl(url)) {
+                                await launchUrl(url);
+                              } else {
+                                print('can not lauch url');
+                              }
+                            },
                           ),
                         ),
                       )
@@ -102,26 +112,26 @@ class SupportScreen extends StatelessWidget {
                                 fontSize: 16, fontWeight: FontWeight.w400),
                           ),
                         ],
-                      ), // Replace with your total price text
+                      ),
                       GestureDetector(
                         behavior: HitTestBehavior.translucent,
                         child: Padding(
                           padding: EdgeInsets.all(
-                              10), // Adjust the padding to increase the tappable area
+                              10), 
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               minimumSize: Size(
-                                  140, 50), // Adjust the minimum size as needed
+                                  140, 50),
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment
-                                  .center, // Center the icon and text horizontally
+                                  .center, 
                               children: [
                                 Icon(Icons
-                                    .email), // Replace with your desired icon
+                                    .email), 
                                 SizedBox(
                                     width:
-                                        8), // Add spacing between the icon and text
+                                        8),
                                 Text(
                                   "Email",
                                   style: TextStyle(fontSize: 16),
