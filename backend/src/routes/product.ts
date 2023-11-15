@@ -2,6 +2,7 @@ import express from "express";
 import multer from "multer";
 import Product from '../models/product';
 import Model from '../models/model';
+
 const productRoute = express.Router();
 
 const storage = multer.diskStorage({
