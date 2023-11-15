@@ -22,7 +22,7 @@ class _TryOnScreenState extends State<TryOnScreen> {
         child: SizedBox(
           height: double.maxFinite,
           child: ModelViewer(
-            src: 'assets/3D_models/test01.glb',
+            src: '\\assets\\3D_models\\Men_S.glb',
             autoPlay: true,
             autoRotate: false,
             cameraControls: true,
