@@ -9,6 +9,9 @@ class Profile {
   double chestSize;
   double waistSize;
   double hipsSize;
+  String gender;
+  String size;
+  String model;
 
   Profile(
       {required this.username,
@@ -20,21 +23,26 @@ class Profile {
       required this.weight,
       required this.chestSize,
       required this.waistSize,
-      required this.hipsSize});
+      required this.hipsSize,
+      required this.gender,
+      required this.size,
+      required this.model});
 
   factory Profile.fromJson(Map<String, dynamic> json) {
     return Profile(
-      username: json["username"] ?? "",
-      firstName: json["firstName"] ?? "",
-      lastName: json["lastName"] ?? "",
-      address: json["address"] ?? "",
-      phone: json["phone"] ?? "",
-      height: (json["height"] ?? 0.0).toDouble(), 
-      weight: (json["weight"] ?? 0.0).toDouble(),
-      chestSize: (json["chestSize"] ?? 0.0).toDouble(),
-      waistSize: (json["waistSize"] ?? 0.0).toDouble(),
-      hipsSize: (json["hipsSize"] ?? 0.0).toDouble(),
-    );
+        username: json["username"] ?? "",
+        firstName: json["firstName"] ?? "",
+        lastName: json["lastName"] ?? "",
+        address: json["address"] ?? "",
+        phone: json["phone"] ?? "",
+        height: (json["height"] ?? 0.0).toDouble(),
+        weight: (json["weight"] ?? 0.0).toDouble(),
+        chestSize: (json["chestSize"] ?? 0.0).toDouble(),
+        waistSize: (json["waistSize"] ?? 0.0).toDouble(),
+        hipsSize: (json["hipsSize"] ?? 0.0).toDouble(),
+        gender: json["gender"] ?? "",
+        size: json["size"] ?? "",
+        model: json['model']);
   }
 
   static List<String> keys = [
@@ -47,6 +55,9 @@ class Profile {
     "weight",
     "chestSize",
     "waistSize",
-    "hipsSize"
+    "hipsSize",
+    "gender",
+    "size",
+    "model"
   ];
 }

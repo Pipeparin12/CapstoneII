@@ -28,7 +28,10 @@ class _AccountScreenState extends State<AccountScreen> {
       weight: 0,
       chestSize: 0,
       waistSize: 0,
-      hipsSize: 0);
+      hipsSize: 0,
+      gender: "-",
+      size: "-",
+      model: "-");
 
   late String address;
   late String phone;
@@ -67,8 +70,8 @@ class _AccountScreenState extends State<AccountScreen> {
       print(response.data);
 
       if (response.data["success"]) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => MenuScreen()));
+        await fetchProfile();
+        setState(() {});
       }
     } catch (e) {
       print(e);
@@ -175,18 +178,23 @@ class _AccountScreenState extends State<AccountScreen> {
                                     ],
                                   ),
                                   Padding(padding: EdgeInsets.only(left: 20)),
-                                  Container(
-                                    width: 360,
-                                    child: TextFormField(
-                                      enabled: false,
-                                      controller: TextEditingController(
-                                          text: userProfile.firstName +
-                                              ' ' +
-                                              userProfile.lastName),
-                                      decoration: InputDecoration(
-                                        border: UnderlineInputBorder(),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        width: 360,
+                                        child: TextFormField(
+                                          enabled: false,
+                                          controller: TextEditingController(
+                                              text: userProfile.firstName +
+                                                  ' ' +
+                                                  userProfile.lastName),
+                                          decoration: InputDecoration(
+                                            border: UnderlineInputBorder(),
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -208,16 +216,21 @@ class _AccountScreenState extends State<AccountScreen> {
                                     ],
                                   ),
                                   Padding(padding: EdgeInsets.only(left: 20)),
-                                  Container(
-                                    width: 360,
-                                    child: TextFormField(
-                                      enabled: false,
-                                      controller: TextEditingController(
-                                          text: userProfile.username),
-                                      decoration: InputDecoration(
-                                        border: UnderlineInputBorder(),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        width: 360,
+                                        child: TextFormField(
+                                          enabled: false,
+                                          controller: TextEditingController(
+                                              text: userProfile.username),
+                                          decoration: InputDecoration(
+                                            border: UnderlineInputBorder(),
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -278,14 +291,19 @@ class _AccountScreenState extends State<AccountScreen> {
                                     ],
                                   ),
                                   Padding(padding: EdgeInsets.only(left: 20)),
-                                  Container(
-                                    width: 360,
-                                    child: TextFormField(
-                                      controller: phoneController,
-                                      decoration: InputDecoration(
-                                        border: UnderlineInputBorder(),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        width: 360,
+                                        child: TextFormField(
+                                          controller: phoneController,
+                                          decoration: InputDecoration(
+                                            border: UnderlineInputBorder(),
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -294,7 +312,8 @@ class _AccountScreenState extends State<AccountScreen> {
                               padding: const EdgeInsets.only(
                                   top: 20, left: 10, right: 10),
                               child: Column(
-                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,

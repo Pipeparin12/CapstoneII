@@ -33,6 +33,7 @@ class _MyStatefulWidgetState extends State<SignUpPage> {
             passwordController.text,
             firstnameController.text,
             lastnameController.text);
+            
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => SignInPage()));
       } on DioException catch (e) {
@@ -43,6 +44,7 @@ class _MyStatefulWidgetState extends State<SignUpPage> {
       }
     }
   }
+
 
   @override
   Widget build(BuildContext context) {

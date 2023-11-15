@@ -1,7 +1,5 @@
 import mongoose from 'mongoose'
 
-// Create profile schema firstname, lastname, email, address, phone
-
 export const ProductSchema = new mongoose.Schema({
     productId:{
         type: String, 

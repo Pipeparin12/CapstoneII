@@ -22,6 +22,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
   bool isLoading = true;
   late int counter = 1;
   String selectedSize = 'S';
+  var cart = [];
 
   Future<void> getDetail() async {
     try {
@@ -45,6 +46,21 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
     }
   }
 
+  Future<void> getYourCart() async {
+    try {
+      var result = await CartApi.getCart();
+      print(result.data);
+      setState(() {
+        print('Before update: $cart');
+        cart = result.data['cart'].toList();
+        print('After update: $cart');
+      });
+      print(cart);
+    } on DioException catch (e) {
+      print(e);
+    }
+  }
+
   @override
   void initState() {
     getDetail().then((_) => Future.delayed(new Duration(seconds: 1), () {
@@ -52,7 +68,11 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
             isLoading = false;
           });
         }));
-
+    getYourCart().then((_) => Future.delayed(new Duration(seconds: 1), () {
+          setState(() {
+            isLoading = false;
+          });
+        }));
     super.initState();
   }
 
@@ -62,13 +82,41 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.shopping_bag),
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return CartScreen();
-              }));
-            },
+          Stack(
+            children: <Widget>[
+              IconButton(
+                icon: const Icon(
+                  Icons.shopping_bag,
+                  size: 30,
+                ),
+                onPressed: () async {
+                  await Navigator.push(context,
+                      MaterialPageRoute(builder: (context) {
+                    return CartScreen();
+                  }));
+                  getYourCart();
+                },
+              ),
+              Visibility(
+                visible: cart
+                    .isNotEmpty, // Show the Positioned widget only if the cart is not empty
+                child: Positioned(
+                  right: 3,
+                  top: 5,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.red,
+                    radius: 10,
+                    child: Text(
+                      cart.length > 99 ? '99+' : cart.length.toString(),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           )
         ],
       ),
@@ -277,6 +325,21 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                                     listProduct[
                                                         'productImage']);
                                             print(result);
+                                            // Update the cart variable and trigger a rebuild
+                                            getYourCart();
+
+                                            // Pop the current screen
+                                            Navigator.pop(context);
+
+                                            // Push the screen again
+                                            Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ItemDetailScreen(
+                                                        id: widget.id,
+                                                      )),
+                                            );
                                           } catch (e) {
                                             print(e);
                                           }

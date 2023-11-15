@@ -40,7 +40,13 @@ dependencies:
   dio: ^5.3.3
   shared_preferences: ^2.2.2
   provider: ^6.0.5
+  numberpicker: ^2.1.2
+  url_launcher: ^6.2.1
+  flutter_native_splash: ^2.3.5
   
+flutter_native_splash:
+  color: "#ffffff"
+  image: "assets/images/splash.jpg"
 
 dev_dependencies:
   flutter_test:
@@ -55,9 +61,12 @@ dev_dependencies:
   flutter_launcher_icons: "^0.13.1"
 
 flutter_launcher_icons:
-  android: "launcher_icon"
+  android: true
   ios: true
   image_path: "assets/images/longdoo_logo.png" 
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/images/1024.png"
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
