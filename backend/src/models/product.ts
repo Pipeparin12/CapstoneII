@@ -36,7 +36,11 @@ export const ProductSchema = new mongoose.Schema({
     category:{
         type: String,
         require: true
-    }
+    },
+    productModel:{
+        type: String,
+        require: true
+    },
 });
 
 export default mongoose.model('Product', ProductSchema);

@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/components/bottomNavBar.dart';
 import 'package:longdoo_frontend/model/user.dart';
-import 'package:longdoo_frontend/screen/signup/signUpScreen.dart';
+import 'package:longdoo_frontend/screen/signUpScreen.dart';
 import 'package:longdoo_frontend/service/api/user.dart';
 import 'package:longdoo_frontend/service/dio.dart';
 import 'package:longdoo_frontend/service/share_preference.dart';

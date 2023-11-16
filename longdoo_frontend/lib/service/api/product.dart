@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:longdoo_frontend/service/dio.dart';
 import 'package:longdoo_frontend/service/share_preference.dart';
 
@@ -9,10 +10,11 @@ class ProductApi {
     return response;
   }
 
-  static Future<dynamic> getMen() async {
+  static Future<dynamic> getBySize(String category) async {
     DioInstance.dio.options.headers["authorization"] =
         "Bearer " + SharePreference.prefs.getString("token").toString();
-    final response = await DioInstance.dio.get('/product/category/Men');
+    final response =
+        await DioInstance.dio.get('/product/yourProduct/$category');
 
     return response;
   }
