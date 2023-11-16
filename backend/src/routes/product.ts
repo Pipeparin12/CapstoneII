@@ -2,6 +2,8 @@ import express from "express";
 import multer from "multer";
 import Product from '../models/product';
 import Model from '../models/model';
+import User  from "../models/user";
+import Profile from "../models/profile"
 const productRoute = express.Router();
 
 const storage = multer.diskStorage({
@@ -28,8 +30,8 @@ async function createproduct(req, res, next){
             'size': "",
             'quantity': 0,
             'category': "",
-            'productAmount': 0,
             'productImage': "",
+            'productModel': "",
         });
         req.productId = newproduct._id;
         next();
@@ -79,7 +81,8 @@ productRoute.post('/add', createproduct , upload.single('file'), async (req,res)
             color: product_color,
             size: product_size,
             quantity: product_quantuty,
-            category: product_category
+            category: product_category,
+            productModel: `assets/3D_models/test.glb`
 		}
 	);
 
@@ -100,6 +103,34 @@ productRoute.get('/all-product', async (req, res) => {
             message: 'Get product successfully!'
         });
     }catch(err){
+        return res.json({
+            success: false,
+            message: err
+        });
+    }
+});
+
+productRoute.get('/yourProduct/:key', async (req, res) => {
+    const user_id = req.user?.user_id;
+    try{
+        const userProfile = await Profile.findOne({ user: user_id });
+        console.log(userProfile)
+        if (!userProfile) {
+            return res.json({
+                success: false,
+                message: 'User profile not found.'
+            });
+        }
+        const userSize = userProfile.size;
+        // const userGender = userProfile.gender
+        const products = await Product.find({ size: userSize, category: {$regex: req.params.key} }).exec();
+        console.log(products)
+        return res.json({
+            products,
+            success: true,
+            message: 'Get products successfully!'
+        });
+    } catch (err) {
         return res.json({
             success: false,
             message: err

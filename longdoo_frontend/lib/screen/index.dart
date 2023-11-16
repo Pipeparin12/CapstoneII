@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/screen/signin.dart';
-import 'package:longdoo_frontend/screen/signup/signUpScreen.dart';
+import 'package:longdoo_frontend/screen/signUpScreen.dart';
 
 class IndexScreen extends StatelessWidget {
   @override

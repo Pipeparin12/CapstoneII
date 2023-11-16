@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:longdoo_frontend/screen/home.dart';
-import 'package:longdoo_frontend/screen/menu.dart';
-import 'package:longdoo_frontend/screen/try_on.dart';
+import 'package:longdoo_frontend/screen/user/home.dart';
+import 'package:longdoo_frontend/screen/user/menu.dart';
+import 'package:longdoo_frontend/screen/user/user_model.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);
@@ -15,7 +15,11 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 0;
   PageController pageController = PageController();
-  List<Widget> pageList = <Widget>[HomeScreen(), TryOnScreen(), MenuScreen()];
+  List<Widget> pageList = <Widget>[
+    HomeScreen(),
+    UserModelScreen(),
+    MenuScreen()
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(

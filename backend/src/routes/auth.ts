@@ -40,7 +40,8 @@ authRoute.post('/signup', async (req,res)=>{
                 waistSize: 0,
                 hipsSize: 0,
                 gender: "Unknown",
-                size: "Unknown"
+                size: "Unknown",
+                model: "Unknown"
 			}).catch(err => console.log(err));
 
             // Send it back to flutter
