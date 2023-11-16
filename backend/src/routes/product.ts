@@ -4,6 +4,7 @@ import Product from '../models/product';
 import Model from '../models/model';
 import User  from "../models/user";
 import Profile from "../models/profile"
+
 const productRoute = express.Router();
 
 const storage = multer.diskStorage({

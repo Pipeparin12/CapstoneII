@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 
+
 export const ModelSchema = new mongoose.Schema({
     modelId:{
         type: String, 
@@ -21,6 +22,7 @@ export const ModelSchema = new mongoose.Schema({
         type: String, 
         require: true,
     },
+
 
 });
 
