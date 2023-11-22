@@ -7,18 +7,49 @@ const accountRoute = express.Router();
 
 accountRoute.get('/all-user', async (req, res) => {
     try {
-        const users = await User.find();
+        const users = await User.find().select('-password');
         return res.json({
             success: true,
             users,
-        })
+        });
     } catch (error) {
         return res.json({
             success: false,
-            message: error
+            message: error,
         });
     }
-})
+});
+
+accountRoute.patch('/update-role', async (req, res) => {
+    const { users } = req.body;
+
+    if (!users || !Array.isArray(users)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid request body. Make sure "users" array is provided.',
+      });
+    }
+    
+    try {
+      for (const { userId, role } of users) {
+        await User.updateOne({ _id: userId }, { role });
+      }
+    
+      return res.json({
+        success: true,
+        message: 'Updated profiles!',
+      });
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({
+        success: false,
+        message: 'Internal server error',
+        error: err.message,
+      });
+    }
+  });
+
+
 
 accountRoute.get('/userdetails', async (req, res) => {
     try {
@@ -83,21 +114,17 @@ accountRoute.patch('/usersize/update', async (req, res) => {
 
         const userId = req.user?.user_id;
 
-        // Find the model based on size and gender
         const model = await Model.findOne({ modelSize: size, modelGender: gender });
 
         if (!model) {
-            // Handle the case where no matching model is found
             return res.json({
                 success: false,
                 message: "No matching model found for the given size and gender."
             });
         }
 
-        // Extract modelPath
         const modelPath = model.modelName;
 
-        // Update user profile with the new size and modelPath
         await Profile.updateOne({ user: userId }, {
             height, weight, chestSize, waistSize, hipsSize, gender, size, model: modelPath
         });

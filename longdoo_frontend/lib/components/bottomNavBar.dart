@@ -6,14 +6,15 @@ import 'package:longdoo_frontend/screen/user/menu.dart';
 import 'package:longdoo_frontend/screen/user/user_model.dart';
 
 class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({Key? key}) : super(key: key);
+  final int selectedIndex;
+  const BottomNavBar({Key? key, required this.selectedIndex}) : super(key: key);
 
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  int _selectedIndex = 0;
+  late int _selectedIndex = widget.selectedIndex;
   PageController pageController = PageController();
   List<Widget> pageList = <Widget>[
     HomeScreen(),

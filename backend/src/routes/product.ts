@@ -4,7 +4,6 @@ import Product from '../models/product';
 import Profile from '../models/profile';
 import Model from '../models/model';
 import User  from "../models/user";
-import Profile from "../models/profile"
 
 const productRoute = express.Router();
 
@@ -111,36 +110,22 @@ productRoute.get('/all-product', async (req, res) => {
         });
     }
 });
-productRoute.get('/yourProduct', async (req, res) => {
-    const user_id = req.user?.user_id;
-    // const user_id = req.body.user_id;
-    console.log(user_id);
 
-    try{
-        const userProfile = await Profile.findOne({ user: user_id });
-        console.log(userProfile)
-        if (!userProfile) {
-            return res.json({
-                success: false,
-                message: 'User profile not found.'
-            });
-        }
-        const userSize = userProfile.size;
-        const userGender = userProfile.gender;
-        const products = await Product.find({ size: userSize }).exec();
-        console.log(products)
-        return res.json({
-            products,
-            success: true,
-            message: 'Get products successfully!'
-        });
+productRoute.get('/category/:key',async (req, res) => {
+    try {
+        let result = await Product.find({
+            "$or": [{
+                category: {$regex: req.params.key}
+            }]
+        })
+        res.send(result);
     } catch (err) {
         return res.json({
             success: false,
             message: err
-        });
+        })
     }
-});
+})
 
 productRoute.get('/yourProduct/:key', async (req, res) => {
     const user_id = req.user?.user_id;
@@ -154,7 +139,6 @@ productRoute.get('/yourProduct/:key', async (req, res) => {
             });
         }
         const userSize = userProfile.size;
-        // const userGender = userProfile.gender
         const products = await Product.find({ size: userSize, category: {$regex: req.params.key} }).exec();
         console.log(products)
         return res.json({

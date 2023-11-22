@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/screen/signin.dart';
-import 'package:longdoo_frontend/screen/signUpScreen.dart';
 
 class IndexScreen extends StatelessWidget {
   @override
@@ -34,14 +33,6 @@ class IndexScreen extends StatelessWidget {
                     fontSize: 20,
                     color: Color(0xFFFFFFFF)),
               )),
-          // Container(
-          //     height: 50,
-          //     padding: const EdgeInsets.fromLTRB(10, 10, 200, 0),
-          //     child: ElevatedButton(
-          //       child: const Text('START'),
-          //       onPressed: () => Navigator.push(context,
-          //           MaterialPageRoute(builder: (context) => SignUpPage())),
-          //     )),
         ]),
       ),
       floatingActionButton: FloatingActionButton(

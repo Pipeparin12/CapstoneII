@@ -78,10 +78,9 @@ class _UserModelScreenState extends State<UserModelScreen> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            // Navigate back to a specific route
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) {
-              return BottomNavBar();
+              return BottomNavBar(selectedIndex: 0,);
             }));
           },
         ),

@@ -1,46 +1,30 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:longdoo_frontend/screen/user/cart.dart';
-import 'package:longdoo_frontend/screen/user/itemDetail.dart';
-import 'package:longdoo_frontend/service/api/cart.dart';
+import 'package:longdoo_frontend/screen/admin/add_clothes.dart';
+import 'package:longdoo_frontend/screen/admin/clothes_detail.dart';
 import 'package:longdoo_frontend/service/api/product.dart';
 import 'package:longdoo_frontend/service/dio.dart';
 
-class CategoryScreen extends StatefulWidget {
+class AdminCategoryScreen extends StatefulWidget {
   final String name;
   final String category;
-  CategoryScreen({Key? key, required this.name, required this.category});
+  AdminCategoryScreen({Key? key, required this.name, required this.category});
 
   @override
-  State<CategoryScreen> createState() => _CategoryScreenState();
+  State<AdminCategoryScreen> createState() => _AdminCategoryScreenState();
 }
 
-class _CategoryScreenState extends State<CategoryScreen> {
-  var cart = [];
+class _AdminCategoryScreenState extends State<AdminCategoryScreen> {
   String name = '';
-
   var listProduct = [];
 
   Future<void> getProduct() async {
     try {
-      var result = await ProductApi.getBySize(widget.category);
+      var result = await ProductApi.getProduct(widget.category);
       final responseData = result.data;
       setState(() {
-        listProduct = responseData['products'] ?? [];
+        listProduct = responseData;
       });
-    } on DioException catch (e) {
-      print(e);
-    }
-  }
-
-  Future<void> getYourCart() async {
-    try {
-      var result = await CartApi.getCart();
-      print(result.data);
-      setState(() {
-        cart = result.data['cart'].toList();
-      });
-      print(cart);
     } on DioException catch (e) {
       print(e);
     }
@@ -49,7 +33,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   void initState() {
     getProduct();
-    getYourCart();
     super.initState();
   }
 
@@ -70,40 +53,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
         centerTitle: true,
         backgroundColor: Colors.white,
         actions: <Widget>[
-          Stack(
-            children: <Widget>[
-              IconButton(
-                icon: const Icon(
-                  Icons.shopping_bag,
-                  size: 30,
-                ),
-                onPressed: () async {
-                  await Navigator.push(context,
-                      MaterialPageRoute(builder: (context) {
-                    return CartScreen();
-                  }));
-                  getYourCart();
-                },
-              ),
-              Visibility(
-                visible: cart.isNotEmpty,
-                child: Positioned(
-                  right: 3,
-                  top: 5,
-                  child: CircleAvatar(
-                    backgroundColor: Colors.red,
-                    radius: 10,
-                    child: Text(
-                      cart.length > 99 ? '99+' : cart.length.toString(),
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
+          IconButton(
+            icon: const Icon(
+              Icons.add_circle_outline,
+              size: 30,
+            ),
+            onPressed: () async {
+              await Navigator.push(context,
+                  MaterialPageRoute(builder: (context) {
+                return AddClothesScreen();
+              }));
+            },
           )
         ],
       ),
@@ -144,11 +104,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                     onTap: () => Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) =>
-                                              ItemDetailScreen(
-                                            id: listProduct[index]['_id'],
-                                          ),
-                                        )),
+                                            builder: (context) =>
+                                                ClothesDetailScreen(
+                                                    id: listProduct[index]
+                                                        ['_id']))),
                                     child: Column(
                                       children: [
                                         Card(
@@ -190,6 +149,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         ),
                                         Text(
                                           listProduct[index]['productName'],
+                                          style: TextStyle(fontSize: 10),
+                                          textAlign: TextAlign.left,
+                                        ),
+                                        Text(
+                                          "size: " + listProduct[index]['size'],
                                           style: TextStyle(fontSize: 10),
                                           textAlign: TextAlign.left,
                                         ),

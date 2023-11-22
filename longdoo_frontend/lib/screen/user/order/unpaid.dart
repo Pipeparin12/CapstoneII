@@ -1,8 +1,6 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/components/bottomNavBar.dart';
-import 'package:longdoo_frontend/model/product.dart';
 import 'package:longdoo_frontend/screen/user/checkout.dart';
 import 'package:longdoo_frontend/screen/user/order/processing.dart';
 import 'package:longdoo_frontend/screen/user/order/shipped.dart';
@@ -46,7 +44,7 @@ class _UnpaidScreenState extends State<UnpaidScreen> {
   @override
   void initState() {
     super.initState();
-    getYourOrder(); // Call the function to fetch your orders
+    getYourOrder();
   }
 
   @override
@@ -56,10 +54,11 @@ class _UnpaidScreenState extends State<UnpaidScreen> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            // Navigate back to a specific route
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) {
-              return BottomNavBar();
+              return BottomNavBar(
+                selectedIndex: 2,
+              );
             }));
           },
         ),
@@ -70,7 +69,7 @@ class _UnpaidScreenState extends State<UnpaidScreen> {
       ),
       body: SingleChildScrollView(
         child: SizedBox(
-          height: 550,
+          height: 730,
           child: Column(
             children: <Widget>[
               Container(
@@ -82,7 +81,7 @@ class _UnpaidScreenState extends State<UnpaidScreen> {
                     children: [
                       TextButton(
                         onPressed: () {
-                          // Add navigation logic for the "Unpaid" button
+                          // No navigate because on this page already.
                         },
                         child: Text(
                           'To Pay',
@@ -311,65 +310,6 @@ class _UnpaidScreenState extends State<UnpaidScreen> {
           ),
         ),
       ),
-      // bottomNavigationBar: Container(
-      //   padding: EdgeInsets.symmetric(
-      //     vertical: 15,
-      //     horizontal: 30,
-      //   ),
-      //   // height: 174,
-      //   decoration: BoxDecoration(
-      //     color: Colors.white,
-      //     borderRadius: BorderRadius.only(
-      //       topLeft: Radius.circular(30),
-      //       topRight: Radius.circular(30),
-      //     ),
-      //     boxShadow: [
-      //       BoxShadow(
-      //         offset: Offset(0, -15),
-      //         blurRadius: 20,
-      //         color: Color(0xFFDADADA).withOpacity(0.5),
-      //       )
-      //     ],
-      //   ),
-      //   child: SafeArea(
-      //     child: Column(
-      //       mainAxisSize: MainAxisSize.min,
-      //       crossAxisAlignment: CrossAxisAlignment.start,
-      //       children: [
-      //         SizedBox(height: 10),
-      //         Row(
-      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //           children: [
-      //             Text(
-      //               "Total Price: \$100",
-      //               style:
-      //                   TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-      //             ), // Replace with your total price text
-      //             GestureDetector(
-      //               behavior: HitTestBehavior.translucent,
-      //               onTap: () {},
-      //               child: Container(
-      //                 padding: EdgeInsets.all(
-      //                     10), // Adjust the padding to increase the tappable area
-      //                 child: ElevatedButton(
-      //                   style: ElevatedButton.styleFrom(
-      //                     minimumSize: Size(
-      //                         140, 50), // Adjust the minimum size as needed
-      //                   ),
-      //                   child: Text(
-      //                     "Purchase",
-      //                     style: TextStyle(fontSize: 18),
-      //                   ),
-      //                   onPressed: () {},
-      //                 ),
-      //               ),
-      //             ),
-      //           ],
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      // )
     );
   }
 }

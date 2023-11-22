@@ -1,23 +1,21 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:longdoo_frontend/components/bottomNavBar.dart';
-import 'package:longdoo_frontend/screen/user/order/processing.dart';
-import 'package:longdoo_frontend/screen/user/order/unpaid.dart';
+import 'package:longdoo_frontend/screen/admin/home_admin.dart';
 import 'package:longdoo_frontend/service/api/order.dart';
 import 'package:longdoo_frontend/service/dio.dart';
 
-class ShippedScreen extends StatefulWidget {
+class ConfirmShipmentScreen extends StatefulWidget {
   @override
-  _ShippedScreenState createState() => _ShippedScreenState();
+  _ConfirmShipmentScreenState createState() => _ConfirmShipmentScreenState();
 }
 
-class _ShippedScreenState extends State<ShippedScreen> {
+class _ConfirmShipmentScreenState extends State<ConfirmShipmentScreen> {
   var order = [];
   bool isChecked = false;
 
   Future<void> getYourOrder() async {
     try {
-      var result = await OrderApi.getShippedOrder();
+      var result = await OrderApi.getOnTheWayOrder();
       print(result.data);
       setState(() {
         order = result.data['orders'].toList();
@@ -28,11 +26,32 @@ class _ShippedScreenState extends State<ShippedScreen> {
     }
   }
 
-  Future<void> confirmShipped(String orderId) async {
+  double calculateTotalPrice(List<dynamic> cart) {
+    double totalPriceSum = 0.0;
+
+    for (var item in cart) {
+      double itemTotalPrice =
+          double.tryParse(item['totalPrice'].toString()) ?? 0.0;
+      totalPriceSum += itemTotalPrice;
+    }
+
+    return totalPriceSum;
+  }
+
+  Future<void> updateShipment(String orderId) async {
     try {
-      var result = await OrderApi.confirmShipped(orderId);
-      getYourOrder();
-    } catch (e) {
+      print(orderId);
+      var result = await OrderApi.updateShipment(orderId);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AdminHomeScreen(),
+        ),
+      );
+      setState(() {
+        print('Update successfully');
+      });
+    } on DioException catch (e) {
       print(e);
     }
   }
@@ -52,68 +71,20 @@ class _ShippedScreenState extends State<ShippedScreen> {
           onPressed: () {
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) {
-              return BottomNavBar(selectedIndex: 2);
+              return AdminHomeScreen();
             }));
           },
         ),
         backgroundColor: Colors.white,
-        title: Text('My Purchases'),
+        title: Text('Confirm Shipment'),
         centerTitle: true,
         elevation: 0,
       ),
       body: SingleChildScrollView(
         child: SizedBox(
-          height: 680,
+          height: 700,
           child: Column(
             children: <Widget>[
-              Container(
-                decoration: BoxDecoration(color: Colors.white),
-                child: Padding(
-                  padding: EdgeInsets.all(1),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => UnpaidScreen(),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          'To Pay',
-                          style: TextStyle(fontSize: 14, color: Colors.black),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ProcessingScreen(),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          'To Ship',
-                          style: TextStyle(fontSize: 14, color: Colors.black),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          // No navigate because on this page already.
-                        },
-                        child: Text(
-                          'To Receive',
-                          style: TextStyle(fontSize: 14, color: Colors.black),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
               Expanded(
                 child: ListView.builder(
                   itemCount: order.length,
@@ -130,22 +101,11 @@ class _ShippedScreenState extends State<ShippedScreen> {
                             Row(
                               children: [
                                 Text(
-                                  'Status: Shipped',
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Text(
                                   'Order number: ' + order[index]['_id'],
                                   style: TextStyle(
-                                      fontSize: 14,
+                                      fontSize: 16,
                                       color: Colors.black,
-                                      fontWeight: FontWeight.w400),
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ],
                             ),
@@ -154,8 +114,8 @@ class _ShippedScreenState extends State<ShippedScreen> {
                             ),
                             Column(
                               children: [
-                                for (var product
-                                    in order[index]['products'] ?? '')
+                                if (order[index]['products'] != null &&
+                                    order[index]['products'].isNotEmpty)
                                   Container(
                                     padding: EdgeInsets.only(
                                         right: 5, left: 5, bottom: 10),
@@ -179,8 +139,9 @@ class _ShippedScreenState extends State<ShippedScreen> {
                                                   BorderRadius.circular(20),
                                               image: DecorationImage(
                                                 image: NetworkImage(
-                                                  DioInstance.getImage((product[
-                                                          'productImage'] ??
+                                                  DioInstance.getImage((order[
+                                                              index]['products']
+                                                          [0]['productImage'] ??
                                                       '')),
                                                 ),
                                                 fit: BoxFit.cover,
@@ -198,57 +159,33 @@ class _ShippedScreenState extends State<ShippedScreen> {
                                                     CrossAxisAlignment.start,
                                                 children: <Widget>[
                                                   Text(
-                                                    (product['productName'] ??
+                                                    (order[index]['products'][0]
+                                                            ['productName'] ??
                                                         ''),
                                                     style: TextStyle(
-                                                      fontSize: 14,
-                                                    ),
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold),
                                                     textAlign: TextAlign.start,
                                                   ),
                                                   SizedBox(
                                                     height: 5,
                                                   ),
                                                   Text(
-                                                    "Size: " +
-                                                        (product['size'] ?? ""),
+                                                    "Total Price: ฿" +
+                                                        calculateTotalPrice(
+                                                                order[index][
+                                                                    'products'])
+                                                            .toStringAsFixed(0),
                                                     style: TextStyle(
-                                                      color: Colors.grey,
-                                                    ),
-                                                    textAlign: TextAlign.start,
-                                                  ),
-                                                  SizedBox(
-                                                    height: 5,
-                                                  ),
-                                                  Text(
-                                                    "Amount: " +
-                                                        (product['quantity']
-                                                                .toString() ??
-                                                            ""),
-                                                    style: TextStyle(
-                                                      color: Colors.grey,
-                                                    ),
+                                                        fontSize: 14,
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.w400),
                                                     textAlign: TextAlign.start,
                                                   ),
                                                 ],
                                               ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(10),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: <Widget>[
-                                                Text(
-                                                  '\฿ ' +
-                                                      (product['totalPrice']
-                                                              .toString() ??
-                                                          ''),
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ],
                                             ),
                                           ),
                                         ],
@@ -262,11 +199,11 @@ class _ShippedScreenState extends State<ShippedScreen> {
                               children: [
                                 TextButton(
                                     onPressed: () {
-                                      confirmShipped(order[index]['_id']);
+                                      updateShipment(order[index]['_id']);
                                     },
                                     child: Text(
-                                      'Order received',
-                                      style: TextStyle(color: Colors.black),
+                                      'Confirm Shipment',
+                                      style: TextStyle(color: Colors.red),
                                     )),
                               ],
                             ),

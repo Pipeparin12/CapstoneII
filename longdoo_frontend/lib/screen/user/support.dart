@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class SupportScreen extends StatelessWidget {
   const SupportScreen({super.key});
@@ -53,26 +52,20 @@ class SupportScreen extends StatelessWidget {
                                 fontSize: 16, fontWeight: FontWeight.w400),
                           ),
                         ],
-                      ), // Replace with your total price text
+                      ),
                       GestureDetector(
                         behavior: HitTestBehavior.translucent,
                         child: Padding(
-                          padding: EdgeInsets.all(
-                              10), // Adjust the padding to increase the tappable area
+                          padding: EdgeInsets.all(10),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              minimumSize: Size(
-                                  140, 50), // Adjust the minimum size as needed
+                              minimumSize: Size(140, 50),
                             ),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment
-                                  .center, // Center the icon and text horizontally
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons
-                                    .call), // Replace with your desired icon
-                                SizedBox(
-                                    width:
-                                        8), // Add spacing between the icon and text
+                                Icon(Icons.call),
+                                SizedBox(width: 8),
                                 Text(
                                   "Call",
                                   style: TextStyle(fontSize: 16),

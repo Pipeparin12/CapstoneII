@@ -1,8 +1,14 @@
-import 'package:flutter/foundation.dart';
+import 'package:dio/dio.dart';
 import 'package:longdoo_frontend/service/dio.dart';
 import 'package:longdoo_frontend/service/share_preference.dart';
 
 class ProductApi {
+  static Future<dynamic> addProduct(FormData formData) async {
+    DioInstance.dio.options.headers["authorization"] =
+        "Bearer " + SharePreference.prefs.getString("token").toString();
+    var response = await DioInstance.dio.post("/product/add", data: formData);
+  }
+
   static Future<dynamic> getProduct(String category) async {
     DioInstance.dio.options.headers["authorization"] =
         "Bearer " + SharePreference.prefs.getString("token").toString();

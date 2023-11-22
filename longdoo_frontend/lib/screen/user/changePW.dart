@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:longdoo_frontend/components/bottomNavBar.dart';
+import 'package:longdoo_frontend/screen/user/account.dart';
 import 'package:longdoo_frontend/service/dio.dart';
 import 'package:longdoo_frontend/service/share_preference.dart';
 import 'package:quickalert/quickalert.dart';
@@ -40,14 +40,15 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
       if (response.data["message"] == "Password changed successfully.") {
         QuickAlert.show(
-          context: context,
-          type: QuickAlertType.success,
-          text: 'Password Changed Successfully!',
-          onConfirmBtnTap: () => Navigator.push(
-              context, MaterialPageRoute(builder: (context) => BottomNavBar())),
-        );
-        // Navigator.push(
-        //     context, MaterialPageRoute(builder: (context) => AccountScreen()));
+            context: context,
+            type: QuickAlertType.success,
+            text: 'Password Changed Successfully!',
+            onConfirmBtnTap: () {
+              Navigator.pop(context);
+              Navigator.pop(context);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => AccountScreen()));
+            });
       }
     } catch (e) {
       QuickAlert.show(
@@ -68,6 +69,15 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           backgroundColor: Colors.white,
           title: Text('Change Password'),
           centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => AccountScreen()),
+              );
+            },
+          ),
         ),
         body: SingleChildScrollView(
           child: Form(
@@ -79,10 +89,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        // borderRadius: BorderRadius.circular(10),
                       ),
                       child: Column(
-                          // mainAxisAlignment: MainAxisAlignment.spaceAround,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
                             Padding(
@@ -195,6 +203,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                               children: [
                                 GestureDetector(
                                   child: Container(
+                                    width: 200,
+                                    height: 50,
                                     padding: EdgeInsets.symmetric(
                                         vertical: 10, horizontal: 20),
                                     decoration: BoxDecoration(
@@ -206,8 +216,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                           MainAxisAlignment.center,
                                       children: [
                                         Text('Save',
-                                            style:
-                                                TextStyle(color: Colors.black)),
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 18)),
                                       ],
                                     ),
                                   ),

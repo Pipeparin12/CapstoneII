@@ -1,9 +1,6 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/components/bottomNavBar.dart';
-import 'package:longdoo_frontend/model/product.dart';
-import 'package:longdoo_frontend/screen/user/menu.dart';
 import 'package:longdoo_frontend/screen/user/order/shipped.dart';
 import 'package:longdoo_frontend/screen/user/order/unpaid.dart';
 import 'package:longdoo_frontend/service/api/order.dart';
@@ -34,7 +31,7 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
   @override
   void initState() {
     super.initState();
-    getYourOrder(); // Call the function to fetch your orders
+    getYourOrder();
   }
 
   @override
@@ -44,10 +41,9 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            // Navigate back to a specific route
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) {
-              return BottomNavBar();
+              return BottomNavBar(selectedIndex: 2);
             }));
           },
         ),
@@ -84,7 +80,7 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          // Add navigation logic for the "Processing" button
+                          // No navigate because on this page already.
                         },
                         child: Text(
                           'To Ship',
@@ -278,7 +274,6 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
           ),
         ),
       ),
-      // bottomNavigationBar: BottomNavBar(),
     );
   }
 }

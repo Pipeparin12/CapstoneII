@@ -8,12 +8,10 @@ class CartApi {
         "Bearer " + SharePreference.prefs.getString("token").toString();
 
     try {
-      // Check if the product already exists in the cart
       var response =
           await DioInstance.dio.get("/cart/check-product/$productId");
 
       if (response.data['found']) {
-        // Product already exists in the cart, so update the quantity
         int existingQuantity = response.data['quantity'];
         quantity += existingQuantity;
         await DioInstance.dio.put("/cart/update-cart/$productId", data: {
@@ -22,18 +20,14 @@ class CartApi {
           "productImage": productImage,
         });
       } else {
-        // Product is not in the cart, so create a new cart entry
         await DioInstance.dio.post("/cart/add-cart/$productId", data: {
           "quantity": quantity,
           "size": size,
           "productImage": productImage,
         });
       }
-
-      // Return a success message or updated cart data
       return "Product added to cart.";
     } catch (e) {
-      // Handle any errors here
       print("Error adding to cart: $e");
       throw e;
     }
@@ -45,15 +39,12 @@ class CartApi {
         "Bearer " + SharePreference.prefs.getString("token").toString();
 
     try {
-      // Make an API call to update the quantity of a cart item
       await DioInstance.dio.put("/cart/update-cart/$productId", data: {
         "quantity": quantity,
         "size": size,
         "productImage": productImage,
-        // You might need to provide additional data as needed by your API
       });
     } catch (e) {
-      // Handle any errors here
       print("Error updating cart item quantity: $e");
       throw e;
     }

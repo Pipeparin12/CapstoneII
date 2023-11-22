@@ -1,14 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:longdoo_frontend/model/product.dart';
 import 'dart:io';
 import 'package:http_parser/http_parser.dart';
 import 'package:longdoo_frontend/service/api/order.dart';
 import 'package:longdoo_frontend/service/api/product.dart';
 import 'package:longdoo_frontend/service/dio.dart';
 import 'package:longdoo_frontend/service/share_preference.dart';
-import 'package:http_parser/http_parser.dart';
 
 class CheckoutScreen extends StatefulWidget {
   final String orderId;
@@ -28,7 +26,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   bool isLoading = true;
 
   var orderData = {};
-  var productData = {};
+  var productData = [];
 
   Future<void> getDetail() async {
     try {
@@ -36,7 +34,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       setState(() {
         orderData = result.data['order'];
       });
-      // print(result);
     } on DioException catch (e) {
       print(e);
     }
@@ -45,7 +42,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   Future<void> getProduct() async {
     try {
       setState(() {
-        productData = orderData['products'];
+        productData = List.from(orderData['products']);
       });
       print(productData);
     } on DioException catch (e) {
@@ -64,14 +61,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       print(e);
     }
   }
-
-  // getProductId(String id) {
-  //   productId = orderData['products']['productId'];
-  // }
-
-  // getQuantity(int quantity) {
-  //   productQuantity = orderData['products']['quantity'];
-  // }
 
   double calculateTotalPrice(Map<dynamic, dynamic> orderData) {
     double total = 0.0;
@@ -110,6 +99,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         filename: "fileName.jpg",
         contentType: MediaType('image', 'jpg'),
       ),
+      "orderId": widget.orderId,
     });
 
     final response = await DioInstance.dio.post(
@@ -138,8 +128,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // getProductId(orderData['products']['quantity']);
-    // getQuantity(orderData['products']['quantity']);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -168,14 +156,20 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             children: [
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
-                                children: [Text('Order Details')],
+                                children: [
+                                  Text(
+                                    'Order Details',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                    ),
+                                  )
+                                ],
                               ),
                               SizedBox(
                                 height: 15,
                               ),
                               if (orderData != null &&
-                                  orderData['products'] !=
-                                      null) // Add a null check for orderData
+                                  orderData['products'] != null)
                                 for (var product in orderData['products'])
                                   Row(
                                     mainAxisAlignment:
@@ -216,8 +210,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                       ),
                                     ],
                                   ),
-                              if (orderData !=
-                                  null) // Add a null check for orderData
+                              if (orderData != null)
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -239,7 +232,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                       ],
                                     ),
                                     Text(
-                                      '\฿${calculateTotalPrice(orderData).toStringAsFixed(0)}', // Display the total order price
+                                      '\฿${calculateTotalPrice(orderData).toStringAsFixed(0)}',
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
@@ -274,7 +267,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                       Text(
                                         'User Information',
                                         style: TextStyle(
-                                          fontSize: 16,
+                                          fontSize: 18,
                                         ),
                                         textAlign: TextAlign.start,
                                       ),
@@ -305,7 +298,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                       Text(
                                         'Purchase Order',
                                         style: TextStyle(
-                                          fontSize: 16,
+                                          fontSize: 18,
                                         ),
                                         textAlign: TextAlign.start,
                                       ),
@@ -329,113 +322,111 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                         ),
                                         textAlign: TextAlign.start,
                                       ),
-                                      // ClipRRect(
-                                      //   borderRadius: BorderRadius.circular(10),
-                                      //   child: SizedBox(
-                                      //     height: 250,
-                                      //     width: double.infinity,
-                                      //     child: Column(
-                                      //       children: [
-                                      //         Expanded(
-                                      //             child: Container(
-                                      //           width: 300,
-                                      //           decoration: BoxDecoration(
-                                      //               borderRadius:
-                                      //                   BorderRadius.circular(
-                                      //                       20),
-                                      //               border: Border.all(
-                                      //                   color: Colors.black)),
-                                      //           child: Padding(
-                                      //             padding:
-                                      //                 const EdgeInsets.all(10),
-                                      //             child: Center(
-                                      //               child: Column(
-                                      //                 mainAxisAlignment:
-                                      //                     MainAxisAlignment
-                                      //                         .spaceBetween,
-                                      //                 children: [
-                                      //                   Expanded(
-                                      //                       child: imageFile ==
-                                      //                               null
-                                      //                           ? const Center(
-                                      //                               child: Text(
-                                      //                                   "No image selected"),
-                                      //                             )
-                                      //                           : Image.file(
-                                      //                               imageFile!))
-                                      //                 ],
-                                      //               ),
-                                      //             ),
-                                      //           ),
-                                      //         ))
-                                      //       ],
-                                      //     ),
-                                      //   ),
-                                      // )
                                     ],
                                   ),
                                 ],
                               ),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  pickedImage();
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  primary: Colors.grey.shade400,
-                                  padding: EdgeInsets.all(5),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                                child: Container(
-                                  width: 200,
-                                  child: Center(
-                                    child: Text(
-                                      'Upload Slip',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  uploadSlips(context);
-                                  for (int i = 0;
-                                      i < orderData['products'].length;
-                                      i++) {}
-                                  Navigator.pop(context);
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  primary: Colors.grey.shade400,
-                                  padding: EdgeInsets.all(5),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                                child: Container(
-                                  width: 200,
-                                  child: Center(
-                                    child: Text(
-                                      'Confirm',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
                             ],
                           ),
                         ),
-                      )
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: SizedBox(
+                          height: 400,
+                          width: double.infinity,
+                          child: Column(
+                            children: [
+                              Expanded(
+                                  child: Container(
+                                width: 250,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(
+                                        width: 2, color: Colors.grey)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            pickedImage();
+                                          },
+                                          child: Expanded(
+                                              child: imageFile == null
+                                                  ? Center(
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Icon(
+                                                            Icons
+                                                                .add_photo_alternate_outlined,
+                                                            size: 60,
+                                                          ),
+                                                          SizedBox(height: 10),
+                                                          Text(
+                                                            'Upload Slip Here',
+                                                            style: TextStyle(
+                                                              fontSize: 16,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    )
+                                                  : Image.file(
+                                                      imageFile!,
+                                                      fit: BoxFit.fitHeight,
+                                                      height: 350,
+                                                      width: 400,
+                                                    )),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ))
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          uploadSlips(context);
+                          for (int i = 0;
+                              i < orderData['products'].length;
+                              i++) {}
+                          Navigator.pop(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.grey.shade400,
+                          padding: EdgeInsets.all(5),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        child: Container(
+                          width: 200,
+                          child: Center(
+                            child: Text(
+                              'Confirm',
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

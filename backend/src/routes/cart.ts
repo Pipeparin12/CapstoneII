@@ -7,11 +7,9 @@ import order from "@/models/order";
 const cartRoute = express.Router();
 
 cartRoute.post('/add-cart/:id', async (req, res) => {
-    // ลอง manual ดูก่อนใน postman
     const user_id = req.user.user_id;
     const size = req.body.size
     const quantity = req.body.quantity;
-    // Check if the user is authenticated (logged in)
     if (!req.user) {
         return res.status(401).json({
             success: false,
@@ -21,11 +19,6 @@ cartRoute.post('/add-cart/:id', async (req, res) => {
 
     try {
         const product_id = req.params.id;
-
-        // ลอง manual ดูก่อนใน postman
-        // const product_id = req.body.product_id;
-
-        // Fetch the product's price from the database
         const product = await Product.findById(product_id);
         console.log(product)
 
@@ -67,16 +60,12 @@ cartRoute.post('/add-cart/:id', async (req, res) => {
 cartRoute.post('/checkout', async (req, res) => {
     const user_id = req.user.user_id;
 
-    // ลอง manual ดูก่อนใน postman
-    // const user_id = req.body.user_id;
-
-    const currentTimestamp = Date.now(); // Get the current timestamp
+    const currentTimestamp = Date.now(); 
 
     try {
         const userProfile = await Profile.findOne({ user: user_id })
         const cart = await Cart.find({ owner: user_id });
         const products = [];
-        // Calculate the total price
         let totalPrice = 0;
         cart.map((cart) => {
             products.push({
@@ -120,14 +109,12 @@ cartRoute.post('/checkout', async (req, res) => {
                 message: "Can't create order."
             });
         }
-        // Clear the user's cart after a successful checkout
         await Cart.deleteMany({ owner: user_id });
 
         return res.json({
             success: true,
             message: 'Checkout successful! order will be processing.',
             orderId: orderId,
-            // addOrder
         });
     } catch (err) {
         return res.json({
@@ -179,11 +166,10 @@ cartRoute.get('/check-product/:id', async (req, res) => {
   
       const product = await Product.findById(product_id);
       console.log(product)
-      // Update the cart item details
       cartItem.quantity = quantity;
       cartItem.size = size;
       cartItem.productImage = productImage;
-      cartItem.totalPrice = cartItem.quantity * product.price; // You need to fetch the product's price
+      cartItem.totalPrice = cartItem.quantity * product.price;
   
       await cartItem.save();
   
@@ -203,16 +189,7 @@ cartRoute.get('/check-product/:id', async (req, res) => {
 cartRoute.get('/get-cart', async (req, res) => {
     try {
         const userId = await req.user.user_id;
-
-        // const user_id = req.body.user_id;
         const cart = await Cart.find({ 'owner': userId });
-        // const product = await Product.find({_id: {$in: cart.map((e) => e.productId)}});
-
-        // const serializedCart = JSON.parse(JSON.stringify(cart));
-        // const serializedProduct = JSON.parse(JSON.stringify(product));
-
-        // const carts = serializedCart.map(bm => ({ ...bm, product: serializedProduct.find(p => p._id === bm.productId)}));
-        // console.log(product);
         return res.json({
             cart,
             success: true,

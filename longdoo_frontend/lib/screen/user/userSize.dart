@@ -3,10 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/components/bottomNavBar.dart';
 import 'package:longdoo_frontend/model/profile.dart';
-import 'package:longdoo_frontend/screen/user/menu.dart';
 import 'package:longdoo_frontend/service/dio.dart';
 import 'package:longdoo_frontend/service/share_preference.dart';
-import 'package:numberpicker/numberpicker.dart';
 
 class UserSizeScreen extends StatefulWidget {
   const UserSizeScreen({super.key});
@@ -27,16 +25,31 @@ class _UserSizeScreenState extends State<UserSizeScreen> {
     }
   }
 
-  String calculateSize(double chest, double waist, double hip) {
-    // Define your sizing criteria
-    if (chest >= 37.5 && waist >= 31.5 && hip >= 40) {
-      return "XL";
-    } else if (chest >= 35 && waist >= 29.5 && hip >= 38) {
-      return "L";
-    } else if (chest >= 33.5 && waist >= 28 && hip >= 36.5) {
-      return "M";
+  String calculateSize(
+      double chestInches, double waistInches, double hipInches, String gender) {
+    if (gender == "Female") {
+      if (chestInches >= 42 && waistInches >= 35.5 && hipInches >= 44) {
+        return "XL";
+      } else if (chestInches >= 38 && waistInches >= 32 && hipInches >= 41) {
+        return "L";
+      } else if (chestInches >= 35 && waistInches >= 28 && hipInches >= 38) {
+        return "M";
+      } else {
+        return "S";
+      }
+    }
+    if (gender == "Male") {
+      if (chestInches >= 44 && waistInches >= 36 && hipInches >= 42) {
+        return "XL";
+      } else if (chestInches >= 41 && waistInches >= 33 && hipInches >= 393) {
+        return "L";
+      } else if (chestInches >= 38 && waistInches >= 31 && hipInches >= 37) {
+        return "M";
+      } else {
+        return "S";
+      }
     } else {
-      return "S";
+      return "Size not specified for this gender";
     }
   }
 
@@ -88,21 +101,18 @@ class _UserSizeScreenState extends State<UserSizeScreen> {
   }
 
   updateSize(context) async {
-    // Extract text from controllers
     String heightText = heightController.text;
     String weightText = weightController.text;
     String chestText = chestSizeController.text;
     String waistText = waistSizeController.text;
     String hipText = hipsSizeController.text;
 
-    // Convert text to integers
     double heightValue = double.tryParse(heightText) ?? 0.0;
     double weightValue = double.tryParse(weightText) ?? 0.0;
     double chestValue = double.tryParse(chestText) ?? 0.0;
     double waistValue = double.tryParse(waistText) ?? 0.0;
     double hipValue = double.tryParse(hipText) ?? 0.0;
 
-    // Create formatted strings for display
     String formattedHeight = heightValue == heightValue.roundToDouble()
         ? heightValue.round().toString()
         : heightValue.toString();
@@ -119,7 +129,8 @@ class _UserSizeScreenState extends State<UserSizeScreen> {
         ? hipValue.round().toString()
         : hipValue.toString();
 
-    String size = calculateSize(chestValue, waistValue, hipValue);
+    String size =
+        calculateSize(chestValue, waistValue, hipValue, selectedGender);
 
     Map<String, dynamic> updatedProfile = ({
       "height": formattedHeight,
@@ -155,13 +166,14 @@ class _UserSizeScreenState extends State<UserSizeScreen> {
       if (response.data["success"]) {
         await fetchProfile();
 
-        // Introduce a delay of 1 second (adjust as needed)
         await Future.delayed(Duration(seconds: 3));
 
-        // Navigate to another screen, e.g., UserSizeScreen
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => BottomNavBar()),
+          MaterialPageRoute(
+              builder: (context) => BottomNavBar(
+                    selectedIndex: 2,
+                  )),
         );
       }
     } catch (e) {
@@ -240,10 +252,8 @@ class _UserSizeScreenState extends State<UserSizeScreen> {
                   child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        // borderRadius: BorderRadius.circular(10),
                       ),
                       child: Column(
-                          // mainAxisAlignment: MainAxisAlignment.spaceAround,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
                             Padding(
@@ -450,11 +460,8 @@ class _UserSizeScreenState extends State<UserSizeScreen> {
                                   Container(
                                     width: 160,
                                     decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: Colors
-                                              .black38), // Set the border color
-                                      borderRadius: BorderRadius.circular(
-                                          5.0), // Optional: Set border radius for rounded corners
+                                      border: Border.all(color: Colors.black38),
+                                      borderRadius: BorderRadius.circular(5.0),
                                     ),
                                     child: DropdownButton<String>(
                                       value: selectedGender,
@@ -469,15 +476,13 @@ class _UserSizeScreenState extends State<UserSizeScreen> {
                                           value: value,
                                           child: Container(
                                             padding: EdgeInsets.symmetric(
-                                                horizontal:
-                                                    30.0), // Adjust the padding as needed
+                                                horizontal: 30.0),
                                             child: Text(value),
                                           ),
                                         );
                                       }).toList(),
                                       isExpanded: true,
-                                      underline:
-                                          Container(), // Remove the default underline
+                                      underline: Container(),
                                     ),
                                   ),
                                   SizedBox(width: 20),

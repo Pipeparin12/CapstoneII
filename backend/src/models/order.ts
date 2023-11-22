@@ -25,7 +25,6 @@ export const orderSchema = new mongoose.Schema({
             quantity: {
                 type: Number,
             },
-            // Add price field for the product
             totalPrice: { 
                 type: Number, 
             },

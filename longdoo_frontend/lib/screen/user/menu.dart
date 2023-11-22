@@ -1,10 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:longdoo_frontend/components/wishlistCard.dart';
 import 'package:longdoo_frontend/model/profile.dart';
 import 'package:longdoo_frontend/screen/user/account.dart';
-
 import 'package:longdoo_frontend/screen/user/cart.dart';
 import 'package:longdoo_frontend/screen/user/itemDetail.dart';
 import 'package:longdoo_frontend/screen/user/order/processing.dart';
@@ -199,8 +196,7 @@ class _MenuScreenState extends State<MenuScreen> {
                 },
               ),
               Visibility(
-                visible: cart
-                    .isNotEmpty, // Show the Positioned widget only if the cart is not empty
+                visible: cart.isNotEmpty,
                 child: Positioned(
                   right: 3,
                   top: 5,
@@ -230,10 +226,8 @@ class _MenuScreenState extends State<MenuScreen> {
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  // borderRadius: BorderRadius.circular(10),
                 ),
                 child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     Padding(
@@ -344,10 +338,8 @@ class _MenuScreenState extends State<MenuScreen> {
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  // borderRadius: BorderRadius.circular(10),
                 ),
                 child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     Padding(
@@ -385,8 +377,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                     },
                                   ),
                                   Visibility(
-                                    visible: unpaid
-                                        .isNotEmpty, // Show the Positioned widget only if the cart is not empty
+                                    visible: unpaid.isNotEmpty,
                                     child: Positioned(
                                       right: 0,
                                       top: 3,
@@ -431,8 +422,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                     },
                                   ),
                                   Visibility(
-                                    visible: process
-                                        .isNotEmpty, // Show the Positioned widget only if the cart is not empty
+                                    visible: process.isNotEmpty,
                                     child: Positioned(
                                       right: 0,
                                       top: 3,
@@ -471,14 +461,13 @@ class _MenuScreenState extends State<MenuScreen> {
                                     onPressed: () async {
                                       await Navigator.push(context,
                                           MaterialPageRoute(builder: (context) {
-                                        return ProcessingScreen();
+                                        return ShippedScreen();
                                       }));
                                       getYourCart();
                                     },
                                   ),
                                   Visibility(
-                                    visible: shipped
-                                        .isNotEmpty, // Show the Positioned widget only if the cart is not empty
+                                    visible: shipped.isNotEmpty,
                                     child: Positioned(
                                       right: 0,
                                       top: 3,
@@ -518,10 +507,8 @@ class _MenuScreenState extends State<MenuScreen> {
               child: Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    // borderRadius: BorderRadius.circular(10),
                   ),
                   child: Column(
-                      // mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
                         Padding(

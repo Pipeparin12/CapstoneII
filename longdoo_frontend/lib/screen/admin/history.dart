@@ -1,23 +1,23 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:longdoo_frontend/components/bottomNavBar.dart';
-import 'package:longdoo_frontend/screen/user/order/processing.dart';
-import 'package:longdoo_frontend/screen/user/order/unpaid.dart';
+import 'package:longdoo_frontend/screen/admin/setting.dart';
 import 'package:longdoo_frontend/service/api/order.dart';
 import 'package:longdoo_frontend/service/dio.dart';
 
-class ShippedScreen extends StatefulWidget {
+class OrderHistoryScreen extends StatefulWidget {
+  const OrderHistoryScreen({super.key});
+
   @override
-  _ShippedScreenState createState() => _ShippedScreenState();
+  State<OrderHistoryScreen> createState() => _OrderHistoryScreenState();
 }
 
-class _ShippedScreenState extends State<ShippedScreen> {
+class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
   var order = [];
   bool isChecked = false;
 
   Future<void> getYourOrder() async {
     try {
-      var result = await OrderApi.getShippedOrder();
+      var result = await OrderApi.getCompleteOrder();
       print(result.data);
       setState(() {
         order = result.data['orders'].toList();
@@ -28,13 +28,16 @@ class _ShippedScreenState extends State<ShippedScreen> {
     }
   }
 
-  Future<void> confirmShipped(String orderId) async {
-    try {
-      var result = await OrderApi.confirmShipped(orderId);
-      getYourOrder();
-    } catch (e) {
-      print(e);
+  double calculateTotalPrice(List<dynamic> cart) {
+    double totalPriceSum = 0.0;
+
+    for (var item in cart) {
+      double itemTotalPrice =
+          double.tryParse(item['totalPrice'].toString()) ?? 0.0;
+      totalPriceSum += itemTotalPrice;
     }
+
+    return totalPriceSum;
   }
 
   @override
@@ -52,68 +55,20 @@ class _ShippedScreenState extends State<ShippedScreen> {
           onPressed: () {
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) {
-              return BottomNavBar(selectedIndex: 2);
+              return SettingScreen();
             }));
           },
         ),
         backgroundColor: Colors.white,
-        title: Text('My Purchases'),
+        title: Text('History orders'),
         centerTitle: true,
         elevation: 0,
       ),
       body: SingleChildScrollView(
         child: SizedBox(
-          height: 680,
+          height: double.maxFinite,
           child: Column(
             children: <Widget>[
-              Container(
-                decoration: BoxDecoration(color: Colors.white),
-                child: Padding(
-                  padding: EdgeInsets.all(1),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => UnpaidScreen(),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          'To Pay',
-                          style: TextStyle(fontSize: 14, color: Colors.black),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ProcessingScreen(),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          'To Ship',
-                          style: TextStyle(fontSize: 14, color: Colors.black),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          // No navigate because on this page already.
-                        },
-                        child: Text(
-                          'To Receive',
-                          style: TextStyle(fontSize: 14, color: Colors.black),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
               Expanded(
                 child: ListView.builder(
                   itemCount: order.length,
@@ -130,7 +85,18 @@ class _ShippedScreenState extends State<ShippedScreen> {
                             Row(
                               children: [
                                 Text(
-                                  'Status: Shipped',
+                                  'Order number: ' + order[index]['_id'],
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Status: ' + order[index]['status']['status'],
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.black,
@@ -141,7 +107,8 @@ class _ShippedScreenState extends State<ShippedScreen> {
                             Row(
                               children: [
                                 Text(
-                                  'Order number: ' + order[index]['_id'],
+                                  'Tracking Number: ' +
+                                      order[index]['status']['description'],
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.black,
@@ -255,19 +222,6 @@ class _ShippedScreenState extends State<ShippedScreen> {
                                       ),
                                     ),
                                   ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                TextButton(
-                                    onPressed: () {
-                                      confirmShipped(order[index]['_id']);
-                                    },
-                                    child: Text(
-                                      'Order received',
-                                      style: TextStyle(color: Colors.black),
-                                    )),
                               ],
                             ),
                             Divider(

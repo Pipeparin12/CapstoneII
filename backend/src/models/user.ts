@@ -1,6 +1,4 @@
-// const umongoose = require('mongoose')
 import mongoose, { Types } from 'mongoose'
-// const uSchema = umongoose.Schema
 
 export const userSchema = new mongoose.Schema({
     username:{
@@ -19,6 +17,10 @@ export const userSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
+    role:{
+        type: String,
+        required: true
+    }
 });
 
 export default mongoose.model('User',userSchema);

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/components/bottomNavBar.dart';
 import 'package:longdoo_frontend/model/user.dart';
+import 'package:longdoo_frontend/screen/admin/home_admin.dart';
 import 'package:longdoo_frontend/screen/signUpScreen.dart';
 import 'package:longdoo_frontend/service/api/user.dart';
 import 'package:longdoo_frontend/service/dio.dart';
@@ -34,8 +35,17 @@ class _SignInPageState extends State<SignInPage> {
         SharePreference.prefs.setString("token", result.data['token']);
         DioInstance.dio.options.headers["Authorization"] =
             "Bearer ${result.data}";
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => BottomNavBar()));
+        if (result.data['role'] == 'admin') {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AdminHomeScreen()));
+        } else {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => BottomNavBar(
+                        selectedIndex: 0,
+                      )));
+        }
       } on DioException catch (e) {
         setState(() {
           isLoading = false;
@@ -130,7 +140,7 @@ class _SignInPageState extends State<SignInPage> {
                     )),
                 Container(
                   width: 100,
-                  height: 50, 
+                  height: 50,
                   child: ElevatedButton(
                     onPressed: () => signInHandler(),
                     child: Text(

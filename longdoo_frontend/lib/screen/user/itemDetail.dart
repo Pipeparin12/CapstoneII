@@ -97,8 +97,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                 },
               ),
               Visibility(
-                visible: cart
-                    .isNotEmpty, // Show the Positioned widget only if the cart is not empty
+                visible: cart.isNotEmpty,
                 child: Positioned(
                   right: 3,
                   top: 5,
@@ -156,10 +155,8 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                 listProduct['productName'],
                                 style: TextStyle(
                                     fontSize: 25, fontWeight: FontWeight.bold),
-                                maxLines:
-                                    1, // Ensure the text is displayed on one line
-                                overflow: TextOverflow
-                                    .ellipsis, // Add ellipsis for long text
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                             IconButton(
@@ -321,17 +318,14 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                                 await CartApi.addToCart(
                                                     counter,
                                                     productId,
-                                                    selectedSize,
+                                                    listProduct['size'],
                                                     listProduct[
                                                         'productImage']);
                                             print(result);
-                                            // Update the cart variable and trigger a rebuild
                                             getYourCart();
 
-                                            // Pop the current screen
                                             Navigator.pop(context);
 
-                                            // Push the screen again
                                             Navigator.pushReplacement(
                                               context,
                                               MaterialPageRoute(
@@ -357,7 +351,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                                         listProduct['quantity']
                                                             .toStringAsFixed(0),
                                                     style: TextStyle(
-                                                        fontSize: 14,
+                                                        fontSize: 16,
                                                         fontWeight:
                                                             FontWeight.bold),
                                                   )
@@ -369,118 +363,21 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                               Divider(
                                                 color: Colors.black,
                                               ),
-                                              // Size selection
+                                              SizedBox(
+                                                height: 10,
+                                              ),
                                               Container(
                                                 alignment: Alignment.centerLeft,
                                                 child: Text(
-                                                  'Size:',
+                                                  'Size: ${listProduct['size']}',
                                                   style: TextStyle(
-                                                      fontSize: 14,
+                                                      fontSize: 16,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 ),
                                               ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceEvenly,
-                                                children: <Widget>[
-                                                  ElevatedButton(
-                                                    onPressed: () {
-                                                      setModalState(() {
-                                                        selectedSize = 'XS';
-                                                      });
-                                                    },
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      primary:
-                                                          Colors.grey.shade400,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
-                                                      ),
-                                                    ),
-                                                    child: Text('XS'),
-                                                  ),
-                                                  ElevatedButton(
-                                                    onPressed: () {
-                                                      setModalState(() {
-                                                        selectedSize = 'S';
-                                                      });
-                                                    },
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      primary:
-                                                          Colors.grey.shade400,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
-                                                      ),
-                                                    ),
-                                                    child: Text('S'),
-                                                  ),
-                                                  ElevatedButton(
-                                                    onPressed: () {
-                                                      setModalState(() {
-                                                        selectedSize = 'M';
-                                                      });
-                                                    },
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      primary:
-                                                          Colors.grey.shade400,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
-                                                      ),
-                                                    ),
-                                                    child: Text('M'),
-                                                  ),
-                                                  ElevatedButton(
-                                                    onPressed: () {
-                                                      setModalState(() {
-                                                        selectedSize = 'L';
-                                                      });
-                                                    },
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      primary:
-                                                          Colors.grey.shade400,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
-                                                      ),
-                                                    ),
-                                                    child: Text('L'),
-                                                  ),
-                                                  ElevatedButton(
-                                                    onPressed: () {
-                                                      setModalState(() {
-                                                        selectedSize = 'XL';
-                                                      });
-                                                    },
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      primary:
-                                                          Colors.grey.shade400,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
-                                                      ),
-                                                    ),
-                                                    child: Text('XL'),
-                                                  ),
-                                                ],
+                                              SizedBox(
+                                                height: 10,
                                               ),
                                               Divider(
                                                 color: Colors.black,
@@ -490,7 +387,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                                 child: Text(
                                                   'Amount',
                                                   style: TextStyle(
-                                                      fontSize: 14,
+                                                      fontSize: 16,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 ),
@@ -589,12 +486,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                               ElevatedButton(
                                                 onPressed: () {
                                                   addToCart();
-                                                  // print('$counter and ' +
-                                                  //     selectedSize +
-                                                  //     ' and ' +
-                                                  //     productId);
-                                                  Navigator.pop(
-                                                      context); // Close the modal form
+                                                  Navigator.pop(context);
                                                 },
                                                 style: ElevatedButton.styleFrom(
                                                   primary: Colors.grey.shade400,

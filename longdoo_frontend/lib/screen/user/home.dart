@@ -177,7 +177,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       .map(
                         (item) => GestureDetector(
                           onTap: () {
-                            // Navigate to the item detail screen when an item is tapped.
                             Navigator.push(
                               context,
                               MaterialPageRoute(

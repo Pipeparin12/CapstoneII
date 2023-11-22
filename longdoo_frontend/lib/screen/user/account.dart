@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/model/profile.dart';
 import 'package:longdoo_frontend/screen/user/changePW.dart';
-import 'package:longdoo_frontend/screen/user/menu.dart';
 import 'package:longdoo_frontend/screen/signin.dart';
 import 'package:longdoo_frontend/service/dio.dart';
 import 'package:longdoo_frontend/service/share_preference.dart';
@@ -133,19 +132,18 @@ class _AccountScreenState extends State<AccountScreen> {
           centerTitle: true,
         ),
         body: SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
           child: Form(
             key: formState,
             child: Column(children: [
               Container(
                   padding: EdgeInsets.only(right: 5, left: 5, bottom: 10),
-                  height: 660,
+                  height: double.maxFinite,
                   child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        // borderRadius: BorderRadius.circular(10),
                       ),
                       child: Column(
-                          // mainAxisAlignment: MainAxisAlignment.spaceAround,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
                             Padding(
@@ -239,7 +237,6 @@ class _AccountScreenState extends State<AccountScreen> {
                               padding: const EdgeInsets.only(
                                   top: 25, left: 10, right: 10),
                               child: Column(
-                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -261,7 +258,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                               style: TextStyle(
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.w400,
-                                                  color: Colors.deepPurple),
+                                                  color: Colors.blue.shade800),
                                             ),
                                             onTap: () => Navigator.pushReplacement(
                                                 context,
@@ -353,13 +350,15 @@ class _AccountScreenState extends State<AccountScreen> {
                                         style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.w400,
-                                            color: Colors.deepPurple),
+                                            color: Colors.red.shade900),
                                       ),
-                                      onTap: () => Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  SignInPage()))),
+                                      onTap: () => Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SignInPage()),
+                                            (route) => false,
+                                          )),
                                 ),
                               ],
                             ),
@@ -369,19 +368,22 @@ class _AccountScreenState extends State<AccountScreen> {
                               children: [
                                 GestureDetector(
                                   child: Container(
+                                    width: 200,
+                                    height: 50,
                                     padding: EdgeInsets.symmetric(
                                         vertical: 10, horizontal: 20),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(20),
-                                      color: Colors.grey,
+                                      color: Colors.grey.shade400,
                                     ),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
                                         Text('Save',
-                                            style:
-                                                TextStyle(color: Colors.black)),
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 18)),
                                       ],
                                     ),
                                   ),

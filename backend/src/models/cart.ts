@@ -36,7 +36,7 @@ export const cartSchema = new mongoose.Schema({
     status: { 
         type: String, 
         default: "unpaid" 
-    }, // Add status field
+    },
 },{
     timestamps: true
 })

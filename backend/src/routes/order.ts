@@ -77,7 +77,71 @@ orderRoute.get('/all-unpaid', async (req, res) => {
 orderRoute.get('/all-process', async (req, res) => {
     try {
         const userId = await req.user.user_id;
-        const orders = await Order.find({'owner': userId, 'status.status': { $in: ['Packing', 'On the way'] }});
+        const orders = await Order.find({'owner': userId, 'status.status': { $in: ['Waiting for confirm order.', 'Packing', 'On the way'] }});
+        console.log(orders);
+        return res.json({
+            success: true,
+            orders
+        })
+    } catch (error) {
+        return res.json({
+            success: false,
+            message: error
+        })
+    }
+});
+
+orderRoute.get('/waiting', async (req, res) => {
+    try {
+        const orders = await Order.find({ 'status.status': 'Waiting for confirm order.' });
+        console.log(orders);
+        return res.json({
+            success: true,
+            orders
+        })
+    } catch (error) {
+        return res.json({
+            success: false,
+            message: error
+        })
+    }
+});
+
+orderRoute.get('/packing', async (req, res) => {
+    try {
+        const orders = await Order.find({ 'status.status': 'Packing' });
+        console.log(orders);
+        return res.json({
+            success: true,
+            orders
+        })
+    } catch (error) {
+        return res.json({
+            success: false,
+            message: error
+        })
+    }
+});
+
+orderRoute.get('/on-the-way', async (req, res) => {
+    try {
+        const orders = await Order.find({ 'status.status': 'On the way' });
+        console.log(orders);
+        return res.json({
+            success: true,
+            orders
+        })
+    } catch (error) {
+        return res.json({
+            success: false,
+            message: error
+        })
+    }
+});
+
+orderRoute.get('/complete', async (req, res) => {
+    try {
+        const orders = await Order.find({'status.status': 'Complete'});
         console.log(orders);
         return res.json({
             success: true,
@@ -139,27 +203,6 @@ orderRoute.get('/get-order/:orderId', async (req, res) => {
         });
       }
   });
-  
-// get('/get-order', async (req, res) => {
-//     const user_id = req.user.user_id;
-//     try {
-//         const getOrder = await Order.findOne({
-//             owner: user_id,
-//             status:{
-//                 status: "Unpaid"
-//             }
-//         });
-//         return res.json({
-//             success: true,
-//             getOrder
-//         });
-//     } catch (error) {
-//         return res.json({
-//             success: false,
-//             message: error
-//         });
-//     }
-// })
 
 orderRoute.post('/add-order', async (req, res) => {
     var orderDetail: AddOrderRequestProp = { ...req.body };
@@ -180,42 +223,139 @@ orderRoute.post('/add-order', async (req, res) => {
     }
 });
 
-orderRoute.patch('/update-status/', async (req, res) => {
-    const updateDetail: UpdateOrderStatusRequestProp = req.body;
+orderRoute.patch('/update-status/:orderId', async (req, res) => {
+    const orderId = req.params.orderId;
+
     try {
-        const updateOrder = await Order.findOneAndUpdate({
-            owner: updateDetail.owner
-        }, {
-            status: updateDetail.status
-        }
+        const updateOrder = await Order.findOneAndUpdate(
+            { _id: orderId },
+            {
+                $set: {
+                    'status.status': 'Packing',
+                    'status.description': 'Waiting for tracking number'
+                }
+            },
+            { new: true }
         );
+
+        if (!updateOrder) {
+            return res.status(404).json({
+                success: false,
+                message: 'Order not found'
+            });
+        }
+
         return res.json({
             success: true,
             updateOrder
         });
     } catch (error) {
-        return res.json({
+        return res.status(500).json({
             success: false,
-            message: error
-        });
-    }
-})
-
-orderRoute.delete('/confirm-shipped/:id', async (req, res) => {
-    try {
-        const removeOrder = await Order.findByIdAndDelete(req.params.id);
-        return res.json({
-            success: true,
-            message: 'Confirm received of product'
-        });
-    } catch (error) {
-        return res.json({
-            success: false,
-            message: error
+            message: error.message
         });
     }
 });
 
+orderRoute.patch('/update-tracking/:orderId', async (req, res) => {
+    const orderId = req.params.orderId;
+    const updateDetail = req.body;
 
+    try {
+        const updateOrder = await Order.findOneAndUpdate(
+            { _id: orderId },
+            {
+                $set: {
+                    'status.status': 'On the way',
+                    'status.description': updateDetail.description
+                }
+            },
+            { new: true }
+        );
+
+        if (!updateOrder) {
+            return res.status(404).json({
+                success: false,
+                message: 'Order not found'
+            });
+        }
+
+        return res.json({
+            success: true,
+            updateOrder
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+});
+
+orderRoute.patch('/update-shipment/:orderId', async (req, res) => {
+    const orderId = req.params.orderId;
+
+    try {
+        const updateOrder = await Order.findOneAndUpdate(
+            { _id: orderId },
+            {
+                $set: {
+                    'status.status': 'Shipped',
+                }
+            },
+            { new: true }
+        );
+
+        if (!updateOrder) {
+            return res.status(404).json({
+                success: false,
+                message: 'Order not found'
+            });
+        }
+
+        return res.json({
+            success: true,
+            updateOrder
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+});
+
+orderRoute.patch('/confirm-shipped/:orderId', async (req, res) => {
+    const orderId = req.params.orderId;
+
+    try {
+        const updateOrder = await Order.findOneAndUpdate(
+            { _id: orderId },
+            {
+                $set: {
+                    'status.status': 'Completed',
+                }
+            },
+            { new: true }
+        );
+
+        if (!updateOrder) {
+            return res.status(404).json({
+                success: false,
+                message: 'Order not found'
+            });
+        }
+
+        return res.json({
+            success: true,
+            updateOrder
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+});
 
 export default orderRoute;

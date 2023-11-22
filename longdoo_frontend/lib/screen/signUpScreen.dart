@@ -1,9 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:longdoo_frontend/components/bottomNavBar.dart';
-import 'package:longdoo_frontend/screen/user/category.dart';
-import 'package:longdoo_frontend/screen/user/home.dart';
-import 'package:longdoo_frontend/screen/signin.dart';
 import 'package:longdoo_frontend/screen/user/userSize.dart';
 import 'package:longdoo_frontend/service/api/user.dart';
 import 'package:longdoo_frontend/service/dio.dart';
@@ -32,17 +28,13 @@ class _MyStatefulWidgetState extends State<SignUpPage> {
       });
 
       try {
-        // Sign up
         var signUpResult = await UserApi.signUp(
           usernameController.text,
           passwordController.text,
           firstnameController.text,
           lastnameController.text,
         );
-
-        // If sign-up is successful
         if (signUpResult.statusCode == 200) {
-          // Now, sign in to get the token
           var signInResult = await UserApi.signIn(
             usernameController.text,
             passwordController.text,
@@ -51,21 +43,15 @@ class _MyStatefulWidgetState extends State<SignUpPage> {
           SharePreference.prefs.setString("token", signInResult.data['token']);
           DioInstance.dio.options.headers["Authorization"] =
               "Bearer ${signInResult.data}";
-          // If sign-in is successful
           if (signInResult.statusCode == 200) {
-            // Navigate to the next screen, e.g., UserSizeScreen
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => UserSizeScreen()),
             );
           } else {
-            // Handle sign-in failure
-            // You might want to show an error message or take other actions
             print("Sign-in failed");
           }
         } else {
-          // Handle sign-up failure
-          // You might want to show an error message or take other actions
           print("Sign-up failed");
         }
       } on DioException catch (e) {
@@ -175,10 +161,6 @@ class _MyStatefulWidgetState extends State<SignUpPage> {
                     child: const Text(
                       'People use real names on the app.',
                       style: TextStyle(fontSize: 15),
-                      // onPressed: () {
-                      //   print(nameController.text);
-                      //   print(passwordController.text);
-                      // },
                     )),
                 Container(
                   width: 100,

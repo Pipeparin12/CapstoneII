@@ -1,7 +1,5 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:longdoo_frontend/screen/user/checkout.dart';
 import 'package:longdoo_frontend/screen/user/order/unpaid.dart';
 import 'package:longdoo_frontend/service/api/cart.dart';
 import 'package:longdoo_frontend/service/dio.dart';
@@ -39,27 +37,16 @@ class _CartScreenState extends State<CartScreen> {
 
   void increment(int index) async {
     try {
-      // Get the current counter value for the selected item
       int currentCounter = cart[index]['quantity'];
       int price = cart[index]['price'];
-
-      // Increase the quantity of the selected item in the cart locally
       setState(() {
         cart[index]['quantity'] = currentCounter + 1;
         cart[index]['totalPrice'] = (currentCounter + 1) * price;
       });
-
-      // Make an API call to update the quantity in the database
-      await CartApi.updateCartItemQuantity(
-          cart[index][
-              'productId'], // Replace with the actual product ID field in your cart item
-          cart[index]['size'],
-          currentCounter + 1, // Send the updated quantity to the server
-          cart[index]['productImage']);
+      await CartApi.updateCartItemQuantity(cart[index]['productId'],
+          cart[index]['size'], currentCounter + 1, cart[index]['productImage']);
     } on DioException catch (e) {
-      // Handle API error
       print("Error incrementing quantity: $e");
-      // Revert the local change if the API call fails
       setState(() {
         cart[index]['quantity'] = currentCounter;
       });
@@ -68,29 +55,22 @@ class _CartScreenState extends State<CartScreen> {
 
   void decrement(int index) async {
     try {
-      // Get the current counter value for the selected item
       int currentCounter = cart[index]['quantity'];
       int price = cart[index]['price'];
 
       if (currentCounter > 1) {
-        // Decrease the quantity of the selected item in the cart locally
         setState(() {
           cart[index]['quantity'] = currentCounter - 1;
           cart[index]['totalPrice'] = (currentCounter - 1) * price;
         });
-
-        // Make an API call to update the quantity in the database
         await CartApi.updateCartItemQuantity(
-            cart[index][
-                'productId'], // Replace with the actual product ID field in your cart item
+            cart[index]['productId'],
             cart[index]['size'],
-            currentCounter - 1, // Send the updated quantity to the server
+            currentCounter - 1,
             cart[index]['productImage']);
       }
     } on DioException catch (e) {
-      // Handle API error
       print("Error decrementing quantity: $e");
-      // Revert the local change if the API call fails
       setState(() {
         cart[index]['quantity'] = currentCounter;
       });
@@ -146,20 +126,17 @@ class _CartScreenState extends State<CartScreen> {
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
-                                // crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: <Widget>[
                                   Container(
-                                    width: 110, // Set the desired width
-                                    height: 110, // Set the desired height
+                                    width: 110,
+                                    height: 110,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
                                         image: DecorationImage(
                                           image: NetworkImage(
                                               DioInstance.getImage(
                                                   cart[index]['productImage'])),
-
-                                          fit: BoxFit
-                                              .cover, // Adjust the fit as needed)
+                                          fit: BoxFit.cover,
                                         )),
                                   ),
                                   Expanded(
@@ -288,7 +265,7 @@ class _CartScreenState extends State<CartScreen> {
                                         Text(
                                           '\฿ ' +
                                               cart[index]['totalPrice']
-                                                  .toString(), // Replace with the actual price
+                                                  .toString(),
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -314,7 +291,6 @@ class _CartScreenState extends State<CartScreen> {
             vertical: 15,
             horizontal: 30,
           ),
-          // height: 174,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(
@@ -342,33 +318,22 @@ class _CartScreenState extends State<CartScreen> {
                       "Total Price: ฿" +
                           calculateTotalPrice(cart).toStringAsFixed(0),
                       style: TextStyle(fontSize: 18),
-                    ), // Replace with your total price text
+                    ),
                     GestureDetector(
                       behavior: HitTestBehavior.translucent,
-                      onTap: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => CheckoutScreen(
-                        //       orderId: orderId,
-                        //     ),
-                        //   ),
-                        // );
-                      },
+                      onTap: () {},
                       child: Container(
-                        padding: EdgeInsets.all(
-                            10), // Adjust the padding to increase the tappable area
+                        padding: EdgeInsets.all(10),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            minimumSize: Size(
-                                140, 50), // Adjust the minimum size as needed
+                            minimumSize: Size(140, 50),
                           ),
                           child: Text(
                             "Purchase",
                             style: TextStyle(fontSize: 18, color: Colors.white),
                           ),
                           onPressed: () async {
-                            await checkout(); // Wait for checkout to complete
+                            await checkout();
                             Navigator.push(
                               context,
                               MaterialPageRoute(
