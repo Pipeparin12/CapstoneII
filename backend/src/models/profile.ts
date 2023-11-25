@@ -1,7 +1,5 @@
 import mongoose from 'mongoose'
 
-// Create profile schema firstname, lastname, email, address, phone
-
 export const ProfileSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -16,14 +14,6 @@ export const ProfileSchema = new mongoose.Schema({
         required: true
     },
     lastName: {
-        type: String,
-        required: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
-    email: {
         type: String,
         required: true
     },
@@ -55,6 +45,18 @@ export const ProfileSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    gender: {
+        type: String,
+        required: true
+    },
+    size: {
+        type: String,
+        required: true
+    },
+    model: {
+        type: String,
+        required: true
+    }
 });
 
 export default mongoose.model('Profile', ProfileSchema);

@@ -1,6 +1,10 @@
 import express from "express";
 import multer from "multer";
-import Product, { ProductSchema } from '../models/product';
+import Product from '../models/product';
+import Profile from '../models/profile';
+import Model from '../models/model';
+import User  from "../models/user";
+
 const productRoute = express.Router();
 
 const storage = multer.diskStorage({
@@ -27,10 +31,27 @@ async function createproduct(req, res, next){
             'size': "",
             'quantity': 0,
             'category': "",
-            'productAmount': 0,
             'productImage': "",
+            'productModel': "",
         });
         req.productId = newproduct._id;
+        next();
+    } catch (err) {
+        return res.json({
+            success: false,
+            message: err
+        })
+    }
+};
+
+async function createModel(req, res, next){
+    try {
+        const newModel = await Model.create({
+            'modelName': "",
+            'modelSize': "",
+            'modelPath': "",
+        });
+        req.modelId = newModel._id;
         next();
     } catch (err) {
         return res.json({
@@ -61,7 +82,8 @@ productRoute.post('/add', createproduct , upload.single('file'), async (req,res)
             color: product_color,
             size: product_size,
             quantity: product_quantuty,
-            category: product_category
+            category: product_category,
+            productModel: `assets/3D_models/test.glb`
 		}
 	);
 
@@ -88,6 +110,83 @@ productRoute.get('/all-product', async (req, res) => {
         });
     }
 });
+
+productRoute.get('/category/:key',async (req, res) => {
+    try {
+        let result = await Product.find({
+            "$or": [{
+                category: {$regex: req.params.key}
+            }]
+        })
+        res.send(result);
+    } catch (err) {
+        return res.json({
+            success: false,
+            message: err
+        })
+    }
+})
+
+productRoute.get('/yourProduct/:key', async (req, res) => {
+    const user_id = req.user?.user_id;
+    try{
+        const userProfile = await Profile.findOne({ user: user_id });
+        console.log(userProfile)
+        if (!userProfile) {
+            return res.json({
+                success: false,
+                message: 'User profile not found.'
+            });
+        }
+        const userSize = userProfile.size;
+        const products = await Product.find({ size: userSize, category: {$regex: req.params.key} }).exec();
+        console.log(products)
+        return res.json({
+            products,
+            success: true,
+            message: 'Get products successfully!'
+        });
+    } catch (err) {
+        return res.json({
+            success: false,
+            message: err
+        });
+    }
+});
+
+productRoute.get('/allYourProduct/:key', async (req, res) => {
+    const user_id = req.user?.user_id;
+    try{
+        const userProfile = await Profile.findOne({ user: user_id });
+        console.log(userProfile)
+        if (!userProfile) {
+            return res.json({
+                success: false,
+                message: 'User profile not found.'
+            });
+        }
+        const userSize = userProfile.size;
+        const products = await Product.find({
+            $or: [
+                { size: userSize, category: { $regex: req.params.key } },
+                { size: userSize, category: 'Unisex' }
+            ]
+        }).exec();
+        console.log(products)
+        return res.json({
+            products,
+            success: true,
+            message: 'Get products successfully!'
+        });
+    } catch (err) {
+        return res.json({
+            success: false,
+            message: err
+        });
+    }
+});
+
+
 
 productRoute.get('/:id', async (req, res) => {
     try{
@@ -123,11 +222,30 @@ productRoute.patch('/:id', async (req, res) => {
     }
 })
 
+productRoute.patch('/update-quantity', async (req, res) => {
+    const product = await Product.findById(req.body.product_id);
+    const quantity = req.body.quantityInCart;
+    if(!product) return res.json({message: "No Data Found"});
+    try{
+        const updatequantity = await Product.updateOne({_id: req.body.product_id}, { $set : { quantity : product.quantity-quantity }});
+        return res.json({
+            updatequantity,
+            success: true,
+            message: 'Update product successfully!'
+        });
+    }catch(err){
+        return res.json({
+            success: false,
+            message: err
+        });
+    }
+})
+
 productRoute.delete('/:id',async (req, res) => {
     const product = await Product.findById(req.params.id);
     if (!product) return res.json({message: "No Data Found"});
     try {
-        const deletedproduct = await Product.deleteOne({_id: req.params.id});
+        await Product.deleteOne({_id: req.params.id});
         return res.json({
             success: true,
             message: 'Delete product successfully'
@@ -142,7 +260,7 @@ productRoute.delete('/:id',async (req, res) => {
 
 productRoute.get('/search/:key',async (req, res) => {
     try {
-        let result = await Product.find({
+        const result = await Product.find({
             "$or": [{
                 productName: {$regex: req.params.key}
             }]
@@ -158,7 +276,7 @@ productRoute.get('/search/:key',async (req, res) => {
 
 productRoute.get('/category/:key',async (req, res) => {
     try {
-        let result = await Product.find({
+        const result = await Product.find({
             "$or": [{
                 category: {$regex: req.params.key}
             }]
@@ -171,4 +289,28 @@ productRoute.get('/category/:key',async (req, res) => {
         })
     }
 })
+
+productRoute.post('/add-model', createModel , upload.single('file'), async (req,res) => {
+    const model_name = req.body.modelName;
+    const model_size = req.body.modelSize;
+    const model_gender = req.body.modelGender; 
+    const modelId = (req as any).modelId;
+
+    const newModel = await Model.updateOne(
+        { _id: modelId },
+        {
+            modelName: model_name,
+            modelSize: model_size,
+            modelGender: model_gender,
+            modelPath: `/models/${model_name}.glb`,
+        }
+    );
+
+    return res.json({
+        success: true,
+        message: "Already added model!",
+        newModel
+    })
+});
+
 export default productRoute;

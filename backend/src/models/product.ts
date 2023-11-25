@@ -1,7 +1,5 @@
 import mongoose from 'mongoose'
 
-// Create profile schema firstname, lastname, email, address, phone
-
 export const ProductSchema = new mongoose.Schema({
     productId:{
         type: String, 
@@ -38,7 +36,11 @@ export const ProductSchema = new mongoose.Schema({
     category:{
         type: String,
         require: true
-    }
+    },
+    productModel:{
+        type: String,
+        require: true
+    },
 });
 
 export default mongoose.model('Product', ProductSchema);

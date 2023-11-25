@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/screen/signin.dart';
-import 'package:longdoo_frontend/screen/signup/signUpScreen.dart';
 
 class IndexScreen extends StatelessWidget {
+  const IndexScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/images/index_background.png"),
             fit: BoxFit.cover,
@@ -34,25 +35,17 @@ class IndexScreen extends StatelessWidget {
                     fontSize: 20,
                     color: Color(0xFFFFFFFF)),
               )),
-          // Container(
-          //     height: 50,
-          //     padding: const EdgeInsets.fromLTRB(10, 10, 200, 0),
-          //     child: ElevatedButton(
-          //       child: const Text('START'),
-          //       onPressed: () => Navigator.push(context,
-          //           MaterialPageRoute(builder: (context) => SignUpPage())),
-          //     )),
         ]),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => SignInPage())),
+            context, MaterialPageRoute(builder: (context) => const SignInPage())),
         tooltip: 'Enter your fullname',
-        child: Icon(
+        backgroundColor: const Color(0xFF4A4A4A),
+        child: const Icon(
           Icons.east,
           color: Color(0xFFFFFFFF),
         ),
-        backgroundColor: Color(0xFF4A4A4A),
       ),
     );
   }

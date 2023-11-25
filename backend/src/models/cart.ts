@@ -1,5 +1,4 @@
-import mongoose, { Mongoose }  from "mongoose"
-import { ObjectId, Types } from "mongoose"
+import mongoose, { Types } from "mongoose";
 
 export const cartSchema = new mongoose.Schema({
     owner: {
@@ -14,12 +13,22 @@ export const cartSchema = new mongoose.Schema({
     productName:{
         type: String, 
     },
+    productImage:{
+        type: String,
+    },
+    size: {
+        type: String,
+        required: true,
+    },
     quantity: {
         type: Number,
         required: true,
         min: 1
     },
-    // Add price field for the product
+    price: { 
+        type: Number, 
+        required: true 
+    },
     totalPrice: { 
         type: Number, 
         required: true 
@@ -27,7 +36,7 @@ export const cartSchema = new mongoose.Schema({
     status: { 
         type: String, 
         default: "unpaid" 
-    }, // Add status field
+    },
 },{
     timestamps: true
 })

@@ -1,31 +1,23 @@
 import express from "express";
-// eslint-disable-next-line new-cap
 import User, { userSchema } from '../models/user';
 import Profile from '../models/profile';
 import jwt from 'jsonwebtoken';
-// const User = require('../models/user')
 const authRoute = express.Router();
 
 import AppConfig from '@/config';
 
 authRoute.post('/signup', async (req,res)=>{
     try{
-        // Find one user!
         let newUser = await User.findOne({username:req.body.username});
-
-        // Check if user exists? If it doesn't...
         if(newUser == null){
-            // Create new user
             newUser = new User({
                     username:req.body.username,
                     password:req.body.password,
                     firstName:req.body.firstName,
-                    lastName:req.body.lastName
+                    lastName:req.body.lastName,
+                    role: "customer"
                 });
-            // Save into a database.
             newUser = await newUser.save();
-
-            // Create new profile along with a user.
             await Profile.create({
 				user: newUser._id,
 				username: newUser.username,
@@ -39,23 +31,21 @@ authRoute.post('/signup', async (req,res)=>{
                 chestSize: 0,
                 waistSize: 0,
                 hipsSize: 0,
+                gender: "Unknown",
+                size: "Unknown",
+                model: "Unknown"
 			}).catch(err => console.log(err));
-
-            // Send it back to flutter
             return res.json({
                 success: true,
                 message:'Signed up successfully!'
             });
         }
-
-        // Otherwise, do this...
         return res.json({
             success: false,
             message:'username is not available'
         });
 
     }catch(err){
-        // In case there's an error..
         return res.json({
             success: false,
             message: err
@@ -68,13 +58,13 @@ authRoute.post('/signin',async (req,res)=>{
         const user = await User.findOne({username:req.body.username,password:req.body.password});
 
         if(user){
-            // TODO: ...
             delete user["password"];
 
             return res.json({
                 success: true,
                 message: "Logged In successfully!",
-                token: jwt.sign({ user_id: user._id, username: user.username }, AppConfig.JWT_SECRET)
+                token: jwt.sign({ user_id: user._id, username: user.username }, AppConfig.JWT_SECRET),
+                role: user.role
             });
         }
 
@@ -90,16 +80,6 @@ authRoute.post('/signin',async (req,res)=>{
         });
     }
 })
-
-// Service product Restful API
-// TOKEN   ->   sdfsdfkxclvokxlcvklsdkflsdkflsdklfksdlf
-//C   POST  /product   body -> { name: 'parin', count: 2 }
-// C  POST  /product/add-favourite/:id   ->   
-//R   GET   /product
-//F   GET  /product/:id   /product/1   /product/d121er12dfer12
-//U   PATCH /product/:id      body -> { name: 'parin', count: 2 }
-//D   DELETE /product/:id   
-
 
 authRoute.get("/me", async (req, res) => {
     try{
@@ -166,7 +146,6 @@ authRoute.patch("/me", async (req, res) => {
 });
 
 authRoute.get("/", (req, res) => {
-	// return res.send(`Auth route ${nanoid(64)}`);
 	return res.json(req.user);
 });
 

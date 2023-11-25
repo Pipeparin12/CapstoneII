@@ -1,16 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:longdoo_frontend/model/product.dart';
-
-import '../screen/accountName/accName.dart';
 
 class WishlistCard extends StatelessWidget {
   final Product demoProduct;
   final GestureTapCallback press;
-  const WishlistCard(
-      {Key? key, required this.demoProduct, required this.press});
+  const WishlistCard({required this.demoProduct, required this.press});
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +25,9 @@ class WishlistCard extends StatelessWidget {
                     ),
                   ),
                   child: Transform.translate(
-                    offset: Offset(50, -50),
+                    offset: const Offset(50, -50),
                     child: Container(
-                      margin: EdgeInsets.symmetric(
+                      margin: const EdgeInsets.symmetric(
                         horizontal: 65,
                         vertical: 60,
                       ),
@@ -41,7 +35,7 @@ class WishlistCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.white,
                       ),
-                      child: Icon(
+                      child: const Icon(
                         Icons.bookmark_border,
                         size: 15,
                       ),

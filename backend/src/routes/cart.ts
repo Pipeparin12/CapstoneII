@@ -1,49 +1,50 @@
 import express from "express";
-import Cart, { cartSchema } from '../models/cart';
-import Product, { ProductSchema } from '../models/product';
-import { User } from "@/database/models";
-import product from "../models/product";
+import Cart from '../models/cart';
+import Product from '../models/product';
+import Profile from '../models/profile';
+import { AddOrderRequestProp, addOrderFunc } from "./order";
+import order from "@/models/order";
 const cartRoute = express.Router();
 
-cartRoute.post('/add-cart/:id', async (req,res) => {
+cartRoute.post('/add-cart/:id', async (req, res) => {
+    const user_id = req.user.user_id;
+    const size = req.body.size
     const quantity = req.body.quantity;
-    // // Check if the user is authenticated (logged in)
-    // if (!req.user) {
-    //     return res.status(401).json({
-    //         success: false,
-    //         message: 'User not authenticated.'
-    //     });
-    // }
+    if (!req.user) {
+        return res.status(401).json({
+            success: false,
+            message: 'User not authenticated.'
+        });
+    }
 
-    // const user_id = req.user.user_id;
-
-    // ลอง manual ดูก่อนใน postman
-    const user_id = req.body.user_id;
-    
     try {
-        // const product_id = req.params.id;
-
-        // ลอง manual ดูก่อนใน postman
-        const product_id = req.body.product_id;
-
-        // Fetch the product's price from the database
+        const product_id = req.params.id;
         const product = await Product.findById(product_id);
+        console.log(product)
 
         if (!product) {
             return res.status(404).json({
                 success: false,
                 message: 'Product not found.'
             });
+        } else if (product.quantity < quantity) {
+            return res.status(400).json({
+                success: false,
+                message: 'Product quantity is not enough.'
+            });
         }
-        
+
         await Cart.create({
             'owner': user_id,
-            "productId":product_id, 
-            "quantity":quantity, 
-            "productName":product.productName,
-            "totalPrice": product.price,
+            "productId": product_id,
+            "size": size,
+            "quantity": quantity,
+            "productName": product.productName,
+            "productImage": product.productImage,
+            "price": product.price,
+            "totalPrice": product.price * quantity,
             "status": "unpaid"
-        });        
+        });
         return res.json({
             success: true,
             message: 'Added to cart successfully'
@@ -57,29 +58,63 @@ cartRoute.post('/add-cart/:id', async (req,res) => {
 })
 
 cartRoute.post('/checkout', async (req, res) => {
-    // const user_id = req.user.user_id;
+    const user_id = req.user.user_id;
 
-    // ลอง manual ดูก่อนใน postman
-    const user_id = req.body.user_id;
+    const currentTimestamp = Date.now(); 
 
     try {
-        // Retrieve the user's cart
+        const userProfile = await Profile.findOne({ user: user_id })
         const cart = await Cart.find({ owner: user_id });
+        const products = [];
+        let totalPrice = 0;
+        cart.map((cart) => {
+            products.push({
+                productId: cart.productId,
+                productName: cart.productName,
+                productImage: cart.productImage,
+                size: cart.size,
+                quantity: cart.quantity,
+                totalPrice: cart.totalPrice
+              });
+          });
 
-        // Calculate the total price
-        const totalPrice = cart.reduce((total, item) => {
-            return total + item.price * item.quantity;
-        }, 0);
+        var addOrderDetail: AddOrderRequestProp = {
+            owner: user_id,
+            products: products,
+            totalPrice: 0,
+            shippingInformation: {
+                firstName: userProfile.firstName,
+                lastName: userProfile.lastName,
+                phone: userProfile.phone,
+                address: userProfile.address
+            },
+            paymentInformation: {
+                slip: `/slips/${userProfile.user_id}_at_${currentTimestamp}.jpg`
+            },
+            status: {
+                status: "Unpaid",
+                description: ""
+            }
+        };
+        const addOrder = await addOrderFunc(addOrderDetail); 
+        var orderId
 
-        // Perform any additional checkout logic (e.g., payment processing)
-
-        // Clear the user's cart after a successful checkout
+        if (addOrder) {
+            orderId = addOrder._id
+        }
+        console.log(addOrder)
+        if(addOrder == null){
+            return res.json({
+                success: false,
+                message: "Can't create order."
+            });
+        }
         await Cart.deleteMany({ owner: user_id });
 
         return res.json({
             success: true,
-            totalPrice,
-            message: 'Checkout successful! order will be processing.'
+            message: 'Checkout successful! order will be processing.',
+            orderId: orderId,
         });
     } catch (err) {
         return res.json({
@@ -89,22 +124,74 @@ cartRoute.post('/checkout', async (req, res) => {
     }
 });
 
-
-cartRoute.get('/get-cart', async (req,res) => {
+cartRoute.get('/check-product/:id', async (req, res) => {
+    const user_id = req.user.user_id;
+    const product_id = req.params.id;
+  
     try {
-        const user = await req.user.user_id; 
-        const name = await req.body.ProductName;
-        const quantity = await req.body.quantity;     
-        const cart = await Cart.find({ 'owner': user}).exec();
-        const product = await Product.find({_id: {$in: cart.map((e) => e.productId)}}).exec();
-
-        let serializedCart = JSON.parse(JSON.stringify(cart));
-        let serializedProduct = JSON.parse(JSON.stringify(product));
-
-        const carts = serializedCart.map(bm => ({ ...bm, product: serializedProduct.find(p => p._id === bm.productId)}));
-        console.log(product);
+      const cartItem = await Cart.findOne({ owner: user_id, productId: product_id });
+      
+      if (cartItem) {
         return res.json({
-            carts,
+          found: true,
+          quantity: cartItem.quantity
+        });
+      } else {
+        return res.json({
+          found: false
+        });
+      }
+    } catch (err) {
+      return res.json({
+        success: false,
+        message: err
+      });
+    }
+  });
+
+  cartRoute.put('/update-cart/:id', async (req, res) => {
+    const user_id = req.user.user_id;
+    const product_id = req.params.id;
+    const { quantity, size, productImage } = req.body;
+  
+    try {
+      const cartItem = await Cart.findOne({ owner: user_id, productId: product_id });
+  
+      if (!cartItem) {
+        return res.status(404).json({
+          success: false,
+          message: 'Product not found in the cart.'
+        });
+      }
+  
+      const product = await Product.findById(product_id);
+      console.log(product)
+      cartItem.quantity = quantity;
+      cartItem.size = size;
+      cartItem.productImage = productImage;
+      cartItem.totalPrice = cartItem.quantity * product.price;
+  
+      await cartItem.save();
+  
+      return res.json({
+        success: true,
+        message: 'Cart item updated successfully'
+      });
+    } catch (err) {
+      return res.json({
+        success: false,
+        message: err
+      });
+    }
+  });
+  
+
+cartRoute.get('/get-cart', async (req, res) => {
+    try {
+        const userId = await req.user.user_id;
+        const cart = await Cart.find({ 'owner': userId });
+        return res.json({
+            cart,
             success: true,
             message: 'Get cart successfully!'
         });
@@ -116,9 +203,9 @@ cartRoute.get('/get-cart', async (req,res) => {
     }
 })
 
-cartRoute.delete('/remove/:id', async (req,res) => {
+cartRoute.delete('/remove/:id', async (req, res) => {
     try {
-        const cart = await Cart.findByIdAndDelete(req.params.id);
+        await Cart.findByIdAndDelete(req.params.id);
         return res.json({
             success: true,
             message: 'Delete cart successfully'
