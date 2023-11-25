@@ -65,7 +65,7 @@ class _CheckoutScreenState extends State<ConfirmOrderScreen> {
   double calculateTotalPrice(Map<dynamic, dynamic> orderData) {
     double total = 0.0;
 
-    if (orderData != null && orderData['products'] != null) {
+    if (orderData['products'] != null) {
       List<dynamic> products = orderData['products'];
 
       for (var product in products) {
@@ -97,7 +97,7 @@ class _CheckoutScreenState extends State<ConfirmOrderScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => NewOrderScreen(),
+          builder: (context) => const NewOrderScreen(),
         ),
       );
       setState(() {
@@ -124,11 +124,11 @@ class _CheckoutScreenState extends State<ConfirmOrderScreen> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text('Your Details'),
+          title: const Text('Your Details'),
           centerTitle: true,
         ),
         body: isLoading
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(),
               )
             : SingleChildScrollView(
@@ -137,7 +137,7 @@ class _CheckoutScreenState extends State<ConfirmOrderScreen> {
                   child: Column(
                     children: <Widget>[
                       Container(
-                        margin: EdgeInsets.all(15),
+                        margin: const EdgeInsets.all(15),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -146,20 +146,19 @@ class _CheckoutScreenState extends State<ConfirmOrderScreen> {
                               children: [
                                 Text(
                                   'Order ${widget.orderId}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold),
                                 )
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
-                            if (orderData != null &&
-                                orderData['products'] != null)
+                            if (orderData['products'] != null)
                               for (var product in orderData['products'])
                                 Container(
-                                  padding: EdgeInsets.all(10),
+                                  padding: const EdgeInsets.all(10),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -182,19 +181,19 @@ class _CheckoutScreenState extends State<ConfirmOrderScreen> {
                                               ),
                                             ),
                                           ),
-                                          SizedBox(width: 10),
+                                          const SizedBox(width: 10),
                                           Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
                                                 product['productName'],
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   fontSize: 16,
                                                 ),
                                                 textAlign: TextAlign.start,
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 5,
                                               ),
                                               Text(
@@ -204,7 +203,7 @@ class _CheckoutScreenState extends State<ConfirmOrderScreen> {
                                                 ),
                                                 textAlign: TextAlign.start,
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 5,
                                               ),
                                               Text(
@@ -214,7 +213,7 @@ class _CheckoutScreenState extends State<ConfirmOrderScreen> {
                                                 ),
                                                 textAlign: TextAlign.start,
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 10,
                                               ),
                                             ],
@@ -228,8 +227,8 @@ class _CheckoutScreenState extends State<ConfirmOrderScreen> {
                                             CrossAxisAlignment.end,
                                         children: [
                                           Text(
-                                            '\฿${product['totalPrice']}',
-                                            style: TextStyle(
+                                            '฿${product['totalPrice']}',
+                                            style: const TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold,
                                             ),
@@ -239,37 +238,36 @@ class _CheckoutScreenState extends State<ConfirmOrderScreen> {
                                     ],
                                   ),
                                 ),
-                            SizedBox(height: 5),
-                            if (orderData != null)
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Total',
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.red),
-                                        textAlign: TextAlign.start,
-                                      ),
-                                    ],
-                                  ),
-                                  Text(
-                                    '\฿${calculateTotalPrice(orderData).toStringAsFixed(0)}',
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.red),
-                                  ),
-                                ],
-                              ),
-                            Divider(
+                            const SizedBox(height: 5),
+                            Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Total',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.red),
+                                      textAlign: TextAlign.start,
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  '฿${calculateTotalPrice(orderData).toStringAsFixed(0)}',
+                                  style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red),
+                                ),
+                              ],
+                            ),
+                            const Divider(
                               color: Colors.black,
                             )
                           ],
@@ -277,7 +275,7 @@ class _CheckoutScreenState extends State<ConfirmOrderScreen> {
                       ),
                       Container(
                         margin:
-                            EdgeInsets.only(left: 15, right: 15, bottom: 15),
+                            const EdgeInsets.only(left: 15, right: 15, bottom: 15),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -285,14 +283,14 @@ class _CheckoutScreenState extends State<ConfirmOrderScreen> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Detail for shipping',
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold),
                                   textAlign: TextAlign.start,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 5,
                                 ),
                                 Text(
@@ -313,23 +311,23 @@ class _CheckoutScreenState extends State<ConfirmOrderScreen> {
                                     color: Colors.grey.shade700,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
-                                Divider(
+                                const Divider(
                                   color: Colors.black,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
-                                Text(
+                                const Text(
                                   'Proof of payment',
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold),
                                   textAlign: TextAlign.start,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 15,
                                 ),
                               ],
@@ -350,7 +348,7 @@ class _CheckoutScreenState extends State<ConfirmOrderScreen> {
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 15,
                             ),
                             ElevatedButton(
@@ -358,13 +356,13 @@ class _CheckoutScreenState extends State<ConfirmOrderScreen> {
                                 updateStatus();
                               },
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.grey.shade400,
-                                padding: EdgeInsets.all(5),
+                                backgroundColor: Colors.grey.shade400,
+                                padding: const EdgeInsets.all(5),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
-                              child: Container(
+                              child: const SizedBox(
                                 width: 200,
                                 child: Center(
                                   child: Text(

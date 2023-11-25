@@ -4,7 +4,7 @@ import 'package:longdoo_frontend/service/share_preference.dart';
 class BookmarkApi {
   static Future<dynamic> getBookmark() async {
     DioInstance.dio.options.headers["authorization"] =
-        "Bearer " + SharePreference.prefs.getString("token").toString();
+        "Bearer ${SharePreference.prefs.getString("token")}";
     final response = await DioInstance.dio.get("/bookmark/get-bookmark");
     return response;
   }
@@ -12,7 +12,7 @@ class BookmarkApi {
   static Future<dynamic> addToBookmark(
       String productImage, String productId) async {
     DioInstance.dio.options.headers["authorization"] =
-        "Bearer " + SharePreference.prefs.getString("token").toString();
+        "Bearer ${SharePreference.prefs.getString("token")}";
 
     try {
       var response = await DioInstance.dio
@@ -22,13 +22,13 @@ class BookmarkApi {
       return response.data;
     } catch (e) {
       print("Error adding bookmark: $e");
-      throw e;
+      rethrow;
     }
   }
 
   static Future<dynamic> deleteBookmark(String productId) async {
     DioInstance.dio.options.headers["authorization"] =
-        "Bearer " + SharePreference.prefs.getString("token").toString();
+        "Bearer ${SharePreference.prefs.getString("token")}";
     final response =
         await DioInstance.dio.delete('/bookmark/unbookmark/$productId');
     return response;

@@ -18,7 +18,7 @@ class AdminHomeScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<AdminHomeScreen> {
-  int _currentIndex = 0;
+  final int _currentIndex = 0;
   final List<Map<String, dynamic>> _listItems = [
     {
       'name': 'Men\'s Wear',
@@ -34,10 +34,6 @@ class _MenuScreenState extends State<AdminHomeScreen> {
       'name': 'Unisex',
       'category': 'Unisex',
       'imagePath': 'assets/images/unisex.png',
-    },
-    {
-      'name': 'Sale',
-      'imagePath': 'assets/images/sale.png',
     },
   ];
   var waiting = [];
@@ -144,7 +140,7 @@ class _MenuScreenState extends State<AdminHomeScreen> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text('Admin LongDoo'),
+        title: const Text('Admin LongDoo'),
         centerTitle: true,
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
@@ -157,7 +153,7 @@ class _MenuScreenState extends State<AdminHomeScreen> {
             onPressed: () async {
               await Navigator.push(context,
                   MaterialPageRoute(builder: (context) {
-                return SettingScreen();
+                return const SettingScreen();
               }));
             },
           )
@@ -167,17 +163,17 @@ class _MenuScreenState extends State<AdminHomeScreen> {
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.only(right: 5, left: 5, bottom: 10),
+              padding: const EdgeInsets.only(right: 5, left: 5, bottom: 10),
               height: 150,
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20, left: 10),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 20, left: 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -196,7 +192,7 @@ class _MenuScreenState extends State<AdminHomeScreen> {
                           Container(
                             width: 350,
                             height: 70,
-                            padding: EdgeInsets.all(15),
+                            padding: const EdgeInsets.all(15),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               color: Colors.grey.shade300,
@@ -206,7 +202,7 @@ class _MenuScreenState extends State<AdminHomeScreen> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
+                                    const Text(
                                       "New order",
                                       style: TextStyle(
                                         fontSize: 16,
@@ -218,9 +214,9 @@ class _MenuScreenState extends State<AdminHomeScreen> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    NewOrderScreen()));
+                                                    const NewOrderScreen()));
                                       },
-                                      child: Text(
+                                      child: const Text(
                                         "see more",
                                         style: TextStyle(
                                           fontSize: 14,
@@ -239,7 +235,7 @@ class _MenuScreenState extends State<AdminHomeScreen> {
                                       width: 30,
                                       height: 30,
                                       alignment: Alignment.center,
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         shape: BoxShape.circle,
                                         color: Colors.red,
                                       ),
@@ -247,7 +243,7 @@ class _MenuScreenState extends State<AdminHomeScreen> {
                                         waiting.length > 99
                                             ? '99+'
                                             : waiting.length.toString(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: Colors.white,
                                           fontSize: 12,
                                         ),
@@ -266,17 +262,17 @@ class _MenuScreenState extends State<AdminHomeScreen> {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(right: 5, left: 5, bottom: 10),
+              padding: const EdgeInsets.only(right: 5, left: 5, bottom: 10),
               height: 230,
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20, left: 10),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 20, left: 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -295,7 +291,7 @@ class _MenuScreenState extends State<AdminHomeScreen> {
                           Container(
                             width: 350,
                             height: 70,
-                            padding: EdgeInsets.all(15),
+                            padding: const EdgeInsets.all(15),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               color: Colors.grey.shade300,
@@ -305,7 +301,7 @@ class _MenuScreenState extends State<AdminHomeScreen> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
+                                    const Text(
                                       "Inform tracking number",
                                       style: TextStyle(
                                         fontSize: 16,
@@ -317,9 +313,9 @@ class _MenuScreenState extends State<AdminHomeScreen> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    OrderTrackingScreen()));
+                                                    const OrderTrackingScreen()));
                                       },
-                                      child: Text(
+                                      child: const Text(
                                         "see more",
                                         style: TextStyle(
                                           fontSize: 14,
@@ -338,7 +334,7 @@ class _MenuScreenState extends State<AdminHomeScreen> {
                                       width: 30,
                                       height: 30,
                                       alignment: Alignment.center,
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         shape: BoxShape.circle,
                                         color: Colors.red,
                                       ),
@@ -346,7 +342,7 @@ class _MenuScreenState extends State<AdminHomeScreen> {
                                         packing.length > 99
                                             ? '99+'
                                             : packing.length.toString(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: Colors.white,
                                           fontSize: 12,
                                         ),
@@ -357,13 +353,13 @@ class _MenuScreenState extends State<AdminHomeScreen> {
                               ],
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Container(
                             width: 350,
                             height: 70,
-                            padding: EdgeInsets.all(15),
+                            padding: const EdgeInsets.all(15),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               color: Colors.grey.shade300,
@@ -373,7 +369,7 @@ class _MenuScreenState extends State<AdminHomeScreen> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
+                                    const Text(
                                       "Confirm Shipment",
                                       style: TextStyle(
                                         fontSize: 16,
@@ -385,9 +381,9 @@ class _MenuScreenState extends State<AdminHomeScreen> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    ConfirmShipmentScreen()));
+                                                    const ConfirmShipmentScreen()));
                                       },
-                                      child: Text(
+                                      child: const Text(
                                         "see more",
                                         style: TextStyle(
                                           fontSize: 14,
@@ -406,7 +402,7 @@ class _MenuScreenState extends State<AdminHomeScreen> {
                                       width: 30,
                                       height: 30,
                                       alignment: Alignment.center,
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         shape: BoxShape.circle,
                                         color: Colors.red,
                                       ),
@@ -414,7 +410,7 @@ class _MenuScreenState extends State<AdminHomeScreen> {
                                         onTheWay.length > 99
                                             ? '99+'
                                             : onTheWay.length.toString(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: Colors.white,
                                           fontSize: 12,
                                         ),
@@ -433,17 +429,17 @@ class _MenuScreenState extends State<AdminHomeScreen> {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(right: 5, left: 5, bottom: 10),
+              padding: const EdgeInsets.only(right: 5, left: 5, bottom: 10),
               height: 400,
               child: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.white,
                   ),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(
+                        const Padding(
+                          padding: EdgeInsets.only(
                               top: 20, left: 10, bottom: 10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -496,11 +492,11 @@ class _MenuScreenState extends State<AdminHomeScreen> {
                                                       ),
                                                     ),
                                                     child: Transform.translate(
-                                                      offset: Offset(57, -57),
+                                                      offset: const Offset(57, -57),
                                                       child: Container(
                                                         height: 25,
                                                         width: 25,
-                                                        margin: EdgeInsets
+                                                        margin: const EdgeInsets
                                                             .symmetric(
                                                           horizontal: 65,
                                                           vertical: 65,
@@ -508,7 +504,7 @@ class _MenuScreenState extends State<AdminHomeScreen> {
                                                         child:
                                                             Transform.translate(
                                                           offset:
-                                                              Offset(-3, -3),
+                                                              const Offset(-3, -3),
                                                           child: IconButton(
                                                             icon: const Icon(
                                                               Icons

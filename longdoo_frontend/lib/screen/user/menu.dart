@@ -157,7 +157,7 @@ class _MenuScreenState extends State<MenuScreen> {
                 isLoading = false;
               });
             })));
-    getYourCart().then((_) => Future.delayed(new Duration(seconds: 1), () {
+    getYourCart().then((_) => Future.delayed(const Duration(seconds: 1), () {
           setState(() {
             isLoading = false;
           });
@@ -190,7 +190,7 @@ class _MenuScreenState extends State<MenuScreen> {
                 onPressed: () async {
                   await Navigator.push(context,
                       MaterialPageRoute(builder: (context) {
-                    return CartScreen();
+                    return const CartScreen();
                   }));
                   getYourCart();
                 },
@@ -205,7 +205,7 @@ class _MenuScreenState extends State<MenuScreen> {
                     radius: 10,
                     child: Text(
                       cart.length > 99 ? '99+' : cart.length.toString(),
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 12,
                       ),
@@ -221,10 +221,10 @@ class _MenuScreenState extends State<MenuScreen> {
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.only(right: 5, left: 5, bottom: 10),
+              padding: const EdgeInsets.only(right: 5, left: 5, bottom: 10),
               height: 180,
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                 ),
                 child: Column(
@@ -237,13 +237,13 @@ class _MenuScreenState extends State<MenuScreen> {
                         children: [
                           Text(
                             'Hi, ${userProfile.firstName}',
-                            style: TextStyle(fontSize: 20),
+                            style: const TextStyle(fontSize: 20),
                           ),
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20, left: 10),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 20, left: 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -266,16 +266,16 @@ class _MenuScreenState extends State<MenuScreen> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => UserSizeScreen(),
+                                      builder: (context) => const UserSizeScreen(),
                                     ),
                                   );
                                 },
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.emoji_people,
                                   size: 35,
                                 ),
                               ),
-                              Text(
+                              const Text(
                                 'Your Size',
                                 style: TextStyle(fontSize: 12),
                               ),
@@ -288,16 +288,16 @@ class _MenuScreenState extends State<MenuScreen> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => SupportScreen(),
+                                      builder: (context) => const SupportScreen(),
                                     ),
                                   );
                                 },
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.support_agent,
                                   size: 35,
                                 ),
                               ),
-                              Text(
+                              const Text(
                                 'Support',
                                 style: TextStyle(fontSize: 12),
                               ),
@@ -310,16 +310,16 @@ class _MenuScreenState extends State<MenuScreen> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => AccountScreen(),
+                                      builder: (context) => const AccountScreen(),
                                     ),
                                   );
                                 },
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.manage_accounts,
                                   size: 35,
                                 ),
                               ),
-                              Text(
+                              const Text(
                                 'Account',
                                 style: TextStyle(fontSize: 12),
                               ),
@@ -333,17 +333,17 @@ class _MenuScreenState extends State<MenuScreen> {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(right: 5, left: 5, bottom: 10),
+              padding: const EdgeInsets.only(right: 5, left: 5, bottom: 10),
               height: 140,
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20, left: 10),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 20, left: 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -371,7 +371,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                     onPressed: () async {
                                       await Navigator.push(context,
                                           MaterialPageRoute(builder: (context) {
-                                        return UnpaidScreen();
+                                        return const UnpaidScreen();
                                       }));
                                       getYourCart();
                                     },
@@ -388,7 +388,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                           cart.length > 99
                                               ? '99+'
                                               : unpaid.length.toString(),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             color: Colors.white,
                                             fontSize: 12,
                                           ),
@@ -398,7 +398,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                   ),
                                 ],
                               ),
-                              Text(
+                              const Text(
                                 'Unpaid',
                                 style: TextStyle(fontSize: 12),
                               ),
@@ -416,7 +416,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                     onPressed: () async {
                                       await Navigator.push(context,
                                           MaterialPageRoute(builder: (context) {
-                                        return ProcessingScreen();
+                                        return const ProcessingScreen();
                                       }));
                                       getYourCart();
                                     },
@@ -433,7 +433,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                           process.length > 99
                                               ? '99+'
                                               : process.length.toString(),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             color: Colors.white,
                                             fontSize: 12,
                                           ),
@@ -443,7 +443,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                   ),
                                 ],
                               ),
-                              Text(
+                              const Text(
                                 'Process',
                                 style: TextStyle(fontSize: 12),
                               ),
@@ -461,7 +461,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                     onPressed: () async {
                                       await Navigator.push(context,
                                           MaterialPageRoute(builder: (context) {
-                                        return ShippedScreen();
+                                        return const ShippedScreen();
                                       }));
                                       getYourCart();
                                     },
@@ -478,7 +478,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                           shipped.length > 99
                                               ? '99+'
                                               : shipped.length.toString(),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             color: Colors.white,
                                             fontSize: 12,
                                           ),
@@ -488,7 +488,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                   ),
                                 ],
                               ),
-                              Text(
+                              const Text(
                                 'Shipped',
                                 style: TextStyle(fontSize: 12),
                               ),
@@ -502,17 +502,17 @@ class _MenuScreenState extends State<MenuScreen> {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(right: 5, left: 5, bottom: 10),
-              height: 280,
+              padding: const EdgeInsets.only(right: 5, left: 5, bottom: 10),
+              height: MediaQuery.of(context).size.height * 0.8,
               child: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.white,
                   ),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(
+                        const Padding(
+                          padding: EdgeInsets.only(
                               top: 20, left: 10, bottom: 10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -564,11 +564,11 @@ class _MenuScreenState extends State<MenuScreen> {
                                                       ),
                                                     ),
                                                     child: Transform.translate(
-                                                      offset: Offset(57, -57),
+                                                      offset: const Offset(57, -57),
                                                       child: Container(
                                                         height: 30,
                                                         width: 30,
-                                                        margin: EdgeInsets
+                                                        margin: const EdgeInsets
                                                             .symmetric(
                                                           horizontal: 65,
                                                           vertical: 65,
@@ -583,7 +583,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                                         child:
                                                             Transform.translate(
                                                           offset:
-                                                              Offset(-3, -3),
+                                                              const Offset(-3, -3),
                                                           child: IconButton(
                                                             icon: const Icon(
                                                               Icons

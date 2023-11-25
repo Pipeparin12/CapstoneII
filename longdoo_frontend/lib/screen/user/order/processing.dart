@@ -7,6 +7,8 @@ import 'package:longdoo_frontend/service/api/order.dart';
 import 'package:longdoo_frontend/service/dio.dart';
 
 class ProcessingScreen extends StatefulWidget {
+  const ProcessingScreen({super.key});
+
   @override
   _ProcessingScreenState createState() => _ProcessingScreenState();
 }
@@ -39,16 +41,16 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) {
-              return BottomNavBar(selectedIndex: 2);
+              return const BottomNavBar(selectedIndex: 2);
             }));
           },
         ),
         backgroundColor: Colors.white,
-        title: Text('My Purchases'),
+        title: const Text('My Purchases'),
         centerTitle: true,
         elevation: 0,
       ),
@@ -58,9 +60,9 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
           child: Column(
             children: <Widget>[
               Container(
-                decoration: BoxDecoration(color: Colors.white),
+                decoration: const BoxDecoration(color: Colors.white),
                 child: Padding(
-                  padding: EdgeInsets.all(1),
+                  padding: const EdgeInsets.all(1),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -69,11 +71,11 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => UnpaidScreen(),
+                              builder: (context) => const UnpaidScreen(),
                             ),
                           );
                         },
-                        child: Text(
+                        child: const Text(
                           'To Pay',
                           style: TextStyle(fontSize: 14, color: Colors.black),
                         ),
@@ -82,7 +84,7 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
                         onPressed: () {
                           // No navigate because on this page already.
                         },
-                        child: Text(
+                        child: const Text(
                           'To Ship',
                           style: TextStyle(fontSize: 14, color: Colors.black),
                         ),
@@ -92,11 +94,11 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ShippedScreen(),
+                              builder: (context) => const ShippedScreen(),
                             ),
                           );
                         },
-                        child: Text(
+                        child: const Text(
                           'To Receive',
                           style: TextStyle(fontSize: 14, color: Colors.black),
                         ),
@@ -111,7 +113,7 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
                       width: double.maxFinite,
-                      decoration: BoxDecoration(color: Colors.white),
+                      decoration: const BoxDecoration(color: Colors.white),
                       child: Padding(
                         padding: const EdgeInsets.only(
                             left: 10, right: 10, top: 10, bottom: 5),
@@ -122,7 +124,7 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
                               children: [
                                 Text(
                                   'Status: ' + order[index]['status']['status'],
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 14,
                                       color: Colors.black,
                                       fontWeight: FontWeight.w400),
@@ -134,7 +136,7 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
                                 Text(
                                   'Tracking Number: ' +
                                       order[index]['status']['description'],
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 14,
                                       color: Colors.black,
                                       fontWeight: FontWeight.w400),
@@ -145,14 +147,14 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
                               children: [
                                 Text(
                                   'Order number: ' + order[index]['_id'],
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 14,
                                       color: Colors.black,
                                       fontWeight: FontWeight.w400),
                                 ),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Column(
@@ -160,7 +162,7 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
                                 for (var product
                                     in order[index]['products'] ?? '')
                                   Container(
-                                    padding: EdgeInsets.only(
+                                    padding: const EdgeInsets.only(
                                         right: 5, left: 5, bottom: 10),
                                     height: 120,
                                     child: Container(
@@ -192,7 +194,7 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
                                           ),
                                           Expanded(
                                             child: Container(
-                                              padding: EdgeInsets.only(
+                                              padding: const EdgeInsets.only(
                                                   top: 5, left: 10, bottom: 10),
                                               child: Column(
                                                 mainAxisAlignment:
@@ -203,31 +205,30 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
                                                   Text(
                                                     (product['productName'] ??
                                                         ''),
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       fontSize: 14,
                                                     ),
                                                     textAlign: TextAlign.start,
                                                   ),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     height: 5,
                                                   ),
                                                   Text(
                                                     "Size: " +
                                                         (product['size'] ?? ""),
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       color: Colors.grey,
                                                     ),
                                                     textAlign: TextAlign.start,
                                                   ),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     height: 5,
                                                   ),
                                                   Text(
-                                                    "Amount: " +
-                                                        (product['quantity']
+                                                    "Amount: ${product['quantity']
                                                                 .toString() ??
-                                                            ""),
-                                                    style: TextStyle(
+                                                            ""}",
+                                                    style: const TextStyle(
                                                       color: Colors.grey,
                                                     ),
                                                     textAlign: TextAlign.start,
@@ -243,11 +244,10 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
                                                   MainAxisAlignment.center,
                                               children: <Widget>[
                                                 Text(
-                                                  '\฿ ' +
-                                                      (product['totalPrice']
+                                                  '฿ ${product['totalPrice']
                                                               .toString() ??
-                                                          ''),
-                                                  style: TextStyle(
+                                                          ''}',
+                                                  style: const TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
@@ -260,7 +260,7 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
                                   ),
                               ],
                             ),
-                            Divider(
+                            const Divider(
                               color: Colors.black,
                             ),
                           ],

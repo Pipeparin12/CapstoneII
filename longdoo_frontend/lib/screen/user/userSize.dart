@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/components/bottomNavBar.dart';
 import 'package:longdoo_frontend/model/profile.dart';
@@ -166,12 +165,12 @@ class _UserSizeScreenState extends State<UserSizeScreen> {
       if (response.data["success"]) {
         await fetchProfile();
 
-        await Future.delayed(Duration(seconds: 3));
+        await Future.delayed(const Duration(seconds: 3));
 
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (context) => BottomNavBar(
+              builder: (context) => const BottomNavBar(
                     selectedIndex: 2,
                   )),
         );
@@ -239,7 +238,7 @@ class _UserSizeScreenState extends State<UserSizeScreen> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text('Your size'),
+          title: const Text('Your size'),
           centerTitle: true,
         ),
         body: SingleChildScrollView(
@@ -247,10 +246,10 @@ class _UserSizeScreenState extends State<UserSizeScreen> {
             key: formState,
             child: Column(children: [
               Container(
-                  padding: EdgeInsets.only(right: 5, left: 5, bottom: 10),
+                  padding: const EdgeInsets.only(right: 5, left: 5, bottom: 10),
                   height: double.maxFinite,
                   child: Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.white,
                       ),
                       child: Column(
@@ -264,26 +263,26 @@ class _UserSizeScreenState extends State<UserSizeScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Height',
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(width: 20),
-                                  Container(
+                                  const SizedBox(width: 20),
+                                  SizedBox(
                                     width: 150,
                                     child: TextFormField(
                                       controller: heightController,
                                       keyboardType: TextInputType.number,
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                       ),
                                     ),
                                   ),
-                                  SizedBox(width: 20),
-                                  Text(
+                                  const SizedBox(width: 20),
+                                  const Text(
                                     'cm',
                                     style: TextStyle(
                                       fontSize: 16,
@@ -301,26 +300,26 @@ class _UserSizeScreenState extends State<UserSizeScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Weight',
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(width: 15),
-                                  Container(
+                                  const SizedBox(width: 15),
+                                  SizedBox(
                                     width: 150,
                                     child: TextFormField(
                                       controller: weightController,
                                       keyboardType: TextInputType.number,
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                       ),
                                     ),
                                   ),
-                                  SizedBox(width: 20),
-                                  Text(
+                                  const SizedBox(width: 20),
+                                  const Text(
                                     'kg',
                                     style: TextStyle(
                                       fontSize: 16,
@@ -338,26 +337,26 @@ class _UserSizeScreenState extends State<UserSizeScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Chest',
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(width: 35),
-                                  Container(
+                                  const SizedBox(width: 35),
+                                  SizedBox(
                                     width: 150,
                                     child: TextFormField(
                                       controller: chestSizeController,
                                       keyboardType: TextInputType.number,
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                       ),
                                     ),
                                   ),
-                                  SizedBox(width: 20),
-                                  Text(
+                                  const SizedBox(width: 20),
+                                  const Text(
                                     'Inch',
                                     style: TextStyle(
                                       fontSize: 16,
@@ -375,26 +374,26 @@ class _UserSizeScreenState extends State<UserSizeScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Waist',
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(width: 35),
-                                  Container(
+                                  const SizedBox(width: 35),
+                                  SizedBox(
                                     width: 150,
                                     child: TextFormField(
                                       controller: waistSizeController,
                                       keyboardType: TextInputType.number,
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                       ),
                                     ),
                                   ),
-                                  SizedBox(width: 20),
-                                  Text(
+                                  const SizedBox(width: 20),
+                                  const Text(
                                     'Inch',
                                     style: TextStyle(
                                       fontSize: 16,
@@ -412,26 +411,26 @@ class _UserSizeScreenState extends State<UserSizeScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Hip',
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(width: 55),
-                                  Container(
+                                  const SizedBox(width: 55),
+                                  SizedBox(
                                     width: 150,
                                     child: TextFormField(
                                       controller: hipsSizeController,
                                       keyboardType: TextInputType.number,
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                       ),
                                     ),
                                   ),
-                                  SizedBox(width: 20),
-                                  Text(
+                                  const SizedBox(width: 20),
+                                  const Text(
                                     'Inch',
                                     style: TextStyle(
                                       fontSize: 16,
@@ -449,14 +448,14 @@ class _UserSizeScreenState extends State<UserSizeScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Gender',
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(width: 50),
+                                  const SizedBox(width: 50),
                                   Container(
                                     width: 160,
                                     decoration: BoxDecoration(
@@ -475,7 +474,7 @@ class _UserSizeScreenState extends State<UserSizeScreen> {
                                         return DropdownMenuItem<String>(
                                           value: value,
                                           child: Container(
-                                            padding: EdgeInsets.symmetric(
+                                            padding: const EdgeInsets.symmetric(
                                                 horizontal: 30.0),
                                             child: Text(value),
                                           ),
@@ -485,23 +484,23 @@ class _UserSizeScreenState extends State<UserSizeScreen> {
                                       underline: Container(),
                                     ),
                                   ),
-                                  SizedBox(width: 20),
+                                  const SizedBox(width: 20),
                                 ],
                               ),
                             ),
-                            Padding(padding: EdgeInsets.only(top: 40)),
+                            const Padding(padding: EdgeInsets.only(top: 40)),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 GestureDetector(
                                   child: Container(
-                                    padding: EdgeInsets.symmetric(
+                                    padding: const EdgeInsets.symmetric(
                                         vertical: 10, horizontal: 20),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(20),
                                       color: Colors.grey,
                                     ),
-                                    child: Row(
+                                    child: const Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [

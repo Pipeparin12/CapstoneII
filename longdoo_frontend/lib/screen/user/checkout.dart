@@ -65,7 +65,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   double calculateTotalPrice(Map<dynamic, dynamic> orderData) {
     double total = 0.0;
 
-    if (orderData != null && orderData['products'] != null) {
+    if (orderData['products'] != null) {
       List<dynamic> products = orderData['products'];
 
       for (var product in products) {
@@ -91,7 +91,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
 
   void uploadSlips(BuildContext context) async {
-    print("Uploading... " + imageFile!.path);
+    print("Uploading... ${imageFile!.path}");
     final token = SharePreference.prefs.getString("token");
     final formData = FormData.fromMap({
       "file": await MultipartFile.fromFile(
@@ -131,11 +131,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text('Your Details'),
+          title: const Text('Your Details'),
           centerTitle: true,
         ),
         body: isLoading
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(),
               )
             : SingleChildScrollView(
@@ -144,17 +144,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   child: Column(
                     children: <Widget>[
                       Container(
-                        margin: EdgeInsets.all(20),
+                        margin: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                           border: Border.all(width: 2, color: Colors.grey),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Container(
-                          margin: EdgeInsets.all(15),
+                          margin: const EdgeInsets.all(15),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Row(
+                              const Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Text(
@@ -165,11 +165,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   )
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 15,
                               ),
-                              if (orderData != null &&
-                                  orderData['products'] != null)
+                              if (orderData['products'] != null)
                                 for (var product in orderData['products'])
                                   Row(
                                     mainAxisAlignment:
@@ -181,77 +180,76 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                         children: [
                                           Text(
                                             product['productName'],
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 14,
                                             ),
                                             textAlign: TextAlign.start,
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 5,
                                           ),
                                           Text(
                                             "Size: ${product['size']}",
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               color: Colors.grey,
                                             ),
                                             textAlign: TextAlign.start,
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                           ),
                                         ],
                                       ),
                                       Text(
-                                        '\฿${product['totalPrice']}',
-                                        style: TextStyle(
+                                        '฿${product['totalPrice']}',
+                                        style: const TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                     ],
                                   ),
-                              if (orderData != null)
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Total',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          textAlign: TextAlign.start,
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Total',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                      ],
-                                    ),
-                                    Text(
-                                      '\฿${calculateTotalPrice(orderData).toStringAsFixed(0)}',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
+                                        textAlign: TextAlign.start,
                                       ),
+                                    ],
+                                  ),
+                                  Text(
+                                    '฿${calculateTotalPrice(orderData).toStringAsFixed(0)}',
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                  ],
-                                )
+                                  ),
+                                ],
+                              )
                             ],
                           ),
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.all(20),
+                        margin: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                           border: Border.all(width: 2, color: Colors.grey),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Container(
-                          margin: EdgeInsets.all(15),
+                          margin: const EdgeInsets.all(15),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -264,14 +262,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
+                                      const Text(
                                         'User Information',
                                         style: TextStyle(
                                           fontSize: 18,
                                         ),
                                         textAlign: TextAlign.start,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5,
                                       ),
                                       Text(
@@ -292,17 +290,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                           color: Colors.grey.shade700,
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 10,
                                       ),
-                                      Text(
+                                      const Text(
                                         'Purchase Order',
                                         style: TextStyle(
                                           fontSize: 18,
                                         ),
                                         textAlign: TextAlign.start,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5,
                                       ),
                                       Text(
@@ -312,7 +310,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                         ),
                                         textAlign: TextAlign.start,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5,
                                       ),
                                       Text(
@@ -330,7 +328,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 25,
                       ),
                       ClipRRect(
@@ -360,7 +358,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                           },
                                           child: Expanded(
                                               child: imageFile == null
-                                                  ? Center(
+                                                  ? const Center(
                                                       child: Column(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
@@ -397,7 +395,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       ElevatedButton(
@@ -409,13 +407,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           Navigator.pop(context);
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.grey.shade400,
-                          padding: EdgeInsets.all(5),
+                          backgroundColor: Colors.grey.shade400,
+                          padding: const EdgeInsets.all(5),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        child: Container(
+                        child: const SizedBox(
                           width: 200,
                           child: Center(
                             child: Text(

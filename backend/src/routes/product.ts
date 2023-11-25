@@ -154,6 +154,40 @@ productRoute.get('/yourProduct/:key', async (req, res) => {
     }
 });
 
+productRoute.get('/allYourProduct/:key', async (req, res) => {
+    const user_id = req.user?.user_id;
+    try{
+        const userProfile = await Profile.findOne({ user: user_id });
+        console.log(userProfile)
+        if (!userProfile) {
+            return res.json({
+                success: false,
+                message: 'User profile not found.'
+            });
+        }
+        const userSize = userProfile.size;
+        const products = await Product.find({
+            $or: [
+                { size: userSize, category: { $regex: req.params.key } },
+                { size: userSize, category: 'Unisex' }
+            ]
+        }).exec();
+        console.log(products)
+        return res.json({
+            products,
+            success: true,
+            message: 'Get products successfully!'
+        });
+    } catch (err) {
+        return res.json({
+            success: false,
+            message: err
+        });
+    }
+});
+
+
+
 productRoute.get('/:id', async (req, res) => {
     try{
         const product = await Product.findById(req.params.id);

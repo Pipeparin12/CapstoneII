@@ -1,12 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:longdoo_frontend/service/api/product.dart';
 import 'package:longdoo_frontend/service/dio.dart';
 
 class ClothesDetailScreen extends StatefulWidget {
   final String id;
-  ClothesDetailScreen({required this.id});
+  const ClothesDetailScreen({super.key, required this.id});
 
   @override
   State<ClothesDetailScreen> createState() => _ClothesDetailScreenState();
@@ -30,7 +29,7 @@ class _ClothesDetailScreenState extends State<ClothesDetailScreen> {
 
   @override
   void initState() {
-    getDetail().then((_) => Future.delayed(new Duration(seconds: 1), () {
+    getDetail().then((_) => Future.delayed(const Duration(seconds: 1), () {
           setState(() {
             isLoading = false;
           });
@@ -45,7 +44,7 @@ class _ClothesDetailScreenState extends State<ClothesDetailScreen> {
         backgroundColor: Colors.white,
       ),
       body: isLoading
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : Stack(children: [
@@ -63,7 +62,7 @@ class _ClothesDetailScreenState extends State<ClothesDetailScreen> {
                 child: Container(
                   height: MediaQuery.of(context).size.height * .42,
                   width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(30),
                         topRight: Radius.circular(30)),
@@ -76,7 +75,7 @@ class _ClothesDetailScreenState extends State<ClothesDetailScreen> {
                             top: 20, left: 20, right: 30, bottom: 5),
                         child: Row(
                           children: [
-                            Text(
+                            const Text(
                               "Name: ",
                               style: TextStyle(
                                 fontSize: 20,
@@ -85,12 +84,12 @@ class _ClothesDetailScreenState extends State<ClothesDetailScreen> {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
                             Text(
                               listProduct['productName'],
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 25,
                               ),
                               maxLines: 1,
@@ -99,105 +98,105 @@ class _ClothesDetailScreenState extends State<ClothesDetailScreen> {
                           ],
                         ),
                       ),
-                      Divider(
+                      const Divider(
                         color: Colors.black,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                             top: 5, left: 20, right: 30, bottom: 5),
                         child: Row(
                           children: [
-                            Text(
+                            const Text(
                               "Price: ",
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
                             Text(
                               "฿" + listProduct['price'].toStringAsFixed(0),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 16,
                               ),
                             ),
                           ],
                         ),
                       ),
-                      Divider(
+                      const Divider(
                         color: Colors.black,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                             top: 5, left: 20, right: 30, bottom: 5),
                         child: Row(
                           children: [
-                            Text(
+                            const Text(
                               "Color: ",
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
                             Text(
                               listProduct['color'],
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 16,
                               ),
                             ),
                           ],
                         ),
                       ),
-                      Divider(
+                      const Divider(
                         color: Colors.black,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                             top: 5, left: 20, right: 30, bottom: 5),
                         child: Row(
                           children: [
-                            Text(
+                            const Text(
                               "Size: ",
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
                             Text(
                               listProduct['size'],
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 16,
                               ),
                             ),
                           ],
                         ),
                       ),
-                      Divider(
+                      const Divider(
                         color: Colors.black,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                             top: 5, left: 20, right: 30, bottom: 5),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               "Product description",
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold),
                             ),
-                            SizedBox(height: 5),
+                            const SizedBox(height: 5),
                             Text(
                               listProduct['productDescription'],
-                              style: TextStyle(fontSize: 16),
+                              style: const TextStyle(fontSize: 16),
                             ),
                           ],
                         ),

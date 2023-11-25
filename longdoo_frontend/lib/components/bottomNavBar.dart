@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:longdoo_frontend/screen/user/home.dart';
 import 'package:longdoo_frontend/screen/user/menu.dart';
 import 'package:longdoo_frontend/screen/user/user_model.dart';
@@ -17,9 +15,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
   late int _selectedIndex = widget.selectedIndex;
   PageController pageController = PageController();
   List<Widget> pageList = <Widget>[
-    HomeScreen(),
-    UserModelScreen(),
-    MenuScreen()
+    const HomeScreen(),
+    const UserModelScreen(),
+    const MenuScreen()
   ];
   @override
   Widget build(BuildContext context) {
@@ -32,8 +30,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
         selectedFontSize: 15,
         selectedIconTheme: IconThemeData(color: Colors.grey[850]),
         selectedItemColor: Colors.grey[850],
-        selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
-        unselectedIconTheme: IconThemeData(color: Colors.grey),
+        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+        unselectedIconTheme: const IconThemeData(color: Colors.grey),
         unselectedItemColor: Colors.grey,
         backgroundColor: Colors.grey,
         items: const <BottomNavigationBarItem>[

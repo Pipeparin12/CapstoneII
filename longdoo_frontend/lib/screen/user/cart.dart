@@ -5,6 +5,8 @@ import 'package:longdoo_frontend/service/api/cart.dart';
 import 'package:longdoo_frontend/service/dio.dart';
 
 class CartScreen extends StatefulWidget {
+  const CartScreen({super.key});
+
   @override
   _CartScreenState createState() => _CartScreenState();
 }
@@ -100,7 +102,7 @@ class _CartScreenState extends State<CartScreen> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text('Cart'),
+          title: const Text('Cart'),
           centerTitle: true,
         ),
         body: SingleChildScrollView(
@@ -108,7 +110,7 @@ class _CartScreenState extends State<CartScreen> {
             height: 550,
             child: Column(
               children: <Widget>[
-                Padding(padding: EdgeInsets.all(10)),
+                const Padding(padding: EdgeInsets.all(10)),
                 Expanded(
                   child: ListView.builder(
                     itemCount: cart.length,
@@ -117,7 +119,7 @@ class _CartScreenState extends State<CartScreen> {
                         children: [
                           Container(
                             padding:
-                                EdgeInsets.only(right: 5, left: 5, bottom: 10),
+                                const EdgeInsets.only(right: 5, left: 5, bottom: 10),
                             height: 130,
                             child: Container(
                               decoration: BoxDecoration(
@@ -141,7 +143,7 @@ class _CartScreenState extends State<CartScreen> {
                                   ),
                                   Expanded(
                                     child: Container(
-                                      padding: EdgeInsets.only(
+                                      padding: const EdgeInsets.only(
                                           top: 5, left: 10, bottom: 10),
                                       child: Column(
                                         mainAxisAlignment:
@@ -151,24 +153,24 @@ class _CartScreenState extends State<CartScreen> {
                                         children: <Widget>[
                                           Text(
                                             cart[index]['productName'],
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 14,
                                             ),
                                             textAlign: TextAlign.start,
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 5,
                                           ),
                                           Text(
                                             "Size: " + cart[index]['size'],
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               color: Colors.grey,
                                             ),
                                             textAlign: TextAlign.start,
                                           ),
                                           Expanded(
                                               child: Container(
-                                            margin: EdgeInsets.all(0),
+                                            margin: const EdgeInsets.all(0),
                                             child: Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
@@ -178,7 +180,7 @@ class _CartScreenState extends State<CartScreen> {
                                                   width: 35,
                                                   decoration: BoxDecoration(
                                                       borderRadius:
-                                                          BorderRadius.only(
+                                                          const BorderRadius.only(
                                                               topLeft: Radius
                                                                   .circular(10),
                                                               bottomLeft: Radius
@@ -192,7 +194,7 @@ class _CartScreenState extends State<CartScreen> {
                                                     onPressed: () {
                                                       decrement(index);
                                                     },
-                                                    child: Text(
+                                                    child: const Text(
                                                       '-',
                                                       style: TextStyle(
                                                         fontSize: 14,
@@ -214,7 +216,7 @@ class _CartScreenState extends State<CartScreen> {
                                                       child: Text(
                                                     cart[index]['quantity']
                                                         .toString(),
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontSize: 16,
                                                         fontWeight:
                                                             FontWeight.bold),
@@ -225,7 +227,7 @@ class _CartScreenState extends State<CartScreen> {
                                                   width: 35,
                                                   decoration: BoxDecoration(
                                                       borderRadius:
-                                                          BorderRadius.only(
+                                                          const BorderRadius.only(
                                                               topRight: Radius
                                                                   .circular(10),
                                                               bottomRight:
@@ -237,7 +239,7 @@ class _CartScreenState extends State<CartScreen> {
                                                           color: Colors.grey)),
                                                   child: Center(
                                                       child: TextButton(
-                                                    child: Text(
+                                                    child: const Text(
                                                       '+',
                                                       style: TextStyle(
                                                         fontSize: 14,
@@ -263,10 +265,8 @@ class _CartScreenState extends State<CartScreen> {
                                           MainAxisAlignment.center,
                                       children: <Widget>[
                                         Text(
-                                          '\฿ ' +
-                                              cart[index]['totalPrice']
-                                                  .toString(),
-                                          style: TextStyle(
+                                          '฿ ${cart[index]['totalPrice']}',
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
@@ -287,21 +287,21 @@ class _CartScreenState extends State<CartScreen> {
           ),
         ),
         bottomNavigationBar: Container(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             vertical: 15,
             horizontal: 30,
           ),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(30),
               topRight: Radius.circular(30),
             ),
             boxShadow: [
               BoxShadow(
-                offset: Offset(0, -15),
+                offset: const Offset(0, -15),
                 blurRadius: 20,
-                color: Color(0xFFDADADA).withOpacity(0.5),
+                color: const Color(0xFFDADADA).withOpacity(0.5),
               )
             ],
           ),
@@ -310,25 +310,24 @@ class _CartScreenState extends State<CartScreen> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Total Price: ฿" +
-                          calculateTotalPrice(cart).toStringAsFixed(0),
-                      style: TextStyle(fontSize: 18),
+                      "Total Price: ฿${calculateTotalPrice(cart).toStringAsFixed(0)}",
+                      style: const TextStyle(fontSize: 18),
                     ),
                     GestureDetector(
                       behavior: HitTestBehavior.translucent,
                       onTap: () {},
                       child: Container(
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            minimumSize: Size(140, 50),
+                            minimumSize: const Size(140, 50),
                           ),
-                          child: Text(
+                          child: const Text(
                             "Purchase",
                             style: TextStyle(fontSize: 18, color: Colors.white),
                           ),
@@ -337,7 +336,7 @@ class _CartScreenState extends State<CartScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => UnpaidScreen()),
+                                  builder: (context) => const UnpaidScreen()),
                             );
                           },
                         ),

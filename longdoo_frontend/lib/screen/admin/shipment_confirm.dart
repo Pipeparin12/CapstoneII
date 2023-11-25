@@ -5,6 +5,8 @@ import 'package:longdoo_frontend/service/api/order.dart';
 import 'package:longdoo_frontend/service/dio.dart';
 
 class ConfirmShipmentScreen extends StatefulWidget {
+  const ConfirmShipmentScreen({super.key});
+
   @override
   _ConfirmShipmentScreenState createState() => _ConfirmShipmentScreenState();
 }
@@ -45,7 +47,7 @@ class _ConfirmShipmentScreenState extends State<ConfirmShipmentScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => AdminHomeScreen(),
+          builder: (context) => const AdminHomeScreen(),
         ),
       );
       setState(() {
@@ -67,16 +69,16 @@ class _ConfirmShipmentScreenState extends State<ConfirmShipmentScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) {
-              return AdminHomeScreen();
+              return const AdminHomeScreen();
             }));
           },
         ),
         backgroundColor: Colors.white,
-        title: Text('Confirm Shipment'),
+        title: const Text('Confirm Shipment'),
         centerTitle: true,
         elevation: 0,
       ),
@@ -91,7 +93,7 @@ class _ConfirmShipmentScreenState extends State<ConfirmShipmentScreen> {
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
                       width: double.maxFinite,
-                      decoration: BoxDecoration(color: Colors.white),
+                      decoration: const BoxDecoration(color: Colors.white),
                       child: Padding(
                         padding: const EdgeInsets.only(
                             left: 10, right: 10, top: 10, bottom: 5),
@@ -102,14 +104,14 @@ class _ConfirmShipmentScreenState extends State<ConfirmShipmentScreen> {
                               children: [
                                 Text(
                                   'Order number: ' + order[index]['_id'],
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16,
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Column(
@@ -117,7 +119,7 @@ class _ConfirmShipmentScreenState extends State<ConfirmShipmentScreen> {
                                 if (order[index]['products'] != null &&
                                     order[index]['products'].isNotEmpty)
                                   Container(
-                                    padding: EdgeInsets.only(
+                                    padding: const EdgeInsets.only(
                                         right: 5, left: 5, bottom: 10),
                                     height: 120,
                                     child: Container(
@@ -150,7 +152,7 @@ class _ConfirmShipmentScreenState extends State<ConfirmShipmentScreen> {
                                           ),
                                           Expanded(
                                             child: Container(
-                                              padding: EdgeInsets.only(
+                                              padding: const EdgeInsets.only(
                                                   top: 5, left: 10, bottom: 10),
                                               child: Column(
                                                 mainAxisAlignment:
@@ -162,22 +164,21 @@ class _ConfirmShipmentScreenState extends State<ConfirmShipmentScreen> {
                                                     (order[index]['products'][0]
                                                             ['productName'] ??
                                                         ''),
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontSize: 16,
                                                         fontWeight:
                                                             FontWeight.bold),
                                                     textAlign: TextAlign.start,
                                                   ),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     height: 5,
                                                   ),
                                                   Text(
-                                                    "Total Price: ฿" +
-                                                        calculateTotalPrice(
+                                                    "Total Price: ฿${calculateTotalPrice(
                                                                 order[index][
                                                                     'products'])
-                                                            .toStringAsFixed(0),
-                                                    style: TextStyle(
+                                                            .toStringAsFixed(0)}",
+                                                    style: const TextStyle(
                                                         fontSize: 14,
                                                         color: Colors.black,
                                                         fontWeight:
@@ -201,13 +202,13 @@ class _ConfirmShipmentScreenState extends State<ConfirmShipmentScreen> {
                                     onPressed: () {
                                       updateShipment(order[index]['_id']);
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       'Confirm Shipment',
                                       style: TextStyle(color: Colors.red),
                                     )),
                               ],
                             ),
-                            Divider(
+                            const Divider(
                               color: Colors.black,
                             ),
                           ],

@@ -9,11 +9,11 @@ class SupportScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text('Support'),
+          title: const Text('Support'),
           centerTitle: true,
         ),
         body: Container(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               vertical: 15,
               horizontal: 30,
             ),
@@ -22,9 +22,9 @@ class SupportScreen extends StatelessWidget {
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  offset: Offset(0, -15),
+                  offset: const Offset(0, -15),
                   blurRadius: 20,
-                  color: Color(0xFFDADADA).withOpacity(0.5),
+                  color: const Color(0xFFDADADA).withOpacity(0.5),
                 )
               ],
             ),
@@ -33,11 +33,11 @@ class SupportScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
+                      const Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
@@ -56,12 +56,12 @@ class SupportScreen extends StatelessWidget {
                       GestureDetector(
                         behavior: HitTestBehavior.translucent,
                         child: Padding(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              minimumSize: Size(140, 50),
+                              minimumSize: const Size(140, 50),
                             ),
-                            child: Row(
+                            child: const Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(Icons.call),
@@ -86,11 +86,11 @@ class SupportScreen extends StatelessWidget {
                       )
                     ],
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
+                      const Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
@@ -109,12 +109,12 @@ class SupportScreen extends StatelessWidget {
                       GestureDetector(
                         behavior: HitTestBehavior.translucent,
                         child: Padding(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              minimumSize: Size(140, 50),
+                              minimumSize: const Size(140, 50),
                             ),
-                            child: Row(
+                            child: const Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(Icons.email),

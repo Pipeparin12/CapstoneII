@@ -37,12 +37,12 @@ class _SignInPageState extends State<SignInPage> {
             "Bearer ${result.data}";
         if (result.data['role'] == 'admin') {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AdminHomeScreen()));
+              MaterialPageRoute(builder: (context) => const AdminHomeScreen()));
         } else {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => BottomNavBar(
+                  builder: (context) => const BottomNavBar(
                         selectedIndex: 0,
                       )));
         }
@@ -103,6 +103,7 @@ class _SignInPageState extends State<SignInPage> {
                       } else if (val.length < 6) {
                         return 'Password must be at least 6 characters';
                       }
+                      return null;
                     },
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(
@@ -120,7 +121,7 @@ class _SignInPageState extends State<SignInPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         GestureDetector(
-                            child: Text(
+                            child: const Text(
                               "Sign Up",
                               style: TextStyle(
                                   fontSize: 18,
@@ -130,28 +131,28 @@ class _SignInPageState extends State<SignInPage> {
                             onTap: () => Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SignUpPage()))),
-                        Padding(padding: EdgeInsets.only(right: 10)),
-                        Text(
+                                    builder: (context) => const SignUpPage()))),
+                        const Padding(padding: EdgeInsets.only(right: 10)),
+                        const Text(
                           "If you don't have account.",
                           style: TextStyle(fontSize: 15),
                         )
                       ],
                     )),
-                Container(
+                SizedBox(
                   width: 100,
                   height: 50,
                   child: ElevatedButton(
                     onPressed: () => signInHandler(),
-                    child: Text(
-                      'Sign In',
-                      style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 20),
-                    ),
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.grey,
+                      backgroundColor: Colors.grey,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
+                    ),
+                    child: const Text(
+                      'Sign In',
+                      style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 20),
                     ),
                   ),
                 )

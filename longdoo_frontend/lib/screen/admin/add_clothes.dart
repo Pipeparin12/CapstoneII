@@ -183,7 +183,7 @@ class _AddClothesScreenState extends State<AddClothesScreen> {
                                                         ),
                                                       ),
                                                     ),
-                                                    SizedBox(width: 2),
+                                                    const SizedBox(width: 2),
                                                     Container(
                                                       width: 200,
                                                       padding:
@@ -258,7 +258,7 @@ class _AddClothesScreenState extends State<AddClothesScreen> {
                                                         ),
                                                       ),
                                                     ),
-                                                    SizedBox(width: 2),
+                                                    const SizedBox(width: 2),
                                                     Container(
                                                       width: 200,
                                                       padding:
@@ -299,6 +299,7 @@ class _AddClothesScreenState extends State<AddClothesScreen> {
                                                       const EdgeInsets.all(10),
                                                   child: TextFormField(
                                                     maxLines: 3,
+                                                    maxLength: 50,
                                                     controller:
                                                         descriptionController,
                                                     decoration:

@@ -73,14 +73,14 @@ class _UserModelScreenState extends State<UserModelScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text("Your Model"),
+        title: const Text("Your Model"),
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) {
-              return BottomNavBar(selectedIndex: 0,);
+              return const BottomNavBar(selectedIndex: 0,);
             }));
           },
         ),

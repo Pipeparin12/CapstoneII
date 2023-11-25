@@ -22,7 +22,7 @@ class UserApi {
 
   static Future<dynamic> getUsers() async {
     DioInstance.dio.options.headers["authorization"] =
-        "Bearer " + SharePreference.prefs.getString("token").toString();
+        "Bearer ${SharePreference.prefs.getString("token")}";
     final response = await DioInstance.dio.get("/account/all-user");
     return response;
   }

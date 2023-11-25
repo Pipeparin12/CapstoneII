@@ -46,7 +46,7 @@ class _MyStatefulWidgetState extends State<SignUpPage> {
           if (signInResult.statusCode == 200) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => UserSizeScreen()),
+              MaterialPageRoute(builder: (context) => const UserSizeScreen()),
             );
           } else {
             print("Sign-in failed");
@@ -145,6 +145,7 @@ class _MyStatefulWidgetState extends State<SignUpPage> {
                       } else if (val.length < 6) {
                         return 'Password must be at least 6 characters';
                       }
+                      return null;
                     },
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(
@@ -162,20 +163,20 @@ class _MyStatefulWidgetState extends State<SignUpPage> {
                       'People use real names on the app.',
                       style: TextStyle(fontSize: 15),
                     )),
-                Container(
+                SizedBox(
                   width: 100,
                   height: 50,
                   child: ElevatedButton(
                     onPressed: () => signUpHandler(),
-                    child: Text(
-                      'Sign Up',
-                      style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 20),
-                    ),
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.grey,
+                      backgroundColor: Colors.grey,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
+                    ),
+                    child: const Text(
+                      'Sign Up',
+                      style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 20),
                     ),
                   ),
                 )

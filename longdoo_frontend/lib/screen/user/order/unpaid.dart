@@ -8,6 +8,8 @@ import 'package:longdoo_frontend/service/api/order.dart';
 import 'package:longdoo_frontend/service/dio.dart';
 
 class UnpaidScreen extends StatefulWidget {
+  const UnpaidScreen({super.key});
+
   @override
   _UnpaidScreenState createState() => _UnpaidScreenState();
 }
@@ -52,18 +54,18 @@ class _UnpaidScreenState extends State<UnpaidScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) {
-              return BottomNavBar(
+              return const BottomNavBar(
                 selectedIndex: 2,
               );
             }));
           },
         ),
         backgroundColor: Colors.white,
-        title: Text('My Purchases'),
+        title: const Text('My Purchases'),
         centerTitle: true,
         elevation: 0,
       ),
@@ -73,9 +75,9 @@ class _UnpaidScreenState extends State<UnpaidScreen> {
           child: Column(
             children: <Widget>[
               Container(
-                decoration: BoxDecoration(color: Colors.white),
+                decoration: const BoxDecoration(color: Colors.white),
                 child: Padding(
-                  padding: EdgeInsets.all(1),
+                  padding: const EdgeInsets.all(1),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -83,7 +85,7 @@ class _UnpaidScreenState extends State<UnpaidScreen> {
                         onPressed: () {
                           // No navigate because on this page already.
                         },
-                        child: Text(
+                        child: const Text(
                           'To Pay',
                           style: TextStyle(fontSize: 14, color: Colors.black),
                         ),
@@ -93,11 +95,11 @@ class _UnpaidScreenState extends State<UnpaidScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ProcessingScreen(),
+                              builder: (context) => const ProcessingScreen(),
                             ),
                           );
                         },
-                        child: Text(
+                        child: const Text(
                           'To Ship',
                           style: TextStyle(fontSize: 14, color: Colors.black),
                         ),
@@ -107,11 +109,11 @@ class _UnpaidScreenState extends State<UnpaidScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ShippedScreen(),
+                              builder: (context) => const ShippedScreen(),
                             ),
                           );
                         },
-                        child: Text(
+                        child: const Text(
                           'To Receive',
                           style: TextStyle(fontSize: 14, color: Colors.black),
                         ),
@@ -126,14 +128,14 @@ class _UnpaidScreenState extends State<UnpaidScreen> {
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
                       width: double.maxFinite,
-                      decoration: BoxDecoration(color: Colors.white),
+                      decoration: const BoxDecoration(color: Colors.white),
                       child: Padding(
                         padding: const EdgeInsets.only(
                             left: 10, right: 10, top: 10, bottom: 5),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Row(
+                            const Row(
                               children: [
                                 Text(
                                   'Status: Unpaid',
@@ -148,7 +150,7 @@ class _UnpaidScreenState extends State<UnpaidScreen> {
                               children: [
                                 Text(
                                   'Order number: ' + order[index]['_id'],
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 14,
                                       color: Colors.black,
                                       fontWeight: FontWeight.w400),
@@ -158,18 +160,17 @@ class _UnpaidScreenState extends State<UnpaidScreen> {
                             Row(
                               children: [
                                 Text(
-                                  "Total Price: ฿" +
-                                      calculateTotalPrice(
+                                  "Total Price: ฿${calculateTotalPrice(
                                               order[index]['products'])
-                                          .toStringAsFixed(0),
-                                  style: TextStyle(
+                                          .toStringAsFixed(0)}",
+                                  style: const TextStyle(
                                       fontSize: 14,
                                       color: Colors.black,
                                       fontWeight: FontWeight.w400),
                                 ),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Column(
@@ -177,7 +178,7 @@ class _UnpaidScreenState extends State<UnpaidScreen> {
                                 for (var product
                                     in order[index]['products'] ?? '')
                                   Container(
-                                    padding: EdgeInsets.only(
+                                    padding: const EdgeInsets.only(
                                         right: 5, left: 5, bottom: 10),
                                     height: 120,
                                     child: Container(
@@ -209,7 +210,7 @@ class _UnpaidScreenState extends State<UnpaidScreen> {
                                           ),
                                           Expanded(
                                             child: Container(
-                                              padding: EdgeInsets.only(
+                                              padding: const EdgeInsets.only(
                                                   top: 5, left: 10, bottom: 10),
                                               child: Column(
                                                 mainAxisAlignment:
@@ -220,31 +221,30 @@ class _UnpaidScreenState extends State<UnpaidScreen> {
                                                   Text(
                                                     (product['productName'] ??
                                                         ''),
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       fontSize: 14,
                                                     ),
                                                     textAlign: TextAlign.start,
                                                   ),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     height: 5,
                                                   ),
                                                   Text(
                                                     "Size: " +
                                                         (product['size'] ?? ""),
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       color: Colors.grey,
                                                     ),
                                                     textAlign: TextAlign.start,
                                                   ),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     height: 5,
                                                   ),
                                                   Text(
-                                                    "Amount: " +
-                                                        (product['quantity']
+                                                    "Amount: ${product['quantity']
                                                                 .toString() ??
-                                                            ""),
-                                                    style: TextStyle(
+                                                            ""}",
+                                                    style: const TextStyle(
                                                       color: Colors.grey,
                                                     ),
                                                     textAlign: TextAlign.start,
@@ -260,11 +260,10 @@ class _UnpaidScreenState extends State<UnpaidScreen> {
                                                   MainAxisAlignment.center,
                                               children: <Widget>[
                                                 Text(
-                                                  '\฿ ' +
-                                                      (product['totalPrice']
+                                                  '฿ ${product['totalPrice']
                                                               .toString() ??
-                                                          ''),
-                                                  style: TextStyle(
+                                                          ''}',
+                                                  style: const TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
@@ -290,13 +289,13 @@ class _UnpaidScreenState extends State<UnpaidScreen> {
                                                       orderId: order[index]
                                                           ['_id'])));
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       'Purchase now',
                                       style: TextStyle(color: Colors.black),
                                     )),
                               ],
                             ),
-                            Divider(
+                            const Divider(
                               color: Colors.black,
                             ),
                           ],

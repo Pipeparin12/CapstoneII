@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:longdoo_frontend/screen/user/cart.dart';
 import 'package:longdoo_frontend/screen/user/try_on.dart';
 import 'package:longdoo_frontend/service/api/bookmark.dart';
@@ -10,7 +9,7 @@ import 'package:longdoo_frontend/service/dio.dart';
 
 class ItemDetailScreen extends StatefulWidget {
   final String id;
-  ItemDetailScreen({required this.id});
+  const ItemDetailScreen({super.key, required this.id});
 
   @override
   State<ItemDetailScreen> createState() => _ItemDetailScreenState();
@@ -62,12 +61,12 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
 
   @override
   void initState() {
-    getDetail().then((_) => Future.delayed(new Duration(seconds: 1), () {
+    getDetail().then((_) => Future.delayed(const Duration(seconds: 1), () {
           setState(() {
             isLoading = false;
           });
         }));
-    getYourCart().then((_) => Future.delayed(new Duration(seconds: 1), () {
+    getYourCart().then((_) => Future.delayed(const Duration(seconds: 1), () {
           setState(() {
             isLoading = false;
           });
@@ -91,7 +90,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                 onPressed: () async {
                   await Navigator.push(context,
                       MaterialPageRoute(builder: (context) {
-                    return CartScreen();
+                    return const CartScreen();
                   }));
                   getYourCart();
                 },
@@ -106,7 +105,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                     radius: 10,
                     child: Text(
                       cart.length > 99 ? '99+' : cart.length.toString(),
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 12,
                       ),
@@ -119,7 +118,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
         ],
       ),
       body: isLoading
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : Stack(children: [
@@ -137,7 +136,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                 child: Container(
                   height: MediaQuery.of(context).size.height * .42,
                   width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(30),
                         topRight: Radius.circular(30)),
@@ -153,7 +152,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                             Expanded(
                               child: Text(
                                 listProduct['productName'],
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 25, fontWeight: FontWeight.bold),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -169,47 +168,47 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: 10, left: 20, right: 30),
+                        padding: const EdgeInsets.only(top: 10, left: 20, right: 30),
                         child: Row(
                           children: [
                             Text(
                               "Price: ฿" +
                                   listProduct['price'].toStringAsFixed(0),
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                             )
                           ],
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: 10, left: 20, right: 30),
+                        padding: const EdgeInsets.only(top: 10, left: 20, right: 30),
                         child: Row(
                           children: [
                             Text(
                               "Color: " + listProduct['color'],
-                              style: TextStyle(fontSize: 14),
+                              style: const TextStyle(fontSize: 14),
                             )
                           ],
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: 10, left: 20, right: 30),
+                        padding: const EdgeInsets.only(top: 10, left: 20, right: 30),
                         child: Row(
                           children: [
                             Text(
                               "Size: " + listProduct['size'],
-                              style: TextStyle(fontSize: 14),
+                              style: const TextStyle(fontSize: 14),
                             )
                           ],
                         ),
                       ),
                       Container(
                         color: Colors.grey.withOpacity(0.2),
-                        margin: EdgeInsets.only(
+                        margin: const EdgeInsets.only(
                             top: 10, left: 20, right: 20, bottom: 5),
                         width: double.infinity,
                         child: Padding(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -219,29 +218,29 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                     fontSize: 12,
                                     color: Colors.grey.withOpacity(1)),
                               ),
-                              SizedBox(height: 10),
+                              const SizedBox(height: 10),
                               Text(listProduct['productDescription']),
                             ],
                           ),
                         ),
                       ),
-                      Padding(padding: EdgeInsets.all(10)),
+                      const Padding(padding: EdgeInsets.all(10)),
                       Container(
                         width: MediaQuery.of(context).size.width,
                         padding:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                            const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             GestureDetector(
                               child: Container(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 10),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: Colors.black,
                                 ),
-                                child: Row(
+                                child: const Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Icon(
@@ -266,13 +265,13 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                             ),
                             GestureDetector(
                                 child: Container(
-                                  padding: EdgeInsets.symmetric(
+                                  padding: const EdgeInsets.symmetric(
                                       vertical: 10, horizontal: 20),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     color: Colors.black,
                                   ),
-                                  child: Row(
+                                  child: const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Icon(
@@ -305,7 +304,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                         void decrement() {
                                           setModalState(() {
                                             if (counter == 0) {
-                                              return null;
+                                              return;
                                             } else {
                                               counter--;
                                             }
@@ -340,7 +339,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                         }
 
                                         return Container(
-                                          padding: EdgeInsets.all(16),
+                                          padding: const EdgeInsets.all(16),
                                           child: Column(
                                             mainAxisSize: MainAxisSize.min,
                                             children: <Widget>[
@@ -350,41 +349,41 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                                     "Quantity : " +
                                                         listProduct['quantity']
                                                             .toStringAsFixed(0),
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontSize: 16,
                                                         fontWeight:
                                                             FontWeight.bold),
                                                   )
                                                 ],
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 10,
                                               ),
-                                              Divider(
+                                              const Divider(
                                                 color: Colors.black,
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 10,
                                               ),
                                               Container(
                                                 alignment: Alignment.centerLeft,
                                                 child: Text(
                                                   'Size: ${listProduct['size']}',
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       fontSize: 16,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 ),
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 10,
                                               ),
-                                              Divider(
+                                              const Divider(
                                                 color: Colors.black,
                                               ),
                                               Container(
                                                 alignment: Alignment.centerLeft,
-                                                child: Text(
+                                                child: const Text(
                                                   'Amount',
                                                   style: TextStyle(
                                                       fontSize: 16,
@@ -392,7 +391,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                                           FontWeight.bold),
                                                 ),
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 10,
                                               ),
                                               Row(
@@ -404,7 +403,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                                     width: 35,
                                                     decoration: BoxDecoration(
                                                         borderRadius:
-                                                            BorderRadius.only(
+                                                            const BorderRadius.only(
                                                                 topLeft: Radius
                                                                     .circular(
                                                                         10),
@@ -420,7 +419,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                                       onPressed: () {
                                                         decrement();
                                                       },
-                                                      child: Text(
+                                                      child: const Text(
                                                         '-',
                                                         style: TextStyle(
                                                           fontSize: 14,
@@ -442,7 +441,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                                     child: Center(
                                                         child: Text(
                                                       '$counter',
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           fontSize: 16,
                                                           fontWeight:
                                                               FontWeight.bold),
@@ -453,7 +452,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                                     width: 35,
                                                     decoration: BoxDecoration(
                                                         borderRadius:
-                                                            BorderRadius.only(
+                                                            const BorderRadius.only(
                                                                 topRight: Radius
                                                                     .circular(
                                                                         10),
@@ -466,7 +465,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                                                 Colors.grey)),
                                                     child: Center(
                                                         child: TextButton(
-                                                      child: Text(
+                                                      child: const Text(
                                                         '+',
                                                         style: TextStyle(
                                                           fontSize: 14,
@@ -480,7 +479,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                                   ),
                                                 ],
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 10,
                                               ),
                                               ElevatedButton(
@@ -489,14 +488,14 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                                   Navigator.pop(context);
                                                 },
                                                 style: ElevatedButton.styleFrom(
-                                                  primary: Colors.grey.shade400,
+                                                  backgroundColor: Colors.grey.shade400,
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             15),
                                                   ),
                                                 ),
-                                                child: Text('Confirm'),
+                                                child: const Text('Confirm'),
                                               ),
                                             ],
                                           ),

@@ -16,18 +16,18 @@ class _SettingScreenState extends State<SettingScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text('Setting'),
+        title: const Text('Setting'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.only(right: 5, left: 5, bottom: 10),
+              padding: const EdgeInsets.only(right: 5, left: 5, bottom: 10),
               height: double.maxFinite,
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                 ),
                 child: Column(
@@ -44,17 +44,17 @@ class _SettingScreenState extends State<SettingScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          AccManagementScreen()));
+                                          const AccManagementScreen()));
                             },
                             child: Container(
                               width: 350,
                               height: 70,
-                              padding: EdgeInsets.all(15),
+                              padding: const EdgeInsets.all(15),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
                                 color: Colors.grey.shade300,
                               ),
-                              child: Stack(
+                              child: const Stack(
                                 children: [
                                   Row(
                                     children: [
@@ -82,7 +82,7 @@ class _SettingScreenState extends State<SettingScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           GestureDetector(
@@ -91,12 +91,12 @@ class _SettingScreenState extends State<SettingScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          OrderHistoryScreen()));
+                                          const OrderHistoryScreen()));
                             },
                             child: Container(
                               width: 350,
                               height: 70,
-                              padding: EdgeInsets.all(15),
+                              padding: const EdgeInsets.all(15),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
                                 color: Colors.grey.shade300,
@@ -110,14 +110,14 @@ class _SettingScreenState extends State<SettingScreen> {
                                         color: Colors.deepOrangeAccent.shade200,
                                         size: 40,
                                       ),
-                                      SizedBox(width: 10),
-                                      Text(
+                                      const SizedBox(width: 10),
+                                      const Text(
                                         "History",
                                         style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold),
                                       ),
-                                      Spacer(),
+                                      const Spacer(),
                                       Icon(
                                         Icons.arrow_forward,
                                         color: Colors.deepOrangeAccent.shade200,
@@ -129,7 +129,7 @@ class _SettingScreenState extends State<SettingScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           GestureDetector(
@@ -137,14 +137,14 @@ class _SettingScreenState extends State<SettingScreen> {
                               Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SignInPage()),
+                                    builder: (context) => const SignInPage()),
                                 (route) => false,
                               );
                             },
                             child: Container(
                               width: 350,
                               height: 70,
-                              padding: EdgeInsets.all(15),
+                              padding: const EdgeInsets.all(15),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
                                 color: Colors.grey.shade300,
@@ -156,14 +156,14 @@ class _SettingScreenState extends State<SettingScreen> {
                                     color: Colors.red.shade900,
                                     size: 40,
                                   ),
-                                  SizedBox(width: 10),
-                                  Text(
+                                  const SizedBox(width: 10),
+                                  const Text(
                                     "Log out",
                                     style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   Icon(
                                     Icons.arrow_forward,
                                     color: Colors.red.shade900,

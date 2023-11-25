@@ -41,7 +41,7 @@ class _AccManagementScreenState extends State<AccManagementScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Account Management"),
+        title: const Text("Account Management"),
         centerTitle: true,
         backgroundColor: Colors.white,
       ),
@@ -58,7 +58,7 @@ class _AccManagementScreenState extends State<AccManagementScreen> {
                       final user = users[index];
                       String selectedUserRole = users[index]['role'];
                       return Card(
-                        margin: EdgeInsets.all(10),
+                        margin: const EdgeInsets.all(10),
                         child: ListTile(
                           title:
                               Text("${user["firstName"]} ${user["lastName"]}"),
@@ -104,13 +104,13 @@ class _AccManagementScreenState extends State<AccManagementScreen> {
                 }
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.grey.shade400,
-                padding: EdgeInsets.all(15),
+                backgroundColor: Colors.grey.shade400,
+                padding: const EdgeInsets.all(15),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              child: Container(
+              child: const SizedBox(
                 width: double.infinity,
                 child: Center(
                   child: Text(

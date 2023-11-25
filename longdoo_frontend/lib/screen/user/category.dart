@@ -9,7 +9,7 @@ import 'package:longdoo_frontend/service/dio.dart';
 class CategoryScreen extends StatefulWidget {
   final String name;
   final String category;
-  CategoryScreen({Key? key, required this.name, required this.category});
+  const CategoryScreen({required this.name, required this.category});
 
   @override
   State<CategoryScreen> createState() => _CategoryScreenState();
@@ -54,6 +54,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   }
 
   String _searchQuery = '';
+  List _filteredProducts = [];
 
   List _filterProducts(String query) {
     return listProduct.where((product) {
@@ -64,6 +65,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _filteredProducts = _filterProducts(_searchQuery);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.name),
@@ -80,7 +82,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 onPressed: () async {
                   await Navigator.push(context,
                       MaterialPageRoute(builder: (context) {
-                    return CartScreen();
+                    return const CartScreen();
                   }));
                   getYourCart();
                 },
@@ -95,7 +97,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     radius: 10,
                     child: Text(
                       cart.length > 99 ? '99+' : cart.length.toString(),
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 12,
                       ),
@@ -109,7 +111,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
       ),
       body: SingleChildScrollView(
           child: SizedBox(
-              height: 700,
+              height: MediaQuery.of(context).size.height * 0.9,
               child: Column(children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -117,18 +119,19 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     onChanged: (value) {
                       setState(() {
                         _searchQuery = value;
+                        _filteredProducts = _filterProducts(_searchQuery);
                       });
                     },
                     decoration: InputDecoration(
                       labelText: 'Search',
-                      prefixIcon: Icon(Icons.search),
+                      prefixIcon: const Icon(Icons.search),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20.0),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Expanded(
@@ -138,7 +141,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         mainAxisSpacing: 10,
                         children: [
                       ...List.generate(
-                          listProduct.length,
+                          _filteredProducts.length,
                           (index) => Container(
                                 child: GestureDetector(
                                     onTap: () => Navigator.push(
@@ -146,7 +149,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               ItemDetailScreen(
-                                            id: listProduct[index]['_id'],
+                                            id: _filteredProducts[index]['_id'],
                                           ),
                                         )),
                                     child: Column(
@@ -161,17 +164,19 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                 image: DecorationImage(
                                                     image: NetworkImage(
                                                         DioInstance.getImage(
-                                                            listProduct[index][
+                                                            _filteredProducts[
+                                                                    index][
                                                                 'productImage'])),
                                                     fit: BoxFit.cover)),
                                             child: Transform.translate(
-                                              offset: Offset(30, -30),
+                                              offset: const Offset(30, -30),
                                               child: Container(
-                                                margin: EdgeInsets.symmetric(
+                                                margin:
+                                                    const EdgeInsets.symmetric(
                                                   horizontal: 65,
                                                   vertical: 60,
                                                 ),
-                                                child: Icon(
+                                                child: const Icon(
                                                   Icons.bookmark_border,
                                                   size: 0,
                                                 ),
@@ -180,17 +185,18 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                           ),
                                         ),
                                         Text(
-                                          listProduct[index]['price']
+                                          _filteredProducts[index]['price']
                                                   .toStringAsFixed(0) +
                                               " ฿",
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 12,
                                               fontWeight: FontWeight.bold),
                                           textAlign: TextAlign.left,
                                         ),
                                         Text(
-                                          listProduct[index]['productName'],
-                                          style: TextStyle(fontSize: 10),
+                                          _filteredProducts[index]
+                                              ['productName'],
+                                          style: const TextStyle(fontSize: 10),
                                           textAlign: TextAlign.left,
                                         ),
                                       ],

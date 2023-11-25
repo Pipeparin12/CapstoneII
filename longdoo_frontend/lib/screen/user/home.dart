@@ -1,11 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/model/profile.dart';
+import 'package:longdoo_frontend/screen/user/all_clothes.dart';
 import 'package:longdoo_frontend/screen/user/category.dart';
 import 'package:longdoo_frontend/service/dio.dart';
 import 'package:longdoo_frontend/service/share_preference.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -52,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
     },
   ];
 
-  String _searchQuery = '';
+  final String _searchQuery = '';
 
   Future<void> fetchProfile() async {
     final token = SharePreference.prefs.getString("token");
@@ -92,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text(
+        title: const Text(
           'LongDoo',
           style: TextStyle(color: Colors.black),
         ),
@@ -101,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(12.0),
           child: Column(
             children: <Widget>[
               Container(
@@ -109,8 +112,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 250,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    image: DecorationImage(
-                        image: AssetImage('assets/images/sale.png'),
+                    image: const DecorationImage(
+                        image: AssetImage('assets/images/all-clothes.jpg'),
                         fit: BoxFit.cover)),
                 child: Container(
                   decoration: BoxDecoration(
@@ -123,13 +126,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                       GestureDetector(
                         child: Container(
                           height: 50,
-                          margin: EdgeInsets.symmetric(horizontal: 40),
+                          margin: const EdgeInsets.symmetric(horizontal: 40),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: Colors.white),
@@ -145,22 +148,22 @@ class _HomeScreenState extends State<HomeScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => CategoryScreen(
-                                name: 'Sale',
-                                category: 'Sale',
+                              builder: (context) => AllCategoryScreen(
+                                name: 'Clothes',
+                                category: userProfile.gender,
                               ),
                             ),
                           );
                         },
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                     ],
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Expanded(
@@ -201,13 +204,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ),
                                   child: Transform.translate(
-                                    offset: Offset(30, -30),
+                                    offset: const Offset(30, -30),
                                     child: Container(
-                                      margin: EdgeInsets.symmetric(
+                                      margin: const EdgeInsets.symmetric(
                                         horizontal: 65,
                                         vertical: 63,
                                       ),
-                                      child: Icon(
+                                      child: const Icon(
                                         Icons.bookmark_border,
                                         size: 0,
                                       ),
@@ -217,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               Text(
                                 item['name'],
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),

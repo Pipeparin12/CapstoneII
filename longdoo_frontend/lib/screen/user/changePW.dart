@@ -47,7 +47,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               Navigator.pop(context);
               Navigator.pop(context);
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AccountScreen()));
+                  MaterialPageRoute(builder: (context) => const AccountScreen()));
             });
       }
     } catch (e) {
@@ -67,14 +67,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text('Change Password'),
+          title: const Text('Change Password'),
           centerTitle: true,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => AccountScreen()),
+                MaterialPageRoute(builder: (context) => const AccountScreen()),
               );
             },
           ),
@@ -84,17 +84,17 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             key: formState,
             child: Column(children: [
               Container(
-                  padding: EdgeInsets.only(right: 5, left: 5, bottom: 10),
+                  padding: const EdgeInsets.only(right: 5, left: 5, bottom: 10),
                   height: double.maxFinite,
                   child: Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.white,
                       ),
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.only(
+                            const Padding(
+                              padding: EdgeInsets.only(
                                   top: 30, right: 15, left: 15),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -121,21 +121,21 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Current Password',
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(height: 10),
-                                  Container(
+                                  const SizedBox(height: 10),
+                                  SizedBox(
                                     width: 360,
                                     child: TextFormField(
                                       controller: oldPasswordController,
                                       obscureText: !_showOldPassword,
                                       decoration: InputDecoration(
-                                        border: UnderlineInputBorder(),
+                                        border: const UnderlineInputBorder(),
                                         suffixIcon: IconButton(
                                           icon: Icon(
                                             _showOldPassword
@@ -162,21 +162,21 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'New Password',
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(height: 10),
-                                  Container(
+                                  const SizedBox(height: 10),
+                                  SizedBox(
                                     width: 360,
                                     child: TextFormField(
                                       controller: newPasswordController,
                                       obscureText: !_showNewPassword,
                                       decoration: InputDecoration(
-                                        border: UnderlineInputBorder(),
+                                        border: const UnderlineInputBorder(),
                                         suffixIcon: IconButton(
                                           icon: Icon(
                                             _showNewPassword
@@ -197,7 +197,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                 ],
                               ),
                             ),
-                            Padding(padding: EdgeInsets.only(top: 40)),
+                            const Padding(padding: EdgeInsets.only(top: 40)),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -205,13 +205,13 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                   child: Container(
                                     width: 200,
                                     height: 50,
-                                    padding: EdgeInsets.symmetric(
+                                    padding: const EdgeInsets.symmetric(
                                         vertical: 10, horizontal: 20),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(20),
                                       color: Colors.grey,
                                     ),
-                                    child: Row(
+                                    child: const Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [

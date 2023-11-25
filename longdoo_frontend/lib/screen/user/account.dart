@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:longdoo_frontend/model/profile.dart';
 import 'package:longdoo_frontend/screen/user/changePW.dart';
@@ -128,27 +127,27 @@ class _AccountScreenState extends State<AccountScreen> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text('Account'),
+          title: const Text('Account'),
           centerTitle: true,
         ),
         body: SingleChildScrollView(
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           child: Form(
             key: formState,
             child: Column(children: [
               Container(
-                  padding: EdgeInsets.only(right: 5, left: 5, bottom: 10),
+                  padding: const EdgeInsets.only(right: 5, left: 5, bottom: 10),
                   height: double.maxFinite,
                   child: Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.white,
                       ),
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
-                            Padding(
+                            const Padding(
                               padding:
-                                  const EdgeInsets.only(top: 20, right: 10),
+                                  EdgeInsets.only(top: 20, right: 10),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -166,7 +165,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Row(
+                                  const Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
@@ -175,19 +174,17 @@ class _AccountScreenState extends State<AccountScreen> {
                                       ),
                                     ],
                                   ),
-                                  Padding(padding: EdgeInsets.only(left: 20)),
+                                  const Padding(padding: EdgeInsets.only(left: 20)),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      Container(
+                                      SizedBox(
                                         width: 360,
                                         child: TextFormField(
                                           enabled: false,
                                           controller: TextEditingController(
-                                              text: userProfile.firstName +
-                                                  ' ' +
-                                                  userProfile.lastName),
-                                          decoration: InputDecoration(
+                                              text: '${userProfile.firstName} ${userProfile.lastName}'),
+                                          decoration: const InputDecoration(
                                             border: UnderlineInputBorder(),
                                           ),
                                         ),
@@ -204,7 +201,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Row(
+                                  const Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
@@ -213,17 +210,17 @@ class _AccountScreenState extends State<AccountScreen> {
                                       ),
                                     ],
                                   ),
-                                  Padding(padding: EdgeInsets.only(left: 20)),
+                                  const Padding(padding: EdgeInsets.only(left: 20)),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      Container(
+                                      SizedBox(
                                         width: 360,
                                         child: TextFormField(
                                           enabled: false,
                                           controller: TextEditingController(
                                               text: userProfile.username),
-                                          decoration: InputDecoration(
+                                          decoration: const InputDecoration(
                                             border: UnderlineInputBorder(),
                                           ),
                                         ),
@@ -238,7 +235,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                   top: 25, left: 10, right: 10),
                               child: Column(
                                 children: [
-                                  Row(
+                                  const Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
@@ -247,7 +244,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                       ),
                                     ],
                                   ),
-                                  Padding(padding: EdgeInsets.only(top: 10)),
+                                  const Padding(padding: EdgeInsets.only(top: 10)),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
@@ -264,7 +261,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        ChangePasswordScreen()))),
+                                                        const ChangePasswordScreen()))),
                                       ),
                                     ],
                                   ),
@@ -278,7 +275,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Row(
+                                  const Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
@@ -287,15 +284,15 @@ class _AccountScreenState extends State<AccountScreen> {
                                       ),
                                     ],
                                   ),
-                                  Padding(padding: EdgeInsets.only(left: 20)),
+                                  const Padding(padding: EdgeInsets.only(left: 20)),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      Container(
+                                      SizedBox(
                                         width: 360,
                                         child: TextFormField(
                                           controller: phoneController,
-                                          decoration: InputDecoration(
+                                          decoration: const InputDecoration(
                                             border: UnderlineInputBorder(),
                                           ),
                                         ),
@@ -312,7 +309,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Row(
+                                  const Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
@@ -321,15 +318,15 @@ class _AccountScreenState extends State<AccountScreen> {
                                       ),
                                     ],
                                   ),
-                                  Padding(padding: EdgeInsets.only(left: 20)),
+                                  const Padding(padding: EdgeInsets.only(left: 20)),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      Container(
+                                      SizedBox(
                                         width: 360,
                                         child: TextFormField(
                                           controller: addressController,
-                                          decoration: InputDecoration(
+                                          decoration: const InputDecoration(
                                             border: UnderlineInputBorder(),
                                           ),
                                         ),
@@ -339,7 +336,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                 ],
                               ),
                             ),
-                            Padding(padding: EdgeInsets.only(top: 30)),
+                            const Padding(padding: EdgeInsets.only(top: 30)),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -356,13 +353,13 @@ class _AccountScreenState extends State<AccountScreen> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    SignInPage()),
+                                                    const SignInPage()),
                                             (route) => false,
                                           )),
                                 ),
                               ],
                             ),
-                            Padding(padding: EdgeInsets.only(top: 40)),
+                            const Padding(padding: EdgeInsets.only(top: 40)),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -370,13 +367,13 @@ class _AccountScreenState extends State<AccountScreen> {
                                   child: Container(
                                     width: 200,
                                     height: 50,
-                                    padding: EdgeInsets.symmetric(
+                                    padding: const EdgeInsets.symmetric(
                                         vertical: 10, horizontal: 20),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(20),
                                       color: Colors.grey.shade400,
                                     ),
-                                    child: Row(
+                                    child: const Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
