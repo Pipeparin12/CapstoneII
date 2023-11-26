@@ -185,7 +185,7 @@ class _MenuScreenState extends State<AdminHomeScreen> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 25),
+                      padding: const EdgeInsets.only(top: 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -439,8 +439,8 @@ class _MenuScreenState extends State<AdminHomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
                         const Padding(
-                          padding: EdgeInsets.only(
-                              top: 20, left: 10, bottom: 10),
+                          padding:
+                              EdgeInsets.only(top: 20, left: 10, bottom: 10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -455,7 +455,7 @@ class _MenuScreenState extends State<AdminHomeScreen> {
                             child: GridView.count(
                                 crossAxisCount: 2,
                                 crossAxisSpacing: 10,
-                                mainAxisSpacing: 0,
+                                mainAxisSpacing: 5,
                                 children: [
                               ...List.generate(
                                   _listItems.length,
@@ -492,9 +492,10 @@ class _MenuScreenState extends State<AdminHomeScreen> {
                                                       ),
                                                     ),
                                                     child: Transform.translate(
-                                                      offset: const Offset(57, -57),
+                                                      offset:
+                                                          const Offset(57, -57),
                                                       child: Container(
-                                                        height: 25,
+                                                        height: 15,
                                                         width: 25,
                                                         margin: const EdgeInsets
                                                             .symmetric(
@@ -503,8 +504,8 @@ class _MenuScreenState extends State<AdminHomeScreen> {
                                                         ),
                                                         child:
                                                             Transform.translate(
-                                                          offset:
-                                                              const Offset(-3, -3),
+                                                          offset: const Offset(
+                                                              -3, -3),
                                                           child: IconButton(
                                                             icon: const Icon(
                                                               Icons

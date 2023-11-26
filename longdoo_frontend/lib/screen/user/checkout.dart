@@ -140,7 +140,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               )
             : SingleChildScrollView(
                 child: SizedBox(
-                  height: double.maxFinite,
+                  height: 900,
                   child: Column(
                     children: <Widget>[
                       Container(
@@ -214,8 +214,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   const Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [

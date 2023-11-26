@@ -146,8 +146,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
                             const Padding(
-                              padding:
-                                  EdgeInsets.only(top: 20, right: 10),
+                              padding: EdgeInsets.only(top: 20, right: 10),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -174,16 +173,18 @@ class _AccountScreenState extends State<AccountScreen> {
                                       ),
                                     ],
                                   ),
-                                  const Padding(padding: EdgeInsets.only(left: 20)),
+                                  const Padding(
+                                      padding: EdgeInsets.only(left: 20)),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       SizedBox(
-                                        width: 360,
+                                        width: 330,
                                         child: TextFormField(
                                           enabled: false,
                                           controller: TextEditingController(
-                                              text: '${userProfile.firstName} ${userProfile.lastName}'),
+                                              text:
+                                                  '${userProfile.firstName} ${userProfile.lastName}'),
                                           decoration: const InputDecoration(
                                             border: UnderlineInputBorder(),
                                           ),
@@ -210,12 +211,13 @@ class _AccountScreenState extends State<AccountScreen> {
                                       ),
                                     ],
                                   ),
-                                  const Padding(padding: EdgeInsets.only(left: 20)),
+                                  const Padding(
+                                      padding: EdgeInsets.only(left: 20)),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       SizedBox(
-                                        width: 360,
+                                        width: 330,
                                         child: TextFormField(
                                           enabled: false,
                                           controller: TextEditingController(
@@ -244,7 +246,8 @@ class _AccountScreenState extends State<AccountScreen> {
                                       ),
                                     ],
                                   ),
-                                  const Padding(padding: EdgeInsets.only(top: 10)),
+                                  const Padding(
+                                      padding: EdgeInsets.only(top: 10)),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
@@ -284,12 +287,13 @@ class _AccountScreenState extends State<AccountScreen> {
                                       ),
                                     ],
                                   ),
-                                  const Padding(padding: EdgeInsets.only(left: 20)),
+                                  const Padding(
+                                      padding: EdgeInsets.only(left: 20)),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       SizedBox(
-                                        width: 360,
+                                        width: 330,
                                         child: TextFormField(
                                           controller: phoneController,
                                           decoration: const InputDecoration(
@@ -318,12 +322,13 @@ class _AccountScreenState extends State<AccountScreen> {
                                       ),
                                     ],
                                   ),
-                                  const Padding(padding: EdgeInsets.only(left: 20)),
+                                  const Padding(
+                                      padding: EdgeInsets.only(left: 20)),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       SizedBox(
-                                        width: 360,
+                                        width: 330,
                                         child: TextFormField(
                                           controller: addressController,
                                           decoration: const InputDecoration(

@@ -111,7 +111,7 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
       ),
       body: SingleChildScrollView(
           child: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.9,
+              height: MediaQuery.of(context).size.height * 0.89,
               child: Column(children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(16.0),

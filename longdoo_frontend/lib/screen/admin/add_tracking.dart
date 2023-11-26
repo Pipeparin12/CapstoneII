@@ -239,8 +239,7 @@ class _CheckoutScreenState extends State<AddTrackingScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   const Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
@@ -270,8 +269,8 @@ class _CheckoutScreenState extends State<AddTrackingScreen> {
                           ),
                         ),
                         Container(
-                          margin:
-                              const EdgeInsets.only(left: 15, right: 15, bottom: 15),
+                          margin: const EdgeInsets.only(
+                              left: 15, right: 15, bottom: 15),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -354,7 +353,7 @@ class _CheckoutScreenState extends State<AddTrackingScreen> {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 SizedBox(
-                                                  width: 370,
+                                                  width: 320,
                                                   child:
                                                       DropdownButtonFormField<
                                                           String>(
@@ -382,7 +381,8 @@ class _CheckoutScreenState extends State<AddTrackingScreen> {
                                                                 .circular(10.0),
                                                       ),
                                                       contentPadding:
-                                                          const EdgeInsets.symmetric(
+                                                          const EdgeInsets
+                                                              .symmetric(
                                                               horizontal: 10.0),
                                                     ),
                                                   ),
@@ -417,11 +417,12 @@ class _CheckoutScreenState extends State<AddTrackingScreen> {
                                                   MainAxisAlignment.start,
                                               children: [
                                                 SizedBox(
-                                                  width: 370,
+                                                  width: 320,
                                                   child: TextFormField(
                                                     controller:
                                                         trackingNumberController,
-                                                    decoration: const InputDecoration(
+                                                    decoration:
+                                                        const InputDecoration(
                                                       border:
                                                           UnderlineInputBorder(),
                                                     ),
